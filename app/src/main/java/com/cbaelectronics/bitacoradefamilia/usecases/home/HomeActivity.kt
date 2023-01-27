@@ -1,30 +1,36 @@
-package com.cbaelectronics.bitacoradefamilia
+package com.cbaelectronics.bitacoradefamilia.usecases.home
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
-import com.cbaelectronics.bitacoradefamilia.databinding.ActivityMainBinding
+import com.cbaelectronics.bitacoradefamilia.R
+import com.cbaelectronics.bitacoradefamilia.databinding.ActivityHomeBinding
+import com.cbaelectronics.bitacoradefamilia.util.extension.transparent
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        // Content
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
+        // Setup
+        setup()
+
+    }
+
+    private fun setup() {
+        supportActionBar?.transparent(this)
 
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

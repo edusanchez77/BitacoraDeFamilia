@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--~
+  ~  Created by CbaElectronics by Eduardo Sanchez on 26/1/23 15:27.
+  ~  www.cbaelectronics.com.ar
+  -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/secondary_background"/>
+        </shape>
+    </item>
+    <item android:top="500dp"
+        android:bottom="-200dp"
+        android:left="-82dp"
+        android:right="-20dp">
+        <shape android:shape="oval">
+            <solid
+                android:color="@color/primary"/>
+            <corners
+                android:radius="32dp"/>
+        </shape>
+    </item>
+</layer-list>
