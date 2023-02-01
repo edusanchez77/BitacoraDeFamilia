@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--~
+  ~  Created by CbaElectronics by Eduardo Sanchez on 30/1/23 16:18.
+  ~  www.cbaelectronics.com.ar
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_info"
+        android:icon="@drawable/info"
+        android:title="@string/bottommenu.pregnant.info" />
+
+    <item
+        android:id="@+id/navigation_medical_meeting"
+        android:icon="@drawable/logros"
+        android:title="@string/bottommenu.pregnant.medicalmeeting" />
+
+    <item
+        android:id="@+id/navigation_echography"
+        android:icon="@drawable/crecimiento"
+        android:title="@string/bottommenu.pregnant.echography" />
+
+    <item
+        android:id="@+id/navigation_pregnant_notes"
+        android:icon="@drawable/enfermedades"
+        android:title="@string/bottommenu.pregnant.notes" />
+
+</menu>

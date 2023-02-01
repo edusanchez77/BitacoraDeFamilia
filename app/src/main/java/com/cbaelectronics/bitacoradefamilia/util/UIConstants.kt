@@ -9,14 +9,15 @@ object UIConstants {
 
     const val VIEW_OPACITY = 0.5f
     const val SHADOW_OPACITY = 0.2f
-    const val LOGO_HEIGHT = 18
+    const val LOGO_HEIGHT = 24
 
 }
 
 enum class FontType(val path: String) {
-    LIGHT("font/oswald_light.ttf"),
-    REGULAR("font/oswald_regular.ttf"),
-    BOLD("font/oswald_bold.ttf")
+    GALADA("font/galada_regular.ttf"),
+    LIGHT("font/farro_light.ttf"),
+    REGULAR("font/farro.ttf"),
+    BOLD("font/farro_bold.ttf")
 }
 
 enum class FontSize(val size: Int) {

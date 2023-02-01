@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--~
+  ~  Created by CbaElectronics by Eduardo Sanchez on 31/1/23 10:22.
+  ~  www.cbaelectronics.com.ar
+  -->
+
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/farro</item>
+        <item>@font/farro_bold</item>
+        <item>@font/farro_light</item>
         <item>@font/galada</item>
     </array>
 </resources>
