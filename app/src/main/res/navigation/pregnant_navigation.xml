@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--~
+  ~  Created by CbaElectronics by Eduardo Sanchez on 30/1/23 16:18.
+  ~  www.cbaelectronics.com.ar
+  -->
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_info">
+
+    <fragment
+        android:id="@+id/navigation_info"
+        android:name="com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.info.InfoFragment"
+        android:label="@string/bottommenu.pregnant.info"
+        tools:layout="@layout/fragment_info" />
+
+    <fragment
+        android:id="@+id/navigation_medical_meeting"
+        android:name="com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.medical_meeting.MedicalMeetingFragment"
+        android:label="@string/bottommenu.pregnant.medicalmeeting"
+        tools:layout="@layout/fragment_medical_meeting" />
+
+    <fragment
+        android:id="@+id/navigation_echography"
+        android:name="com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.echography.EchographyFragment"
+        android:label="@string/bottommenu.pregnant.echography"
+        tools:layout="@layout/fragment_echography" />
+
+    <fragment
+        android:id="@+id/navigation_pregnant_notes"
+        android:name="com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.notes.PregnantNotesFragment"
+        android:label="@string/bottommenu.pregnant.notes"
+        tools:layout="@layout/fragment_pregnant_notes" />
+
+</navigation>

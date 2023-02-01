@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
-import androidx.lifecycle.ViewModelProvider
-import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityLaunchBinding
 import com.cbaelectronics.bitacoradefamilia.usecases.home.HomeActivity
 

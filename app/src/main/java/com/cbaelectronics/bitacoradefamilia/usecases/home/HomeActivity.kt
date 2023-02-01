@@ -9,7 +9,12 @@ import android.view.Menu
 import android.view.MenuItem
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityHomeBinding
-import com.cbaelectronics.bitacoradefamilia.util.extension.transparent
+import com.cbaelectronics.bitacoradefamilia.usecases.menu.MenuRouter
+import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
+import com.cbaelectronics.bitacoradefamilia.util.FontSize
+import com.cbaelectronics.bitacoradefamilia.util.FontType
+import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
+import com.cbaelectronics.bitacoradefamilia.util.extension.font
 
 class HomeActivity : AppCompatActivity() {
 
@@ -30,7 +35,28 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setup() {
-        supportActionBar?.transparent(this)
+
+        addClose(this)
+
+        // UI
+
+        //binding.textViewOlivia.font(FontSize.BODY, FontType.BOLD, getColor(R.color.light))
+
+        // Buttons
+
+        buttons()
+
+    }
+
+    private fun buttons() {
+
+        binding.cardViewOlivia.setOnClickListener {
+            MenuRouter().launch(this)
+        }
+
+        binding.cardViewBastian.setOnClickListener {
+            MenuRouter().launch(this)
+        }
 
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
