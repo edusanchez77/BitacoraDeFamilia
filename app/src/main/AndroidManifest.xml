@@ -14,14 +14,14 @@
         <activity
             android:name=".usecases.notebook.NotebookActivity"
             android:exported="false"
-            android:label="@string/title_activity_notebook" />
+            android:label="@string/activity.notebook.title" />
         <activity
             android:name=".usecases.menu.MenuActivity"
             android:exported="false" />
         <activity
             android:name=".usecases.pregnant.PregnantActivity"
             android:exported="false"
-            android:label="@string/title_activity_pregnant" />
+            android:label="@string/activity.pregnant.title" />
         <activity
             android:name=".usecases.launch.LaunchActivity"
             android:exported="true"

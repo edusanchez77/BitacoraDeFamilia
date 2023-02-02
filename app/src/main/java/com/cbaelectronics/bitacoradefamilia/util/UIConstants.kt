@@ -5,6 +5,9 @@
 
 package com.cbaelectronics.bitacoradefamilia.util
 
+import android.content.Context
+import androidx.core.content.res.ResourcesCompat
+
 object UIConstants {
 
     const val VIEW_OPACITY = 0.5f
@@ -14,7 +17,7 @@ object UIConstants {
 }
 
 enum class FontType(val path: String) {
-    GALADA("font/galada_regular.ttf"),
+    GALADA("font/galada_regular.ttf", ResourcesCompat.getFont(Context, R.font.);),
     LIGHT("font/farro_light.ttf"),
     REGULAR("font/farro.ttf"),
     BOLD("font/farro_bold.ttf")

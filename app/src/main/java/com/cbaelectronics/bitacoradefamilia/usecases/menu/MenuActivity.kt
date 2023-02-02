@@ -10,11 +10,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityMenuBinding
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookActivity
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
+import com.cbaelectronics.bitacoradefamilia.util.FontSize
+import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
+import com.cbaelectronics.bitacoradefamilia.util.extension.font
 
 class MenuActivity : AppCompatActivity() {
 
@@ -33,6 +37,9 @@ class MenuActivity : AppCompatActivity() {
 
     private fun setup() {
         addClose(this)
+
+        // UI
+        binding.textViewName.font(FontSize.SUBHEAD, FontType.GALADA, ContextCompat.getColor(this, R.color.text))
 
         buttons()
     }

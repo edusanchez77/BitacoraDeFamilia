@@ -1,27 +1,37 @@
 <resources>
-    <string name="app_name">Bitacora de Familia</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <!-- Generic -->
+    <string name="app_name">Bitácora de Familia</string>
+    <string name="companyName">CbaElectronics</string>
+    <string name="title">Bitácora de Familia</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="understood">Entendido</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="settings">Ajustes</string>
 
     <!-- Bottom Menu -->
-    <string name="title_activity_menu1">Menu1Activity</string>
-    <string name="title_activity_home1">Home1Activity</string>
-    <string name="title_activity_pregnant">PregnantActivity</string>
-    <string name="bottommenu.pregnant.info">Informacion</string>
-    <string name="bottommenu.pregnant.medicalmeeting">Citas medicas</string>
-    <string name="bottommenu.pregnant.echography">Ecografias</string>
+    <string name="bottommenu.pregnant.info">Información</string>
+    <string name="bottommenu.pregnant.medicalmeeting">Citas Médicas</string>
+    <string name="bottommenu.pregnant.echography">Ecografías</string>
     <string name="bottommenu.pregnant.notes">Notas</string>
-    <string name="bottommenu.notebook.info">Informacion</string>
     <string name="bottommenu.notebook.achievements">Logros</string>
     <string name="bottommenu.notebook.growth">Crecimiento</string>
     <string name="bottommenu.notebook.illness">Enfermedades</string>
     <string name="bottommenu.notebook.pediatriccontrol">Controles</string>
     <string name="bottommenu.notebook.notes">Notas</string>
-    <string name="title_activity_notebook">NotebookActivity</string>
+
+    <!-- Growth -->
+    <string name="growth.title">Mi Crecimiento</string>
+    <string name="growth.button">Agregar dato</string>
+    <string name="growth.table.header.date">Fecha</string>
+    <string name="growth.table.header.weight">Peso</string>
+    <string name="growth.table.header.height">Altura</string>
+    <string name="growth.table.header.PC">PC</string>
+
+    <!-- Titles Activity -->
+    <string name="activity.notebook.title">Cuaderno Pediátrico</string>
+    <string name="activity.pregnant.title">Diario de Embarazo</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
