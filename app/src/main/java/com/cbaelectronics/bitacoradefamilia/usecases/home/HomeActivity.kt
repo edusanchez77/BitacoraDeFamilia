@@ -40,7 +40,9 @@ class HomeActivity : AppCompatActivity() {
 
         // UI
 
-        //binding.textViewOlivia.font(FontSize.BODY, FontType.BOLD, getColor(R.color.light))
+        binding.textViewTitleApp.font(FontSize.TITLE, FontType.GALADA, getColor(R.color.light))
+        binding.textViewOlivia.font(FontSize.HEAD, FontType.GALADA, getColor(R.color.text))
+        binding.textViewBastian.font(FontSize.HEAD, FontType.GALADA, getColor(R.color.text))
 
         // Buttons
 

@@ -23,11 +23,12 @@ import com.cbaelectronics.bitacoradefamilia.databinding.FragmentGrowthBinding
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
+import com.google.android.material.snackbar.Snackbar
 
 class GrowthFragment : Fragment() {
 
     private lateinit var _binding: FragmentGrowthBinding
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var viewModel: GrowthViewModel
 
     override fun onCreateView(
@@ -47,6 +48,7 @@ class GrowthFragment : Fragment() {
 
         // Setup
         setup()
+        footer()
 
 
 
@@ -59,11 +61,25 @@ class GrowthFragment : Fragment() {
         binding.textViewGrowthTableHeaderWeight.text = getString(viewModel.headerWeight)
         binding.textViewGrowthTableHeaderHeight.text = getString(viewModel.headerHeight)
         binding.textViewGrowthTableHeaderPC.text = getString(viewModel.headerPC)
+        binding.buttonGrowthAdd.text = getString(viewModel.button)
     }
 
     private fun setup() {
         // UI
         binding.textViewGrowthTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        binding.textViewGrowthTableHeaderDate.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        binding.textViewGrowthTableHeaderWeight.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        binding.textViewGrowthTableHeaderHeight.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        binding.textViewGrowthTableHeaderPC.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+
+    }
+
+    private fun footer() {
+        binding.buttonGrowthAdd.setOnClickListener {
+            Snackbar.make(it, "Agregar dato", Snackbar.LENGTH_LONG)
+                .setAnchorView(R.id.buttonGrowthAdd)
+                .setAction("Action", null).show()
+        }
     }
 
 }

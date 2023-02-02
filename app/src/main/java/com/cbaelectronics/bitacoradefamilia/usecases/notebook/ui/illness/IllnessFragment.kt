@@ -11,35 +11,59 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentIllnessBinding
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentMedicalMeetingBinding
+import com.cbaelectronics.bitacoradefamilia.util.FontSize
+import com.cbaelectronics.bitacoradefamilia.util.FontType
+import com.cbaelectronics.bitacoradefamilia.util.extension.font
+import com.google.android.material.snackbar.Snackbar
 
 class IllnessFragment : Fragment() {
 
-    private var _binding: FragmentIllnessBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
+    private lateinit var _binding: FragmentIllnessBinding
+    private val binding get() = _binding
     private lateinit var viewModel: IllnessViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(IllnessViewModel::class.java)
 
+        // Content
         _binding = FragmentIllnessBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        return root
+        // ViewModel
+        viewModel = ViewModelProvider(this)[IllnessViewModel::class.java]
+
+        // Localize
+        localize()
+
+        // Setup
+        setup()
+        footer()
+
+        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun localize() {
+        binding.textViewIllnessTitle.text = getString(viewModel.title)
+        binding.buttonIllnessAdd.text = getString(viewModel.button)
     }
+
+    private fun setup() {
+        // UI
+        binding.textViewIllnessTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+    }
+
+    private fun footer() {
+        binding.buttonIllnessAdd.setOnClickListener {
+            Snackbar.make(it, "Agregar enfermedad", Snackbar.LENGTH_LONG)
+                .setAnchorView(R.id.buttonIllnessAdd)
+                .setAction("Action", null).show()
+        }
+    }
+
 
 }

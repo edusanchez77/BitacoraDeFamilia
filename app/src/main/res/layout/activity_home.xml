@@ -23,9 +23,9 @@
 
 
     <TextView
+        android:id="@+id/textViewTitleApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/galada"
         android:text="Bitacora de Familia"
         android:textColor="@color/light"
         android:textSize="30sp"

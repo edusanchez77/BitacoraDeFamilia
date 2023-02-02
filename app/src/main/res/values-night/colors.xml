@@ -7,7 +7,7 @@
 <resources>
     <color name="primary">#6A095D</color>
     <color name="secondary">#ED1F66</color>
-    <color name="primary_light">#6C085C</color>
+    <color name="primary_light">#B36F2A64</color>
     <color name="secondary_light">#F11F65</color>
     <color name="primary_dark">#4D0743</color>
     <color name="secondary_dark">#BF1A53</color>

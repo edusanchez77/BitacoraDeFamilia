@@ -21,6 +21,10 @@
     <string name="bottommenu.notebook.pediatriccontrol">Controles</string>
     <string name="bottommenu.notebook.notes">Notas</string>
 
+    <!-- Menu -->
+    <string name="menu.card.pregnant">Diario de\nEmbarazo</string>
+    <string name="menu.card.notebook">Cuaderno\nPediátrico</string>
+
     <!-- Growth -->
     <string name="growth.title">Mi Crecimiento</string>
     <string name="growth.button">Agregar dato</string>
@@ -28,6 +32,10 @@
     <string name="growth.table.header.weight">Peso</string>
     <string name="growth.table.header.height">Altura</string>
     <string name="growth.table.header.PC">PC</string>
+
+    <!-- Illness -->
+    <string name="illness.title">Mis Enfermedades</string>
+    <string name="illness.button">Agregar enfermedad</string>
 
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>

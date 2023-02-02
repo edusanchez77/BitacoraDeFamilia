@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityMenuBinding
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookActivity
@@ -23,6 +24,7 @@ import com.cbaelectronics.bitacoradefamilia.util.extension.font
 class MenuActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMenuBinding
+    private lateinit var viewModel: MenuViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +33,30 @@ class MenuActivity : AppCompatActivity() {
         // Content
         setContentView(binding.root)
 
+        // ViewModel
+        viewModel = ViewModelProvider(this)[MenuViewModel::class.java]
+
         // Setup
+        localize()
         setup()
+    }
+
+    private fun localize() {
+        binding.textViewPregnancyDiary.text = getString(viewModel.pregnancyDiary)
+        binding.textViewPediatricNotebook.text = getString(viewModel.pediatricNotebook)
     }
 
     private fun setup() {
         addClose(this)
 
         // UI
-        binding.textViewName.font(FontSize.SUBHEAD, FontType.GALADA, ContextCompat.getColor(this, R.color.text))
+        binding.textViewName.font(FontSize.TITLE, FontType.GALADA, ContextCompat.getColor(this, R.color.text))
+        binding.textViewMenuDateOfBirth.font(FontSize.CAPTION, FontType.REGULAR, ContextCompat.getColor(this, R.color.text))
+        binding.textViewMenuHourOfBirth.font(FontSize.CAPTION, FontType.REGULAR, ContextCompat.getColor(this, R.color.text))
+        binding.textViewMenuWeigthOfBirth.font(FontSize.CAPTION, FontType.REGULAR, ContextCompat.getColor(this, R.color.text))
+        binding.textViewMenuHeigthOfBirth.font(FontSize.CAPTION, FontType.REGULAR, ContextCompat.getColor(this, R.color.text))
+        binding.textViewPregnancyDiary.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(this, R.color.light))
+        binding.textViewPediatricNotebook.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(this, R.color.light))
 
         buttons()
     }

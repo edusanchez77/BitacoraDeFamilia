@@ -23,13 +23,13 @@ fun TextView.font(size: FontSize, type: FontType? = null, color: Int = ContextCo
             FontSize.TITLE, FontSize.HEAD, FontSize.BUTTON, FontSize.CAPTION -> FontType.BOLD
             FontSize.SUBTITLE, FontSize.SUBHEAD -> FontType.LIGHT
             FontSize.BODY -> FontType.REGULAR
+            FontSize.TITLE_APP -> FontType.GALADA
         }
     }
 
     setTextSize(TypedValue.COMPLEX_UNIT_SP, size.size.toFloat())
     //typeface = Typeface.createFromAsset(context.assets,fontType!!.path);
-    //typeface = ResourcesCompat.getFont(context, fontType!!.path);
-    //setTypeface(Typeface.createFromAsset(context.assets, fontType!!.path), Typeface.NORMAL)
+    setTypeface(Typeface.createFromAsset(context.assets, fontType!!.path), Typeface.NORMAL)
     setTextColor(color)
     includeFontPadding = false
 
