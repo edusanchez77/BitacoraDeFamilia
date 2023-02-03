@@ -37,6 +37,14 @@
     <string name="illness.title">Mis Enfermedades</string>
     <string name="illness.button">Agregar enfermedad</string>
 
+    <!-- Control -->
+    <string name="control.title">Controles Pediátricos</string>
+    <string name="control.button">Agregar control</string>
+
+    <!-- Notes -->
+    <string name="note.title">Notas</string>
+    <string name="note.button">Agregar nota</string>
+
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>
     <string name="activity.pregnant.title">Diario de Embarazo</string>

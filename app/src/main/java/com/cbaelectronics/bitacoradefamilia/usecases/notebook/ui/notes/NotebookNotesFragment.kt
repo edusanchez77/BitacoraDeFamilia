@@ -11,27 +11,58 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.cbaelectronics.bitacoradefamilia.R
+import com.cbaelectronics.bitacoradefamilia.databinding.FragmentNotebookNotesBinding
+import com.cbaelectronics.bitacoradefamilia.util.FontSize
+import com.cbaelectronics.bitacoradefamilia.util.FontType
+import com.cbaelectronics.bitacoradefamilia.util.extension.font
+import com.google.android.material.snackbar.Snackbar
 
 class NotebookNotesFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = NotebookNotesFragment()
-    }
-
+    private lateinit var _binding: FragmentNotebookNotesBinding
+    private val binding get() = _binding
     private lateinit var viewModel: NotebookNotesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_notebook_notes, container, false)
+    ): View {
+
+        // Content
+        _binding = FragmentNotebookNotesBinding.inflate(inflater, container, false)
+
+        // ViewModel
+        viewModel = ViewModelProvider(this)[NotebookNotesViewModel::class.java]
+
+        // Localize
+        localize()
+
+        // Setup
+        setup()
+        footer()
+
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(NotebookNotesViewModel::class.java)
-        // TODO: Use the ViewModel
+    private fun localize() {
+        binding.textViewNotesTitle.text = getString(viewModel.title)
+        binding.buttonNotebookNotesAdd.text = getString(viewModel.button)
     }
+
+    private fun setup() {
+        // UI
+        binding.textViewNotesTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+    }
+
+    private fun footer() {
+        binding.buttonNotebookNotesAdd.setOnClickListener {
+            Snackbar.make(it, "Agregar control", Snackbar.LENGTH_LONG)
+                .setAnchorView(R.id.buttonNotebookNotesAdd)
+                .setAction("Action", null).show()
+        }
+    }
+
 
 }
