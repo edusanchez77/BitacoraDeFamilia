@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentNotebookNotesBinding
+import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.notes.AddNotesRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
@@ -58,9 +59,7 @@ class NotebookNotesFragment : Fragment() {
 
     private fun footer() {
         binding.buttonNotebookNotesAdd.setOnClickListener {
-            Snackbar.make(it, "Agregar control", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.buttonNotebookNotesAdd)
-                .setAction("Action", null).show()
+            AddNotesRouter().launch(binding.root.context)
         }
     }
 

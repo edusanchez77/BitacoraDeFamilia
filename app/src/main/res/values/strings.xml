@@ -45,6 +45,11 @@
     <string name="note.title">Notas</string>
     <string name="note.button">Agregar nota</string>
 
+    <!-- Adds -->
+    <string name="add.notes.title">Agregar Nota</string>
+    <string name="add.notes.button.cancel">Cancelar</string>
+    <string name="add.notes.button.save">Guardar</string>
+
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>
     <string name="activity.pregnant.title">Diario de Embarazo</string>
