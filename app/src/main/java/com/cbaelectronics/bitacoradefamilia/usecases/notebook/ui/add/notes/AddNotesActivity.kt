@@ -58,6 +58,7 @@ class AddNotesActivity : AppCompatActivity() {
         binding.textViewAddNoteTitle.text = getString(viewModel.title)
         binding.buttonSaveNote.text = getString(viewModel.save)
         binding.buttonCancelNote.text = getString(viewModel.cancel)
+        binding.textFieldAddNote.hint = getString(viewModel.editTextNote)
     }
 
     private fun setup() {

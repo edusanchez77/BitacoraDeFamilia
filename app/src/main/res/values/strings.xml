@@ -46,9 +46,17 @@
     <string name="note.button">Agregar nota</string>
 
     <!-- Adds -->
+    <string name="add.button.cancel">Cancelar</string>
+    <string name="add.button.save">Guardar</string>
     <string name="add.notes.title">Agregar Nota</string>
-    <string name="add.notes.button.cancel">Cancelar</string>
-    <string name="add.notes.button.save">Guardar</string>
+    <string name="add.notes.edittext.note">Nota</string>
+    <string name="add.illness.title">Agregar Enfermedad</string>
+    <string name="add.illness.edittext.date">Fecha en que me enfermé</string>
+    <string name="add.illness.edittext.name">Enfermedad</string>
+    <string name="add.illness.edittext.duration">Duración</string>
+    <string name="add.illness.edittext.symptom">Síntomas que tuve</string>
+    <string name="add.illness.edittext.medication">Medicación que tomé</string>
+    <string name="add.illness.edittext.observation">Observaciones (opcional)</string>
 
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>

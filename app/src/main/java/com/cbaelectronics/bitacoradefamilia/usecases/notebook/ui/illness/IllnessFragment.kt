@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentIllnessBinding
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentMedicalMeetingBinding
+import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.illness.AddIllnessRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
@@ -59,9 +60,7 @@ class IllnessFragment : Fragment() {
 
     private fun footer() {
         binding.buttonIllnessAdd.setOnClickListener {
-            Snackbar.make(it, "Agregar enfermedad", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.buttonIllnessAdd)
-                .setAction("Action", null).show()
+            AddIllnessRouter().launch(binding.root.context)
         }
     }
 

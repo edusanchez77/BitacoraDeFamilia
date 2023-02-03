@@ -13,7 +13,8 @@ class AddNotesViewModel: ViewModel() {
     // Localization
 
     val title = R.string.add_notes_title
-    val save = R.string.add_notes_button_save
-    val cancel = R.string.add_notes_button_cancel
+    val save = R.string.add_button_save
+    val cancel = R.string.add_button_cancel
+    val editTextNote = R.string.add_notes_edittext_note
 
 }

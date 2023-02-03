@@ -151,7 +151,7 @@
                 android:id="@+id/textViewItemIllnessObservation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sintomas que tuve:"
+                android:text="Observaciones:"
                 android:layout_marginTop="16dp"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintVertical_bias="0"
