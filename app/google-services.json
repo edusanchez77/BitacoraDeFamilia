@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "759307134999",
+    "project_id": "bitacora-de-familia",
+    "storage_bucket": "bitacora-de-familia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759307134999:android:42ddcfcf54da9b84125452",
+        "android_client_info": {
+          "package_name": "com.cbaelectronics.bitacoradefamilia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "759307134999-hdpo60u9h6tmb1o2lq74f08kpfkvpgub.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cbaelectronics.bitacoradefamilia",
+            "certificate_hash": "ee6d14e366dc489f16595e0120aeac1c3a00d5b4"
+          }
+        },
+        {
+          "client_id": "759307134999-es1dq7ne9m3cmmvhdoa864a0e1fdi534.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl65vPilSc31wrFa8Lu9UDX-g32Rq386w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "759307134999-es1dq7ne9m3cmmvhdoa864a0e1fdi534.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
