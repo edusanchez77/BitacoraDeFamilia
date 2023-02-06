@@ -6,7 +6,13 @@
 package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.pediatric_control
 
 import androidx.lifecycle.ViewModel
+import com.cbaelectronics.bitacoradefamilia.R
 
 class PediatricControlViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+
+    // Localization
+
+    val title = R.string.control_title
+    val button = R.string.control_button
+
 }

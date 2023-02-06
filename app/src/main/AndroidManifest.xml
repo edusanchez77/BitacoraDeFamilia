@@ -12,16 +12,31 @@
         android:theme="@style/Theme.BitacoraDeFamilia"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.notebook.ui.add.achievements.AddAchievementsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.notebook.ui.add.pediatric_control.AddPediatricControlActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.notebook.ui.add.growth.AddGrowthActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.notebook.ui.add.illness.AddIllnessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.notebook.ui.add.notes.AddNotesActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.notebook.NotebookActivity"
             android:exported="false"
-            android:label="@string/title_activity_notebook" />
+            android:label="@string/activity.notebook.title" />
         <activity
             android:name=".usecases.menu.MenuActivity"
             android:exported="false" />
         <activity
             android:name=".usecases.pregnant.PregnantActivity"
             android:exported="false"
-            android:label="@string/title_activity_pregnant" />
+            android:label="@string/activity.pregnant.title" />
         <activity
             android:name=".usecases.launch.LaunchActivity"
             android:exported="true"
@@ -37,10 +52,6 @@
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.BitacoraDeFamilia" />
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

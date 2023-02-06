@@ -9,6 +9,7 @@ import android.graphics.Typeface
 import android.util.TypedValue
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
@@ -22,10 +23,12 @@ fun TextView.font(size: FontSize, type: FontType? = null, color: Int = ContextCo
             FontSize.TITLE, FontSize.HEAD, FontSize.BUTTON, FontSize.CAPTION -> FontType.BOLD
             FontSize.SUBTITLE, FontSize.SUBHEAD -> FontType.LIGHT
             FontSize.BODY -> FontType.REGULAR
+            FontSize.TITLE_APP -> FontType.GALADA
         }
     }
 
     setTextSize(TypedValue.COMPLEX_UNIT_SP, size.size.toFloat())
+    //typeface = Typeface.createFromAsset(context.assets,fontType!!.path);
     setTypeface(Typeface.createFromAsset(context.assets, fontType!!.path), Typeface.NORMAL)
     setTextColor(color)
     includeFontPadding = false

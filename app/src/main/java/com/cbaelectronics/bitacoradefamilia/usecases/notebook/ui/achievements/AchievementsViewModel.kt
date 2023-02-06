@@ -13,11 +13,12 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.achievements
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cbaelectronics.bitacoradefamilia.R
 
 class AchievementsViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
-    }
-    val text: LiveData<String> = _text
+    // Localization
+
+    val title = R.string.achievements_title
+    val button = R.string.achievements_button
 }

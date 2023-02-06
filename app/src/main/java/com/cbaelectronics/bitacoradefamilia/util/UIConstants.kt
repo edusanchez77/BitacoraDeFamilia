@@ -14,13 +14,14 @@ object UIConstants {
 }
 
 enum class FontType(val path: String) {
-    GALADA("font/galada_regular.ttf"),
+    GALADA("font/galada.ttf"),
     LIGHT("font/farro_light.ttf"),
     REGULAR("font/farro.ttf"),
     BOLD("font/farro_bold.ttf")
 }
 
 enum class FontSize(val size: Int) {
+    TITLE_APP(50),
     TITLE(24),
     SUBTITLE(22),
     HEAD(18),

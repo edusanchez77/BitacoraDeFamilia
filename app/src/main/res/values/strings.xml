@@ -1,27 +1,88 @@
 <resources>
-    <string name="app_name">Bitacora de Familia</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <!-- Generic -->
+    <string name="app_name">Bitácora de Familia</string>
+    <string name="companyName">CbaElectronics</string>
+    <string name="title">Bitácora de Familia</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="understood">Entendido</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="settings">Ajustes</string>
 
     <!-- Bottom Menu -->
-    <string name="title_activity_menu1">Menu1Activity</string>
-    <string name="title_activity_home1">Home1Activity</string>
-    <string name="title_activity_pregnant">PregnantActivity</string>
-    <string name="bottommenu.pregnant.info">Informacion</string>
-    <string name="bottommenu.pregnant.medicalmeeting">Citas medicas</string>
-    <string name="bottommenu.pregnant.echography">Ecografias</string>
+    <string name="bottommenu.pregnant.info">Información</string>
+    <string name="bottommenu.pregnant.medicalmeeting">Citas Médicas</string>
+    <string name="bottommenu.pregnant.echography">Ecografías</string>
     <string name="bottommenu.pregnant.notes">Notas</string>
-    <string name="bottommenu.notebook.info">Informacion</string>
     <string name="bottommenu.notebook.achievements">Logros</string>
     <string name="bottommenu.notebook.growth">Crecimiento</string>
     <string name="bottommenu.notebook.illness">Enfermedades</string>
     <string name="bottommenu.notebook.pediatriccontrol">Controles</string>
     <string name="bottommenu.notebook.notes">Notas</string>
-    <string name="title_activity_notebook">NotebookActivity</string>
+
+    <!-- Menu -->
+    <string name="menu.card.pregnant">Diario de\nEmbarazo</string>
+    <string name="menu.card.notebook">Cuaderno\nPediátrico</string>
+
+    <!-- Achievements -->
+    <string name="achievements.title">Logros Desbloqueados</string>
+    <string name="achievements.button">Agregar logro</string>
+
+    <!-- Growth -->
+    <string name="growth.title">Mi Crecimiento</string>
+    <string name="growth.button">Agregar dato</string>
+    <string name="growth.table.header.date">Fecha</string>
+    <string name="growth.table.header.weight">Peso</string>
+    <string name="growth.table.header.height">Altura</string>
+    <string name="growth.table.header.PC">PC</string>
+
+    <!-- Illness -->
+    <string name="illness.title">Mis Enfermedades</string>
+    <string name="illness.button">Agregar enfermedad</string>
+
+    <!-- Control -->
+    <string name="control.title">Controles Pediátricos</string>
+    <string name="control.button">Agregar control</string>
+
+    <!-- Notes -->
+    <string name="note.title">Notas</string>
+    <string name="note.button">Agregar nota</string>
+
+    <!-- Adds -->
+    <string name="add.button.cancel">Cancelar</string>
+    <string name="add.button.save">Guardar</string>
+    <string name="add.notes.title">Agregar Nota</string>
+    <string name="add.notes.edittext.note">Nota</string>
+    <string name="add.illness.title">Agregar Enfermedad</string>
+    <string name="add.illness.edittext.date">Fecha en que me enfermé</string>
+    <string name="add.illness.edittext.name">Enfermedad</string>
+    <string name="add.illness.edittext.duration">Duración</string>
+    <string name="add.illness.edittext.symptom">Síntomas que tuve</string>
+    <string name="add.illness.edittext.medication">Medicación que tomé</string>
+    <string name="add.illness.edittext.observation">Observaciones (opcional)</string>
+    <string name="add.growth.title">Agregar información</string>
+    <string name="add.growth.edittext.date">Fecha</string>
+    <string name="add.growth.edittext.weight">Peso</string>
+    <string name="add.growth.edittext.height">Altura</string>
+    <string name="add.growth.edittext.pc">PC (opcional)</string>
+    <string name="add.pediatriccontrol.title">Agregar datos del control pediátrico</string>
+    <string name="add.pediatriccontrol.edittext.date">Fecha</string>
+    <string name="add.pediatriccontrol.edittext.doctor">Médico</string>
+    <string name="add.pediatriccontrol.edittext.speciality">Especialidad</string>
+    <string name="add.pediatriccontrol.edittext.weight">Peso</string>
+    <string name="add.pediatriccontrol.edittext.height">Altura</string>
+    <string name="add.pediatriccontrol.edittext.observation">Observaciones</string>
+    <string name="add.pediatriccontrol.edittext.next">Próximo Control</string>
+    <string name="add.pediatriccontrol.edittext.notes">Notas (opcional)</string>
+    <string name="add.achievements.title">Agregar logro</string>
+    <string name="add.achievements.edittext.date">Fecha</string>
+    <string name="add.achievements.edittext.achievementsName">Logro</string>
+    <string name="add.achievements.edittext.details">Detalles (opcional)</string>
+
+    <!-- Titles Activity -->
+    <string name="activity.notebook.title">Cuaderno Pediátrico</string>
+    <string name="activity.pregnant.title">Diario de Embarazo</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
