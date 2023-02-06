@@ -55,6 +55,7 @@ class AddIllnessActivity : AppCompatActivity() {
     // Private
 
     private fun localize(){
+        binding.textViewAddIllnesTitle.text = getString(viewModel.title)
         binding.textFieldAddIllnessDate.hint = getString(viewModel.editTextDate)
         binding.textFieldAddIllnessName.hint = getString(viewModel.editTextIllnessName)
         binding.textFieldAddIllnessDuration.hint = getString(viewModel.editTextDuration)

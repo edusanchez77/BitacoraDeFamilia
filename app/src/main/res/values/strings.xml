@@ -62,6 +62,15 @@
     <string name="add.growth.edittext.weight">Peso</string>
     <string name="add.growth.edittext.height">Altura</string>
     <string name="add.growth.edittext.pc">PC (opcional)</string>
+    <string name="add.pediatriccontrol.title">Agregar datos del control pediátrico</string>
+    <string name="add.pediatriccontrol.edittext.date">Fecha</string>
+    <string name="add.pediatriccontrol.edittext.doctor">Médico</string>
+    <string name="add.pediatriccontrol.edittext.speciality">Especialidad</string>
+    <string name="add.pediatriccontrol.edittext.weight">Peso</string>
+    <string name="add.pediatriccontrol.edittext.height">Altura</string>
+    <string name="add.pediatriccontrol.edittext.observation">Observaciones</string>
+    <string name="add.pediatriccontrol.edittext.next">Próximo Control</string>
+    <string name="add.pediatriccontrol.edittext.notes">Notas (opcional)</string>
 
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>

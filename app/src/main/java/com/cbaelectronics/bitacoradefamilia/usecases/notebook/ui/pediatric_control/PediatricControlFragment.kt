@@ -16,6 +16,7 @@ import androidx.lifecycle.get
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentIllnessBinding
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentPediatricControlBinding
+import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.pediatric_control.AddPediatricControlRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
@@ -60,9 +61,7 @@ class PediatricControlFragment : Fragment() {
 
     private fun footer() {
         binding.buttonControlAdd.setOnClickListener {
-            Snackbar.make(it, "Agregar control", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.buttonControlAdd)
-                .setAction("Action", null).show()
+            AddPediatricControlRouter().launch(binding.root.context)
         }
     }
 
