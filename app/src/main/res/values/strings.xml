@@ -57,6 +57,11 @@
     <string name="add.illness.edittext.symptom">Síntomas que tuve</string>
     <string name="add.illness.edittext.medication">Medicación que tomé</string>
     <string name="add.illness.edittext.observation">Observaciones (opcional)</string>
+    <string name="add.growth.title">Agregar información</string>
+    <string name="add.growth.edittext.date">Fecha</string>
+    <string name="add.growth.edittext.weight">Peso</string>
+    <string name="add.growth.edittext.height">Altura</string>
+    <string name="add.growth.edittext.pc">PC (opcional)</string>
 
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>

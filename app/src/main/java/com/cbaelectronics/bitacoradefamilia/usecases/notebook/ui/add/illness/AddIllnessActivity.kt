@@ -61,6 +61,8 @@ class AddIllnessActivity : AppCompatActivity() {
         binding.textFieldAddIllnessSymptom.hint = getString(viewModel.editTextSymptom)
         binding.textFieldAddIllnessMedication.hint = getString(viewModel.editTextMedication)
         binding.textFieldAddIllnessObservation.hint = getString(viewModel.editTextObservation)
+        binding.buttonSaveIllness.text = getString(viewModel.save)
+        binding.buttonCancelIllness.text = getString(viewModel.cancel)
     }
 
     private fun setup(){

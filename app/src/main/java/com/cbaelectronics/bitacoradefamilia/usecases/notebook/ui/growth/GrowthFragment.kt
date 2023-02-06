@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentGrowthBinding
+import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.growth.AddGrowthRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
@@ -76,9 +77,7 @@ class GrowthFragment : Fragment() {
 
     private fun footer() {
         binding.buttonGrowthAdd.setOnClickListener {
-            Snackbar.make(it, "Agregar dato", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.buttonGrowthAdd)
-                .setAction("Action", null).show()
+            AddGrowthRouter().launch(binding.root.context)
         }
     }
 

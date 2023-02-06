@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BitacoraDeFamilia"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.notebook.ui.add.growth.AddGrowthActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.notebook.ui.add.illness.AddIllnessActivity"
             android:exported="false" />
         <activity
