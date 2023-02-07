@@ -17,7 +17,10 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityLoginBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.User
+import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
 import com.cbaelectronics.bitacoradefamilia.usecases.home.HomeRouter
+import com.cbaelectronics.bitacoradefamilia.util.Constants.ADMIN
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
@@ -180,8 +183,35 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loadUser(){
-        viewModel.save(auth.currentUser?.email!!, auth.currentUser?.displayName!!)
+        // TODO: Validar si el usuario existe, en caso negativo, insertar en DB
+        saveDatabase()
+    }
+
+    private fun saveDatabase() {
+        val user = User(
+            auth.currentUser?.displayName,
+            auth.currentUser?.email,
+            auth.currentUser?.photoUrl.toString(),
+            token,
+            ADMIN
+        )
+
+        val settings = UserSettings()
+
+        viewModel.user = user
+        viewModel.user.settings = settings
+
+        viewModel.save(user)
+
+        data()
         showHome()
+    }
+
+    private fun data() {
+
+        viewModel.save(this)
+        viewModel.configure(this)
+
     }
 
     private fun showHome() {

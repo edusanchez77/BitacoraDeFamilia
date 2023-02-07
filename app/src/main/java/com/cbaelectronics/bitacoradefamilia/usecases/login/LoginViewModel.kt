@@ -5,11 +5,20 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.login
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
-import com.cbaelectronics.bitacoradefamilia.provider.firebase.FirebaseDBService
+import com.cbaelectronics.bitacoradefamilia.model.domain.User
+import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
+import com.cbaelectronics.bitacoradefamilia.model.session.Session
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.FirebaseDBService
 
 class LoginViewModel: ViewModel() {
+
+    // Properties
+
+    var user = Session.instance.user ?: User()
+    var settings = Session.instance.user?.settings ?: UserSettings()
 
     // Localization
     val title = R.string.login_title
@@ -21,8 +30,20 @@ class LoginViewModel: ViewModel() {
 
     // Public
 
-    fun save(email: String, name: String){
-        FirebaseDBService.save(email, name)
+    fun save(user: User){
+        FirebaseDBService.save(user)
+    }
+
+    fun configure(context: Context) {
+
+        Session.instance.configure(context)
+
+    }
+
+    fun save(context: Context) {
+
+        Session.instance.save(context, user)
+
     }
 
 }
