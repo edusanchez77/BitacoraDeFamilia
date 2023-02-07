@@ -8,7 +8,18 @@
     <string name="understood">Entendido</string>
     <string name="next">Siguiente</string>
     <string name="previous">Anterior</string>
-    <string name="settings">Ajustes</string>
+
+    <!-- Options -->
+    <string name="option.settings">Ajustes</string>
+    <string name="option.share">Compartir</string>
+
+    <!-- Login -->
+    <string name="login.title">Iniciá sesión de forma segura con tu cuenta de Google</string>
+    <string name="login.body">Necesitas iniciar sesión para poder a la información de la familia.</string>
+    <string name="login.button">Iniciar sesión</string>
+    <string name="login.alert.error.token">Fetching FCM registration token failed</string>
+    <string name="login.alert.wait">Iniciando sesión</string>
+    <string name="login.alert.error.user">Ocurrió un error autenticando al usuario.</string>
 
     <!-- Bottom Menu -->
     <string name="bottommenu.pregnant.info">Información</string>

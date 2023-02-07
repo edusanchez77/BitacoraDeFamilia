@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BitacoraDeFamilia"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.login.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.notebook.ui.add.achievements.AddAchievementsActivity"
             android:exported="false" />
         <activity
