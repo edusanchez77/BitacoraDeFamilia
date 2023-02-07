@@ -1,11 +1,11 @@
 /**
- *  Created by CbaElectronics by Eduardo Sanchez on 2/6/23, 12:42 PM.
+ *  Created by CbaElectronics by Eduardo Sanchez on 2/7/23, 2:26 PM.
  *  www.cbaelectronics.com.ar
  */
 
 package com.cbaelectronics.bitacoradefamilia.model.domain
 
-import com.cbaelectronics.bitacoradefamilia.provider.firebase.DatabaseField
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.google.gson.GsonBuilder
 import java.sql.Timestamp
@@ -57,18 +57,12 @@ data class User(
 }
 
 data class UserSettings(
-    var category: String = Constants.CATEGORY_DEFAULT,
-    var position: String = Constants.POSITION_DEFAULT,
-    var notificationTurn: Boolean = Constants.NOTIFICATION_TURN_DEFAULT,
-    var notificationPost: Boolean = Constants.NOTIFICATION_POST_DEFAULT
+    var notifications: Boolean = Constants.NOTIFICATIONS
 ){
     fun toJSON() : MutableMap<String, Any>{
 
         return mutableMapOf(
-            DatabaseField.PROFILE_CATEGORY.key to category,
-            DatabaseField.PROFILE_POSITION.key to position,
-            DatabaseField.NOTIFICATION_TURN.key to notificationTurn,
-            DatabaseField.NOTIFICATION_POST.key to notificationPost
+            DatabaseField.NOTIFICATIONS.key to notifications
         )
 
     }

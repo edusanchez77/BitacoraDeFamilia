@@ -9,6 +9,9 @@ import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityLaunchBinding
+import com.cbaelectronics.bitacoradefamilia.model.session.Session
+import com.cbaelectronics.bitacoradefamilia.provider.preferences.PreferencesKey
+import com.cbaelectronics.bitacoradefamilia.provider.preferences.PreferencesProvider
 import com.cbaelectronics.bitacoradefamilia.usecases.home.HomeActivity
 import com.cbaelectronics.bitacoradefamilia.usecases.login.LoginActivity
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -41,7 +44,17 @@ class LaunchActivity : AppCompatActivity() {
     }
 
     private fun data() {
-        var nextActivity = Intent(this, LoginActivity::class.java).also { it }
+
+        // Session
+        Session.instance.configure(this)
+        validateSession()
+
+    }
+
+    private fun validateSession() {
+        val session = PreferencesProvider.string(this, PreferencesKey.AUTH_USER)
+
+        var nextActivity = if (session.isNullOrEmpty()) Intent(this, LoginActivity::class.java).also { it } else Intent(this, HomeActivity::class.java).also { it }
 
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(nextActivity)

@@ -31,10 +31,7 @@ object Constants {
     const val ADMIN = 2
 
     // Settings
-    const val CATEGORY_DEFAULT = "No definida"
-    const val POSITION_DEFAULT = "No definida"
-    const val NOTIFICATION_TURN_DEFAULT = true
-    const val NOTIFICATION_POST_DEFAULT = true
+    const val NOTIFICATIONS = true
 
     // Locale
     val DEFAULT_LOCALE = Locale( "en_US_POSIX")
