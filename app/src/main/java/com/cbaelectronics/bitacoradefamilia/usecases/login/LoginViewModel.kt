@@ -16,5 +16,6 @@ class LoginViewModel: ViewModel() {
     val button = R.string.login_button
     val wait = R.string.login_alert_wait
     val error = R.string.login_alert_error_user
+    val errorToken = R.string.login_alert_error_token
 
 }
