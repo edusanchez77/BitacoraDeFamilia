@@ -15,6 +15,8 @@ import com.cbaelectronics.bitacoradefamilia.usecases.home.HomeRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
@@ -22,6 +24,9 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
+    private var token: String? = null
+    private lateinit var gso: GoogleSignInOptions
+    private lateinit var auth: FirebaseAuth
 
     // Initialization
 
