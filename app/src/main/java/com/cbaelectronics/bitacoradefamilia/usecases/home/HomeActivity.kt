@@ -14,6 +14,7 @@ import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
+import com.cbaelectronics.bitacoradefamilia.util.extension.addCloseWithoutArrow
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 
 class HomeActivity : AppCompatActivity() {
@@ -36,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setup() {
 
-        addClose(this)
+        addCloseWithoutArrow(this)
 
         // UI
 
