@@ -155,8 +155,7 @@ class LoginActivity : AppCompatActivity() {
                             .addOnCompleteListener {
                                 if (it.isSuccessful) {
                                     mProgress.dismiss()
-                                    //loadUser(auth.currentUser?.email!!)
-                                    showHome()
+                                    loadUser()
                                 }
                             }
 
@@ -178,6 +177,11 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    private fun loadUser(){
+        viewModel.save(auth.currentUser?.email!!, auth.currentUser?.displayName!!)
+        showHome()
     }
 
     private fun showHome() {
