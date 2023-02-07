@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityLaunchBinding
 import com.cbaelectronics.bitacoradefamilia.usecases.home.HomeActivity
+import com.cbaelectronics.bitacoradefamilia.usecases.login.LoginActivity
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
@@ -40,7 +41,7 @@ class LaunchActivity : AppCompatActivity() {
     }
 
     private fun data() {
-        var nextActivity = Intent(this, HomeActivity::class.java).also { it }
+        var nextActivity = Intent(this, LoginActivity::class.java).also { it }
 
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(nextActivity)
