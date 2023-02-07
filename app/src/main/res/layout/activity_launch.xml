@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".usecases.launch.LaunchActivity"
+    tools:context=".usecases.menu.launch.LaunchActivity"
     android:background="@drawable/bg_splash">
 
     <TextView

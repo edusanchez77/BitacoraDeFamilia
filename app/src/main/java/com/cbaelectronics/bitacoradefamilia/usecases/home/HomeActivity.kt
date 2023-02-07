@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityHomeBinding
+import com.cbaelectronics.bitacoradefamilia.usecases.addChildren.AddChildrenRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.menu.MenuRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -62,9 +63,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show()
+            AddChildrenRouter().launch(this)
         }
     }
 

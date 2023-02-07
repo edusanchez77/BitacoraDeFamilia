@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BitacoraDeFamilia"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.addChildren.AddChildrenActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.login.LoginActivity"
             android:exported="false" />
         <activity
@@ -41,7 +44,7 @@
             android:exported="false"
             android:label="@string/activity.pregnant.title" />
         <activity
-            android:name=".usecases.launch.LaunchActivity"
+            android:name=".usecases.menu.launch.LaunchActivity"
             android:exported="true"
             android:theme="@style/FullScreen">
             <intent-filter>
