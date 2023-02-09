@@ -30,8 +30,7 @@ data class User(
             DatabaseField.PROFILE_IMAGE_URL.key to (photoProfile ?: ""),
             DatabaseField.TOKEN.key to (token ?: ""),
             DatabaseField.TYPE.key to (type ?: ""),
-
-            DatabaseField.REGISTER_DATE.key to (registerDate ?: "")
+            DatabaseField.REGISTERED_DATE.key to (registerDate ?: "")
         )
 
         JSON[DatabaseField.SETTINGS.key] = settingsToJSON()
