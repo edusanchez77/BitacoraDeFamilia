@@ -5,9 +5,10 @@
     <string name="title">Bitácora de Familia</string>
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
-    <string name="understood">Entendido</string>
+    <string name="back">Volver</string>
     <string name="next">Siguiente</string>
     <string name="previous">Anterior</string>
+    <string name="understood">Entendido</string>
 
     <!-- Options -->
     <string name="option.settings">Ajustes</string>
@@ -63,6 +64,10 @@
     <!-- Adds -->
     <string name="add.button.cancel">Cancelar</string>
     <string name="add.button.save">Guardar</string>
+    <string name="add.button.back">Volver</string>
+    <string name="add.alert.error.incomplete">Tenés que completar todos los campos</string>
+    <string name="add.alert.error.unknown">Ha surgido un error inesperado.\nPor favor intenta más tarde.</string>
+    <string name="add.alert.ok">Guardado correctamente</string>
     <string name="add.notes.title">Agregar Nota</string>
     <string name="add.notes.edittext.note">Nota</string>
     <string name="add.illness.title">Agregar Enfermedad</string>
@@ -90,6 +95,13 @@
     <string name="add.achievements.edittext.date">Fecha</string>
     <string name="add.achievements.edittext.achievementsName">Logro</string>
     <string name="add.achievements.edittext.details">Detalles (opcional)</string>
+    <string name="add.children.title">Agregar nuevo integrante a la familia</string>
+    <string name="add.children.edittext.name">Nombre</string>
+    <string name="add.children.edittext.genre">Sexo</string>
+    <string name="add.children.edittext.date">Fecha de nacimiento (opcional)</string>
+    <string name="add.children.edittext.hour">Hora de nacimiento (opcional)</string>
+    <string name="add.children.edittext.weight">Peso (opcional)</string>
+    <string name="add.children.edittext.height">Altura (opcional)</string>
 
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>

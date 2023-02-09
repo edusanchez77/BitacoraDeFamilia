@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="genre">
+        <item>Masculino</item>
+        <item>Femenino</item>
+        <item>No Especificado</item>
+    </string-array>
+</resources>
