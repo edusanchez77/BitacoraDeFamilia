@@ -11,13 +11,19 @@ import com.google.gson.GsonBuilder
 import java.sql.Timestamp
 import java.util.*
 
+enum class Genre(val type: String){
+    BOY("Masculino"),
+    WOMAN("Femenino"),
+    INDETERMINATE("No Definido")
+}
+
 data class Children(
     var name: String? = null,
     var genre: String? = null,
     var date: String? = null,
     var hour: String? = null,
-    var weight: Float? = null,
-    var height: Float? = null,
+    var weight: String? = null,
+    var height: String? = null,
     var avatar: String? = null,
     val registeredBy: User,
     val registeredDate: Date? = Timestamp(Date().time),

@@ -5,6 +5,8 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.addChildren
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
@@ -41,6 +43,5 @@ class AddChildrenViewModel: ViewModel() {
     fun save(children: Children){
         FirebaseDBService.save(children)
     }
-
 
 }

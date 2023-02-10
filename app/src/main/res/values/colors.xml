@@ -8,6 +8,7 @@
     <color name="secondary_light">#F11F65</color>
     <color name="woman">#F5A2B9</color>
     <color name="boy">#6C5DD2</color>
+    <color name="indeterminate">#52BB8D</color>
     <color name="light">#FFFFFFFF</color>
     <color name="dark">#FF000000</color>
     <color name="dark_shadow">#33000000</color>
