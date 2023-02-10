@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityMenuBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.Children
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookActivity
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -23,8 +25,14 @@ import com.cbaelectronics.bitacoradefamilia.util.extension.font
 
 class MenuActivity : AppCompatActivity() {
 
+    // Properties
+
     private lateinit var binding: ActivityMenuBinding
     private lateinit var viewModel: MenuViewModel
+    private lateinit var childrenJSON: String
+    private lateinit var children: Children
+
+    // Initialization
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +45,24 @@ class MenuActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MenuViewModel::class.java]
 
         // Setup
+        data()
         localize()
         setup()
     }
 
+    private fun data(){
+        val bundle = intent.extras
+        childrenJSON = bundle?.getString(DatabaseField.CHILDREN.key).toString()
+        children = Children.fromJson(childrenJSON)!!
+    }
+
     private fun localize() {
+        binding.textViewName.text = children.name
+        binding.textViewMenuDateOfBirth.text = children.date
+        binding.textViewMenuHourOfBirth.text = children.hour
+        binding.textViewMenuWeigthOfBirth.text = children.weight.toString()
+        binding.textViewMenuHeigthOfBirth.text = children.height.toString()
+
         binding.textViewPregnancyDiary.text = getString(viewModel.pregnancyDiary)
         binding.textViewPediatricNotebook.text = getString(viewModel.pediatricNotebook)
     }
