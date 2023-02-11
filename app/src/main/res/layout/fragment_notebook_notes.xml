@@ -29,7 +29,8 @@
             android:id="@+id/imageViewNotesTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/notas"/>
+            android:src="@drawable/notas"
+            app:tint="@color/text"/>
 
         <TextView
             android:id="@+id/textViewNotesTitle"
