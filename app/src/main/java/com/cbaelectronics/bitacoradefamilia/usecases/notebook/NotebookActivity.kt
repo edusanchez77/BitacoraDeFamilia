@@ -42,7 +42,7 @@ class NotebookActivity : AppCompatActivity() {
                 R.id.navigation_notebook_notes
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         // Setup

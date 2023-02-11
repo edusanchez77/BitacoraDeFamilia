@@ -29,7 +29,8 @@
             android:id="@+id/imageViewIllnessTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logros"/>
+            android:src="@drawable/logros"
+            app:tint="@color/text" />
 
         <TextView
             android:id="@+id/textViewAchievementsTitle"

@@ -17,6 +17,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityPregnantBinding
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
+import androidx.appcompat.widget.Toolbar;
 
 class PregnantActivity : AppCompatActivity() {
 
@@ -41,7 +42,7 @@ class PregnantActivity : AppCompatActivity() {
                 R.id.navigation_pregnant_notes
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         // Setup

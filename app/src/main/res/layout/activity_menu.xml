@@ -73,7 +73,8 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/calendar"/>
+                        android:src="@drawable/calendar"
+                        app:tint="@color/text"/>
 
 
                     <TextView
@@ -96,7 +97,8 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/weight"/>
+                        android:src="@drawable/weight"
+                        app:tint="@color/text"/>
 
 
                     <TextView
@@ -129,7 +131,8 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/clock"/>
+                        android:src="@drawable/clock"
+                        app:tint="@color/text"/>
 
 
                     <TextView
@@ -152,7 +155,8 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/height"/>
+                        android:src="@drawable/height"
+                        app:tint="@color/text"/>
 
 
                     <TextView
