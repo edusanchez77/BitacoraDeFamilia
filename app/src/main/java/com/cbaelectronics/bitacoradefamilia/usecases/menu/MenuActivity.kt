@@ -17,6 +17,7 @@ import com.cbaelectronics.bitacoradefamilia.databinding.ActivityMenuBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookActivity
+import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
@@ -89,7 +90,7 @@ class MenuActivity : AppCompatActivity() {
         }
 
         binding.cardViewNotebook.setOnClickListener {
-            startActivity(Intent(this, NotebookActivity::class.java))
+            NotebookRouter().launch(this)
         }
 
     }

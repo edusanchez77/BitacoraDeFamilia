@@ -42,7 +42,7 @@ class PregnantActivity : AppCompatActivity() {
                 R.id.navigation_pregnant_notes
             )
         )
-        //setupActionBarWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         // Setup
