@@ -15,6 +15,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.model.domain.Growth
+import com.cbaelectronics.bitacoradefamilia.model.domain.Illness
 import com.cbaelectronics.bitacoradefamilia.model.domain.User
 import com.cbaelectronics.bitacoradefamilia.util.extension.removeFirebaseInvalidCharacters
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,27 +24,44 @@ import com.google.firebase.firestore.Query
 enum class DatabaseField(val key: String) {
 
     // Schemes
-    USERS("users"), CHILDREN("children"), GROWTH("growth"),
+    USERS("users"),
+    CHILDREN("children"),
+    GROWTH("growth"),
+    ILLNESS("illness"),
 
     // Generic Field
-    SETTINGS("settings"), REGISTERED_DATE("registerDate"), REGISTERED_BY("registeredBy"), SHARED_WITH(
-        "sharedBy"
-    ),
+    SETTINGS("settings"),
+    REGISTERED_DATE("registerDate"),
+    REGISTERED_BY("registeredBy"),
+    SHARED_WITH("sharedBy"),
 
     // User
-    DISPLAY_NAME("displayName"), EMAIL("email"), PROFILE_IMAGE_URL("photoProfile"), TOKEN("tokenDevice"), TYPE(
-        "type"
-    ),
+    DISPLAY_NAME("displayName"),
+    EMAIL("email"),
+    PROFILE_IMAGE_URL("photoProfile"),
+    TOKEN("tokenDevice"), TYPE("type"),
     NOTIFICATIONS("notifications"),
 
     // Children
-    CHILDREN_ID("childrenId"), NAME("name"), GENRE("genre"), DATE_OF_BIRTH("dateOfBirth"), HOUR_OF_BIRTH(
-        "hourOfBirth"
-    ),
-    WEIGHT("weight"), HEIGHT("height"), AVATAR("childrenAvatar"),
+    CHILDREN_ID("childrenId"),
+    NAME("name"),
+    GENRE("genre"),
+    DATE_OF_BIRTH("dateOfBirth"),
+    HOUR_OF_BIRTH("hourOfBirth"),
+    WEIGHT("weight"),
+    HEIGHT("height"),
+    AVATAR("childrenAvatar"),
 
     // Growth
-    DATE("date"), PC("PC")
+    DATE("date"),
+    PC("PC"),
+
+    // Illness
+    ILLNESS_NAME("illness"),
+    SYMPTOM("symptom"),
+    DURATION("duration"),
+    MEDICATION("medication"),
+    OBSERVATIONS("observations")
 
 }
 
@@ -53,7 +71,7 @@ object FirebaseDBService {
     private val usersRef = FirebaseFirestore.getInstance().collection(DatabaseField.USERS.key)
     private val childreRef = FirebaseFirestore.getInstance().collection(DatabaseField.CHILDREN.key)
     private val growthRef = FirebaseFirestore.getInstance().collection(DatabaseField.GROWTH.key)
-
+    private val illnessRef = FirebaseFirestore.getInstance().collection(DatabaseField.ILLNESS.key)
 
     // Public
 
@@ -159,8 +177,9 @@ object FirebaseDBService {
                     val usrToken = registeredByData[DatabaseField.TOKEN.key].toString()
                     val usrType = registeredByData[DatabaseField.TYPE.key].toString().toInt()
 
-                    val user = User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
-                    val growth = Growth(childrenId, date, weight, height, pc, user, registeredDate  )
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val growth = Growth(childrenId, date, weight, height, pc, user, registeredDate)
 
                     listData.add(growth)
                 }
@@ -168,6 +187,69 @@ object FirebaseDBService {
             }
 
         return mutableData
+    }
+
+    fun save(illness: Illness) {
+
+        illness.childrenId.let {
+            illnessRef.document().set(illness.toJSON())
+        }
+
+    }
+
+    fun loadIllness(childrenId: String): LiveData<MutableList<Illness>> {
+
+        val mutableList = MutableLiveData<MutableList<Illness>>()
+
+        illnessRef.orderBy(DatabaseField.DATE.key)
+            .addSnapshotListener { value, error ->
+
+                val listData = mutableListOf<Illness>()
+
+                for (document in value!!) {
+                    val registeredByData =
+                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+
+                    val date = document.getDate(DatabaseField.DATE.key)
+                    val illnessName = document.get(DatabaseField.ILLNESS_NAME.key)
+                    val symptom = document.get(DatabaseField.SYMPTOM.key)
+                    val duration = document.getLong(DatabaseField.DURATION.key)?.toInt()
+                    val medication = document.get(DatabaseField.MEDICATION.key)
+                    val observation = document.get(DatabaseField.OBSERVATIONS.key)
+                    val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
+                    val usrEmail = registeredByData[DatabaseField.EMAIL.key].toString()
+                    val usrName = registeredByData[DatabaseField.DISPLAY_NAME.key].toString()
+                    val usrPhoto =
+                        registeredByData[DatabaseField.PROFILE_IMAGE_URL.key].toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = registeredByData[DatabaseField.TOKEN.key].toString()
+                    val usrType = registeredByData[DatabaseField.TYPE.key].toString().toInt()
+
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val illness = Illness(
+                        childrenId,
+                        date,
+                        illnessName.toString(),
+                        symptom.toString(),
+                        duration,
+                        medication.toString(),
+                        observation.toString(),
+                        user,
+                        registeredDate
+                    )
+
+                    listData.add(illness)
+                }
+
+                mutableList.value = listData
+
+            }
+
+        return mutableList
+
     }
 
 }

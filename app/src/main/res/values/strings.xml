@@ -9,6 +9,10 @@
     <string name="next">Siguiente</string>
     <string name="previous">Anterior</string>
     <string name="understood">Entendido</string>
+    <string name="kg">kg.</string>
+    <string name="cm">cm.</string>
+    <string name="day">día</string>
+    <string name="days">días</string>
 
     <!-- Options -->
     <string name="option.settings">Ajustes</string>
@@ -71,19 +75,19 @@
     <string name="add.notes.title">Agregar Nota</string>
     <string name="add.notes.edittext.note">Nota</string>
     <string name="add.illness.title">Agregar Enfermedad</string>
-    <string name="add.illness.edittext.date">Fecha en que me enfermé</string>
+    <string name="add.illness.edittext.date">Fecha en que me enfermé (dd/mm/yyyy)</string>
     <string name="add.illness.edittext.name">Enfermedad</string>
-    <string name="add.illness.edittext.duration">Duración</string>
-    <string name="add.illness.edittext.symptom">Síntomas que tuve</string>
-    <string name="add.illness.edittext.medication">Medicación que tomé</string>
+    <string name="add.illness.edittext.duration">Duración (en días)</string>
+    <string name="add.illness.edittext.symptom">Síntomas que tuve (separados por coma)</string>
+    <string name="add.illness.edittext.medication">Medicación que tomé (separada por coma)</string>
     <string name="add.illness.edittext.observation">Observaciones (opcional)</string>
     <string name="add.growth.title">Agregar información</string>
-    <string name="add.growth.edittext.date">Fecha</string>
+    <string name="add.growth.edittext.date">Fecha (dd/mm/yyyy)</string>
     <string name="add.growth.edittext.weight">Peso</string>
-    <string name="add.growth.edittext.height">Altura</string>
+    <string name="add.growth.edittext.height">Altura (en cm)</string>
     <string name="add.growth.edittext.pc">PC (opcional)</string>
     <string name="add.pediatriccontrol.title">Agregar datos del control pediátrico</string>
-    <string name="add.pediatriccontrol.edittext.date">Fecha</string>
+    <string name="add.pediatriccontrol.edittext.date">Fecha (dd/mm/yyyy)</string>
     <string name="add.pediatriccontrol.edittext.doctor">Médico</string>
     <string name="add.pediatriccontrol.edittext.speciality">Especialidad</string>
     <string name="add.pediatriccontrol.edittext.weight">Peso</string>
