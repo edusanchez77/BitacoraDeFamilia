@@ -11,12 +11,10 @@
 package com.cbaelectronics.bitacoradefamilia.provider.services.firebase
 
 import android.provider.ContactsContract.Data
+import android.text.style.TtsSpan.DateBuilder
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.cbaelectronics.bitacoradefamilia.model.domain.Children
-import com.cbaelectronics.bitacoradefamilia.model.domain.Growth
-import com.cbaelectronics.bitacoradefamilia.model.domain.Illness
-import com.cbaelectronics.bitacoradefamilia.model.domain.User
+import com.cbaelectronics.bitacoradefamilia.model.domain.*
 import com.cbaelectronics.bitacoradefamilia.util.extension.removeFirebaseInvalidCharacters
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -28,12 +26,14 @@ enum class DatabaseField(val key: String) {
     CHILDREN("children"),
     GROWTH("growth"),
     ILLNESS("illness"),
+    PEDIATRIC_CONTROL("pediatric_control"),
 
     // Generic Field
     SETTINGS("settings"),
     REGISTERED_DATE("registerDate"),
     REGISTERED_BY("registeredBy"),
     SHARED_WITH("sharedBy"),
+    NOTES("notes"),
 
     // User
     DISPLAY_NAME("displayName"),
@@ -61,7 +61,12 @@ enum class DatabaseField(val key: String) {
     SYMPTOM("symptom"),
     DURATION("duration"),
     MEDICATION("medication"),
-    OBSERVATIONS("observations")
+    OBSERVATIONS("observations"),
+
+    // Pediatric Control
+    DOCTOR("doctor"),
+    SPECIALTY("specialty"),
+    NEXT_CONTROL("nextControl")
 
 }
 
@@ -72,6 +77,8 @@ object FirebaseDBService {
     private val childreRef = FirebaseFirestore.getInstance().collection(DatabaseField.CHILDREN.key)
     private val growthRef = FirebaseFirestore.getInstance().collection(DatabaseField.GROWTH.key)
     private val illnessRef = FirebaseFirestore.getInstance().collection(DatabaseField.ILLNESS.key)
+    private val controlRef =
+        FirebaseFirestore.getInstance().collection(DatabaseField.PEDIATRIC_CONTROL.key)
 
     // Public
 
@@ -250,6 +257,70 @@ object FirebaseDBService {
 
         return mutableList
 
+    }
+
+    fun save(control: PediatricControl) {
+        control.registeredBy.email.let {
+            controlRef.document().set(control.toJSON())
+        }
+    }
+
+    fun loadControl(childrenId: String): LiveData<MutableList<PediatricControl>> {
+
+        val mutableList = MutableLiveData<MutableList<PediatricControl>>()
+
+        controlRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .addSnapshotListener { value, error ->
+
+                val listData = mutableListOf<PediatricControl>()
+
+                for (document in value!!) {
+                    val registeredByData =
+                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+
+                    val date = document.getDate(DatabaseField.DATE.key)
+                    val doctor = document.get(DatabaseField.DOCTOR.key)
+                    val specialty = document.get(DatabaseField.SPECIALTY.key)
+                    val weight = document.get(DatabaseField.WEIGHT.key)
+                    val height = document.getLong(DatabaseField.HEIGHT.key)
+                    val observation = document.get(DatabaseField.OBSERVATIONS.key)
+                    val next = document.getDate(DatabaseField.NEXT_CONTROL.key)
+                    val notes = document.get(DatabaseField.NOTES.key)
+                    val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
+                    val usrEmail = registeredByData[DatabaseField.EMAIL.key].toString()
+                    val usrName = registeredByData[DatabaseField.DISPLAY_NAME.key].toString()
+                    val usrPhoto =
+                        registeredByData[DatabaseField.PROFILE_IMAGE_URL.key].toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = registeredByData[DatabaseField.TOKEN.key].toString()
+                    val usrType = registeredByData[DatabaseField.TYPE.key].toString().toInt()
+
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val control = PediatricControl(
+                        childrenId,
+                        date,
+                        doctor.toString(),
+                        specialty.toString(),
+                        weight.toString(),
+                        height?.toInt(),
+                        observation.toString(),
+                        next,
+                        notes.toString(),
+                        user,
+                        registeredDate
+                    )
+
+                    listData.add(control)
+                }
+
+                mutableList.value = listData
+
+            }
+
+        return mutableList
     }
 
 }

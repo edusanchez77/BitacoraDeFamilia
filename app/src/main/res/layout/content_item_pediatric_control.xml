@@ -38,6 +38,7 @@
                 android:text="xx/xx/xxxx"
                 app:layout_constraintHorizontal_bias=".02"
                 app:layout_constraintTop_toTopOf="@id/textViewItemControlDate"
+                app:layout_constraintBottom_toBottomOf="@id/textViewItemControlDate"
                 app:layout_constraintStart_toEndOf="@id/textViewItemControlDate"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -73,6 +74,7 @@
                 android:text="xxxxxxxxxx"
                 app:layout_constraintHorizontal_bias=".02"
                 app:layout_constraintTop_toTopOf="@id/textViewItemControlDoctor"
+                app:layout_constraintBottom_toBottomOf="@id/textViewItemControlDoctor"
                 app:layout_constraintStart_toEndOf="@id/textViewItemControlDoctor"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -96,6 +98,7 @@
                 android:text="xxxxxxxxxx"
                 app:layout_constraintHorizontal_bias=".02"
                 app:layout_constraintTop_toTopOf="@id/textViewItemControlSpecialty"
+                app:layout_constraintBottom_toBottomOf="@id/textViewItemControlSpecialty"
                 app:layout_constraintStart_toEndOf="@id/textViewItemControlSpecialty"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -120,7 +123,7 @@
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintHorizontal_bias=".02"
                 app:layout_constraintTop_toTopOf="@id/textViewItemControlWeigth"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/textViewItemControlWeigth"
                 app:layout_constraintStart_toEndOf="@id/textViewItemControlWeigth"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -162,9 +165,10 @@
 
             <TextView
                 android:id="@+id/textViewItemControlObservationName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="xxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxx\nxxxxxxxxxxxxxxx"
+                android:inputType="textMultiLine"
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintHorizontal_bias=".02"
                 app:layout_constraintTop_toTopOf="@id/textViewItemControlObservation"
@@ -210,9 +214,10 @@
 
             <TextView
                 android:id="@+id/textViewItemControlNotesName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="xxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxx\nxxxxxxxxxxxxxxx"
+                android:inputType="textMultiLine"
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintHorizontal_bias=".02"
                 app:layout_constraintTop_toTopOf="@id/textViewItemControlNotes"
@@ -232,9 +237,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewControlAvatar"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_user"
                 app:layout_constraintHorizontal_bias=".98"
                 app:layout_constraintTop_toTopOf="@id/textViewItemControlAuthor"
