@@ -74,11 +74,14 @@ class PediatricControlRecyclerViewAdapter(private val context: Context): Recycle
         @SuppressLint("SetTextI18n")
         fun bindView(control: PediatricControl) {
 
+            val kg = R.string.kg
+            val cm = R.string.cm
+
             binding.textViewItemControlDateOfControl.text = control.date?.calendarDate()
             binding.textViewItemControlDoctorName.text = control.doctor
             binding.textViewItemDoctorSpecialtyName.text = control.specialty
-            binding.textViewItemControlWeigthName.text = control.weight
-            binding.textViewItemControlHeigthName.text = control.height.toString()
+            binding.textViewItemControlWeigthName.text = "${control.weight} ${context.getString(kg)}"
+            binding.textViewItemControlHeigthName.text = "${control.height.toString()} ${context.getString(cm)}"
             binding.textViewItemControlObservationName.text = control.observation
             binding.textViewItemControlNextControlName.text = control.nextControl?.calendarDate()
             binding.textViewItemControlNotesName.text = control.notes
