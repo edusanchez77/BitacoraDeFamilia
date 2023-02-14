@@ -13,10 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddGrowthBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Growth
+import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil
 import com.cbaelectronics.bitacoradefamilia.util.extension.*
+import java.text.SimpleDateFormat
 import kotlin.text.toDouble
 
 class AddGrowthActivity : AppCompatActivity() {
@@ -96,9 +98,13 @@ class AddGrowthActivity : AppCompatActivity() {
         if (date.isNullOrBlank() || weight.isNullOrBlank() || height.isNullOrBlank()) {
             UIUtil.showAlert(this, getString(viewModel.errorIncomplete))
         } else {
+
+            val sdf = SimpleDateFormat(Constants.DATE)
+            val dateFormat = sdf.parse(date.toString())
+
             val growth = Growth(
                 viewModel.children?.id,
-                date.toDate(),
+                dateFormat,
                 weight.toString(),
                 height.toInt(),
                 pc,

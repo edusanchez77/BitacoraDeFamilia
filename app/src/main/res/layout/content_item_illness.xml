@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:text="xxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxx\nxxxxxxxxxxxxxxx"
                 android:inputType="textMultiLine"
-                app:layout_constraintVertical_bias="0"
+                app:layout_constraintVertical_bias="0.02"
                 android:layout_marginStart="4dp"
                 app:layout_constraintTop_toTopOf="@id/textViewItemIllnessSymptom"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -148,12 +148,14 @@
                 android:id="@+id/textViewItemIllnessMedicationName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="xxxxxxxxxx"
-                android:inputType="textMultiLine"
                 android:layout_marginStart="4dp"
-                app:layout_constraintTop_toTopOf="@id/textViewItemIllnessMedication"
+                android:inputType="textMultiLine"
+                android:text="xxxxxxxxxx"
+                app:layout_constraintVertical_bias=".02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/textViewItemIllnessMedication"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="@id/textViewItemIllnessMedication" />
 
             <TextView
                 android:id="@+id/textViewItemIllnessObservation"
@@ -161,12 +163,12 @@
                 android:layout_height="wrap_content"
                 android:text="Observaciones:"
                 android:layout_marginTop="16dp"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintTop_toBottomOf="@id/textViewItemIllnessMedication"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/textViewItemIllnessMedicationName"
+                app:layout_constraintVertical_bias="0" />
 
             <TextView
                 android:id="@+id/textViewItemIllnessObservationName"
@@ -174,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:text="xxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxx\nxxxxxxxxxxxxxxx"
                 android:inputType="textMultiLine"
-                app:layout_constraintVertical_bias="0"
+                app:layout_constraintVertical_bias="0.02"
                 android:layout_marginStart="4dp"
                 app:layout_constraintTop_toTopOf="@id/textViewItemIllnessObservation"
                 app:layout_constraintBottom_toBottomOf="parent"

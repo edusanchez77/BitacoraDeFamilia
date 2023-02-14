@@ -36,6 +36,7 @@ object Constants {
     // Locale
     val DEFAULT_LOCALE = Locale( "en_US_POSIX")
     const val JSON_DATE_FORMAT = "MMM d, yyyy HH:mm:ss"
+    const val DATE = "dd/MM/yyyy"
     const val TURN_DATE_FORMAT = "dd/MM/yyyy HH:mm"
     const val FIXED_TURN_FORMAT = "HH:mm"
 

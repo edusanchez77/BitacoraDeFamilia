@@ -15,10 +15,12 @@ import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddIllnessBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Illness
 import com.cbaelectronics.bitacoradefamilia.usecases.common.IllnessRecyclerViewAdapter
+import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil
 import com.cbaelectronics.bitacoradefamilia.util.extension.*
+import java.text.SimpleDateFormat
 
 class AddIllnessActivity : AppCompatActivity() {
 
@@ -101,9 +103,13 @@ class AddIllnessActivity : AppCompatActivity() {
         if (date.isNullOrEmpty() || illnessName.isNullOrEmpty() || symptom.isNullOrEmpty() || duration.isNullOrEmpty() || medication.isNullOrEmpty()) {
             UIUtil.showAlert(binding.root.context, getString(viewModel.errorIncomplete))
         } else {
+
+            val sdf = SimpleDateFormat(Constants.DATE)
+            val dateFormat = sdf.parse(date.toString())
+
             val illness = Illness(
                 viewModel.children?.id,
-                date.toString().toDate(),
+                dateFormat,
                 illnessName.toString(),
                 symptom.toString(),
                 duration.toString().toInt(),

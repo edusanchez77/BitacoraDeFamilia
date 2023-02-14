@@ -91,9 +91,9 @@
     <string name="add.pediatriccontrol.edittext.doctor">Médico</string>
     <string name="add.pediatriccontrol.edittext.speciality">Especialidad</string>
     <string name="add.pediatriccontrol.edittext.weight">Peso</string>
-    <string name="add.pediatriccontrol.edittext.height">Altura</string>
+    <string name="add.pediatriccontrol.edittext.height">Altura (en cm.)</string>
     <string name="add.pediatriccontrol.edittext.observation">Observaciones</string>
-    <string name="add.pediatriccontrol.edittext.next">Próximo Control</string>
+    <string name="add.pediatriccontrol.edittext.next">Próximo Control (dd/mm/yyyy)</string>
     <string name="add.pediatriccontrol.edittext.notes">Notas (opcional)</string>
     <string name="add.achievements.title">Agregar logro</string>
     <string name="add.achievements.edittext.date">Fecha</string>

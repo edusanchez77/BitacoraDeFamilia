@@ -12,10 +12,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.get
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentIllnessBinding
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentPediatricControlBinding
+import com.cbaelectronics.bitacoradefamilia.usecases.common.PediatricControlRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.pediatric_control.AddPediatricControlRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
@@ -24,9 +27,14 @@ import com.google.android.material.snackbar.Snackbar
 
 class PediatricControlFragment : Fragment() {
 
+    // Properties
+
     private lateinit var _binding: FragmentPediatricControlBinding
     private val binding get() = _binding
     private lateinit var viewModel: PediatricControlViewModel
+    private lateinit var adapter: PediatricControlRecyclerViewAdapter
+
+    // Initialization
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,15 +47,18 @@ class PediatricControlFragment : Fragment() {
         // ViewModel
         viewModel = ViewModelProvider(this)[PediatricControlViewModel::class.java]
 
-        // Localize
-        localize()
+        // Adapter
+        adapter = PediatricControlRecyclerViewAdapter(binding.root.context)
 
         // Setup
+        localize()
         setup()
         footer()
 
         return binding.root
     }
+
+    // Public
 
     private fun localize() {
         binding.textViewControlTitle.text = getString(viewModel.title)
@@ -57,12 +68,24 @@ class PediatricControlFragment : Fragment() {
     private fun setup() {
         // UI
         binding.textViewControlTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+
+        binding.recyclerViewPediatricControl.layoutManager = LinearLayoutManager(binding.root.context)
+        binding.recyclerViewPediatricControl.adapter = adapter
+
+        observeData()
     }
 
     private fun footer() {
         binding.buttonControlAdd.setOnClickListener {
             AddPediatricControlRouter().launch(binding.root.context)
         }
+    }
+
+    private fun observeData(){
+        viewModel.load().observe(viewLifecycleOwner, Observer {
+            adapter.setDataList(it)
+            adapter.notifyDataSetChanged()
+        })
     }
 
 }
