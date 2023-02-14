@@ -10,17 +10,23 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityNotebookBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.Children
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 
 class NotebookActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNotebookBinding
+    private lateinit var viewModel: NotebookViewModel
+    private lateinit var childrenJSON: String
+    private lateinit var children: Children
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +51,20 @@ class NotebookActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        // ViewModel
+        viewModel = ViewModelProvider(this)[NotebookViewModel::class.java]
+
         // Setup
+        data()
         setup()
     }
+
+    private fun data(){
+        val bundle = intent.extras
+        childrenJSON = bundle?.getString(DatabaseField.CHILDREN.key).toString()
+        children = Children.fromJson(childrenJSON)!!
+    }
+
 
     private fun setup() {
         addClose(this)

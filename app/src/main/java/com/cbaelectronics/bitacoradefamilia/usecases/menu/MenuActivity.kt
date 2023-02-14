@@ -90,7 +90,8 @@ class MenuActivity : AppCompatActivity() {
         }
 
         binding.cardViewNotebook.setOnClickListener {
-            NotebookRouter().launch(this)
+            viewModel.childrenInstance(children)
+            NotebookRouter().launch(this, children)
         }
 
     }
