@@ -99,7 +99,7 @@ class AddGrowthActivity : AppCompatActivity() {
             val growth = Growth(
                 viewModel.children?.id,
                 date.toDate(),
-                weight.toString().toDouble(),
+                weight.toString(),
                 height.toInt(),
                 pc,
                 viewModel.user

@@ -42,3 +42,9 @@ fun String.toDouble(): Double {
     return BigDecimal(this.toDouble()).setScale(3, RoundingMode.FLOOR).toDouble()
 
 }
+
+fun String.uppercaseFirst(): String {
+    return this.replaceFirstChar {
+        it.uppercase()
+    }
+}

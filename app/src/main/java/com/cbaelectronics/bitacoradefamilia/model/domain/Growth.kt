@@ -14,7 +14,7 @@ import java.util.Date
 data class Growth(
     val childrenId: String? = null,
     val date: Date? = null,
-    val weight: Double? = null,
+    val weight: String? = null,
     val height: Int? = null,
     val pc: Int? = null,
     val registeredBy: User,
@@ -27,7 +27,7 @@ data class Growth(
             DatabaseField.DATE.key to (date ?: ""),
             DatabaseField.WEIGHT.key to (weight ?: ""),
             DatabaseField.HEIGHT.key to (height ?: ""),
-            DatabaseField.PC.key to (pc ?: "-"),
+            DatabaseField.PC.key to (pc ?: 0),
             DatabaseField.REGISTERED_BY.key to (registeredBy ?: ""),
             DatabaseField.REGISTERED_DATE.key to (registeredDate ?: "")
         )
