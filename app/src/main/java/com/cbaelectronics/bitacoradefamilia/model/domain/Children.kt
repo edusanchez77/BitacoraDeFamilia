@@ -18,6 +18,7 @@ enum class Genre(val type: String){
 }
 
 data class Children(
+    val id: String? = null,
     var name: String? = null,
     var genre: String? = null,
     var date: String? = null,
@@ -33,10 +34,11 @@ data class Children(
     fun toJSON(): Map<String, Any> {
 
         val JSON: MutableMap<String, Any> = mutableMapOf(
+            DatabaseField.CHILDREN_ID.key to (id ?: ""),
             DatabaseField.NAME.key to (name ?: ""),
             DatabaseField.GENRE.key to (genre ?: ""),
-            DatabaseField.DATE.key to (date ?: "-"),
-            DatabaseField.HOUR.key to (hour ?: "-"),
+            DatabaseField.DATE_OF_BIRTH.key to (date ?: "-"),
+            DatabaseField.HOUR_OF_BIRTH.key to (hour ?: "-"),
             DatabaseField.WEIGHT.key to (weight ?: "-"),
             DatabaseField.HEIGHT.key to (height ?: "-"),
             DatabaseField.AVATAR.key to (avatar ?: ""),

@@ -6,6 +6,7 @@
 package com.cbaelectronics.bitacoradefamilia.model.session
 
 import android.content.Context
+import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.model.domain.User
 import com.cbaelectronics.bitacoradefamilia.provider.preferences.PreferencesKey
 import com.cbaelectronics.bitacoradefamilia.provider.preferences.PreferencesProvider
@@ -22,7 +23,8 @@ class Session {
 
     var user: User? = null
         private set
-
+    var children: Children? = null
+        private set
 
     // Life Cycle
 
@@ -33,6 +35,10 @@ class Session {
             user?.settings = User.fromJson(it)?.settings
         }
 
+    }
+
+    fun childrenInstance(pChildren: Children){
+        children = pChildren
     }
 
     // Private

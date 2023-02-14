@@ -12,10 +12,12 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddGrowthBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.Growth
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
-import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
-import com.cbaelectronics.bitacoradefamilia.util.extension.font
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil
+import com.cbaelectronics.bitacoradefamilia.util.extension.*
+import kotlin.text.toDouble
 
 class AddGrowthActivity : AppCompatActivity() {
 
@@ -54,7 +56,7 @@ class AddGrowthActivity : AppCompatActivity() {
 
     // Private
 
-    private fun localize(){
+    private fun localize() {
         binding.textViewAddGrowthTitle.text = getString(viewModel.title)
         binding.textFieldAddGrowthDate.hint = getString(viewModel.date)
         binding.textFieldAddGrowthWeight.hint = getString(viewModel.weight)
@@ -64,7 +66,7 @@ class AddGrowthActivity : AppCompatActivity() {
         binding.buttonCancelGrowth.text = getString(viewModel.cancel)
     }
 
-    private fun setup(){
+    private fun setup() {
         addClose(this)
 
         // UI
@@ -75,13 +77,51 @@ class AddGrowthActivity : AppCompatActivity() {
         )
     }
 
-    private fun footer(){
+    private fun footer() {
         binding.buttonSaveGrowth.setOnClickListener {
-            Toast.makeText(this, "Add Growth", Toast.LENGTH_SHORT).show()
+            validForm()
         }
 
         binding.buttonCancelGrowth.setOnClickListener {
-            Toast.makeText(this, "Cancel Growth", Toast.LENGTH_SHORT).show()
+            onBackPressed()
         }
+    }
+
+    private fun validForm() {
+        val date = binding.editTextAddGrowthDate.text.toString()
+        val weight = binding.editTextAddGrowthWeight.text
+        val height = binding.editTextAddGrowthHeight.text.toString()
+        val pc = if(!binding.editTextAddGrowthPC.text.isNullOrBlank()) binding.editTextAddGrowthPC.text.toString().toInt() else null
+
+        if (date.isNullOrBlank() || weight.isNullOrBlank() || height.isNullOrBlank()) {
+            UIUtil.showAlert(this, getString(viewModel.errorIncomplete))
+        } else {
+            val growth = Growth(
+                viewModel.children?.id,
+                date.toDate(),
+                weight.toString().toDouble(),
+                height.toInt(),
+                pc,
+                viewModel.user
+            )
+
+            saveDatabase(growth)
+        }
+    }
+
+    private fun saveDatabase(growth: Growth) {
+        viewModel.save(growth)
+
+        clearEditText()
+        hideSoftInput()
+        UIUtil.showAlert(this, getString(viewModel.ok))
+        onBackPressed()
+    }
+
+    private fun clearEditText() {
+        binding.editTextAddGrowthDate.text = null
+        binding.editTextAddGrowthWeight.text = null
+        binding.editTextAddGrowthHeight.text = null
+        binding.editTextAddGrowthPC.text = null
     }
 }
