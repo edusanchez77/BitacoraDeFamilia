@@ -7,8 +7,19 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.illness
 
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
+import com.cbaelectronics.bitacoradefamilia.model.domain.Illness
+import com.cbaelectronics.bitacoradefamilia.model.domain.User
+import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
+import com.cbaelectronics.bitacoradefamilia.model.session.Session
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.FirebaseDBService
 
 class AddIllnessViewModel: ViewModel() {
+
+    // Properties
+
+    var user = Session.instance.user ?: User()
+    var settings = Session.instance.user?.settings ?: UserSettings()
+    var children = Session.instance.children
 
     // Localization
 
@@ -21,5 +32,14 @@ class AddIllnessViewModel: ViewModel() {
     val editTextSymptom = R.string.add_illness_edittext_symptom
     val editTextMedication = R.string.add_illness_edittext_medication
     val editTextObservation = R.string.add_illness_edittext_observation
+    val errorIncomplete = R.string.add_alert_error_incomplete
+    val errorUnknown = R.string.add_alert_error_unknown
+    val ok = R.string.add_alert_ok
+
+    // Public
+
+    fun save(illness: Illness){
+        FirebaseDBService.save(illness)
+    }
 
 }

@@ -7,15 +7,18 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.illness
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Adapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddIllnessBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.Illness
+import com.cbaelectronics.bitacoradefamilia.usecases.common.IllnessRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
-import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
-import com.cbaelectronics.bitacoradefamilia.util.extension.font
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil
+import com.cbaelectronics.bitacoradefamilia.util.extension.*
 
 class AddIllnessActivity : AppCompatActivity() {
 
@@ -54,7 +57,7 @@ class AddIllnessActivity : AppCompatActivity() {
 
     // Private
 
-    private fun localize(){
+    private fun localize() {
         binding.textViewAddIllnesTitle.text = getString(viewModel.title)
         binding.textFieldAddIllnessDate.hint = getString(viewModel.editTextDate)
         binding.textFieldAddIllnessName.hint = getString(viewModel.editTextIllnessName)
@@ -66,7 +69,7 @@ class AddIllnessActivity : AppCompatActivity() {
         binding.buttonCancelIllness.text = getString(viewModel.cancel)
     }
 
-    private fun setup(){
+    private fun setup() {
         addClose(this)
 
         // UI
@@ -77,13 +80,57 @@ class AddIllnessActivity : AppCompatActivity() {
         )
     }
 
-    private fun footer(){
+    private fun footer() {
         binding.buttonSaveIllness.setOnClickListener {
-            Toast.makeText(this, "Add Illness", Toast.LENGTH_SHORT).show()
+            validForm()
         }
 
         binding.buttonCancelIllness.setOnClickListener {
-            Toast.makeText(this, "Cancel Illness", Toast.LENGTH_SHORT).show()
+            onBackPressed()
         }
+    }
+
+    private fun validForm() {
+        val date = binding.editTextAddIllnessDate.text
+        val illnessName = binding.editTextAddIllnessName.text
+        val symptom = binding.editTextAddIllnessSymptom.text
+        val duration = binding.editTextAddIllnessDuration.text
+        val medication = binding.editTextAddIllnessMedication.text
+        val observations = binding.editTextAddIllnessObservation.text
+
+        if (date.isNullOrEmpty() || illnessName.isNullOrEmpty() || symptom.isNullOrEmpty() || duration.isNullOrEmpty() || medication.isNullOrEmpty()) {
+            UIUtil.showAlert(binding.root.context, getString(viewModel.errorIncomplete))
+        } else {
+            val illness = Illness(
+                viewModel.children?.id,
+                date.toString().toDate(),
+                illnessName.toString(),
+                symptom.toString(),
+                duration.toString().toInt(),
+                medication.toString(),
+                observations.toString(),
+                viewModel.user
+            )
+
+            saveDatabase(illness)
+        }
+    }
+
+    private fun saveDatabase(illness: Illness) {
+        viewModel.save(illness)
+
+        clearEditText()
+        hideSoftInput()
+        UIUtil.showAlert(this, getString(viewModel.ok))
+        onBackPressed()
+    }
+
+    private fun clearEditText() {
+        binding.editTextAddIllnessDate.text = null
+        binding.editTextAddIllnessName.text = null
+        binding.editTextAddIllnessSymptom.text = null
+        binding.editTextAddIllnessDuration.text = null
+        binding.editTextAddIllnessMedication.text = null
+        binding.editTextAddIllnessObservation.text = null
     }
 }
