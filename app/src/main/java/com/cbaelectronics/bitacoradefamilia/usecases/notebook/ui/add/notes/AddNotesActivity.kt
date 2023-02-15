@@ -14,6 +14,7 @@ import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddNotesBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Notes
 import com.cbaelectronics.bitacoradefamilia.util.Constants
+import com.cbaelectronics.bitacoradefamilia.util.Constants.TYPE_NOTEBOOK
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil
@@ -100,8 +101,14 @@ class AddNotesActivity : AppCompatActivity() {
             val sdf = SimpleDateFormat(Constants.DATE)
             val dateFormat = sdf.parse(date.toString())
 
-            val note = Notes(viewModel.children?.id, dateFormat, notes.toString(), viewModel.user)
-            
+            val note = Notes(
+                viewModel.children?.id,
+                dateFormat,
+                notes.toString(),
+                TYPE_NOTEBOOK,
+                viewModel.user
+            )
+
             saveDatabase(note)
         }
     }

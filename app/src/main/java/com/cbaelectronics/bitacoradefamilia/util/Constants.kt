@@ -40,4 +40,7 @@ object Constants {
     const val TURN_DATE_FORMAT = "dd/MM/yyyy HH:mm"
     const val FIXED_TURN_FORMAT = "HH:mm"
 
+    // Notes
+    const val TYPE_NOTEBOOK = "notebook"
+    const val TYPE_PREGNANT = "pregnant"
 }

@@ -40,7 +40,8 @@ enum class DatabaseField(val key: String) {
     DISPLAY_NAME("displayName"),
     EMAIL("email"),
     PROFILE_IMAGE_URL("photoProfile"),
-    TOKEN("tokenDevice"), TYPE("type"),
+    TOKEN("tokenDevice"),
+    TYPE("type"),
     NOTIFICATIONS("notifications"),
 
     // Children
@@ -67,7 +68,10 @@ enum class DatabaseField(val key: String) {
     // Pediatric Control
     DOCTOR("doctor"),
     SPECIALTY("specialty"),
-    NEXT_CONTROL("nextControl")
+    NEXT_CONTROL("nextControl"),
+
+    // Notes
+    NOTE_TYPE("type")
 
 }
 
@@ -328,6 +332,54 @@ object FirebaseDBService {
         notes.childrenId.let {
             notesRef.document().set(notes.toJSON())
         }
+    }
+
+    fun load(childrenId: String, type: String):LiveData<MutableList<Notes>>{
+        val mutableList = MutableLiveData<MutableList<Notes>>()
+
+        notesRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .whereEqualTo(DatabaseField.NOTE_TYPE.key, type)
+            .addSnapshotListener { value, error ->
+
+                val listData = mutableListOf<Notes>()
+
+                for (document in value!!) {
+                    val registeredByData =
+                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+
+                    val date = document.getDate(DatabaseField.DATE.key)
+                    val notes = document.get(DatabaseField.FIELD_NOTES.key)
+                    val type = document.get(DatabaseField.NOTE_TYPE.key)
+                    val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
+                    val usrEmail = registeredByData[DatabaseField.EMAIL.key].toString()
+                    val usrName = registeredByData[DatabaseField.DISPLAY_NAME.key].toString()
+                    val usrPhoto =
+                        registeredByData[DatabaseField.PROFILE_IMAGE_URL.key].toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = registeredByData[DatabaseField.TOKEN.key].toString()
+                    val usrType = registeredByData[DatabaseField.TYPE.key].toString().toInt()
+
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val note = Notes(
+                        childrenId,
+                        date,
+                        notes.toString(),
+                        type.toString(),
+                        user,
+                        registeredDate
+                    )
+
+                    listData.add(note)
+                }
+
+                mutableList.value = listData
+
+            }
+
+        return mutableList
     }
 
 }

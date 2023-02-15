@@ -15,6 +15,7 @@ data class Notes(
     val childrenId: String? = null,
     val date: Date? = null,
     val notes: String? = null,
+    val type: String? = null,
     val registeredBy: User,
     val registeredDate: Date? = Timestamp(Date().time)
 ){
@@ -24,6 +25,7 @@ data class Notes(
             DatabaseField.CHILDREN_ID.key to (childrenId ?: ""),
             DatabaseField.DATE.key to (date ?: ""),
             DatabaseField.FIELD_NOTES.key to (notes ?: "-"),
+            DatabaseField.NOTE_TYPE.key to (type ?: ""),
             DatabaseField.REGISTERED_BY.key to (registeredBy ?: ""),
             DatabaseField.REGISTERED_DATE.key to (registeredDate ?: "")
         )

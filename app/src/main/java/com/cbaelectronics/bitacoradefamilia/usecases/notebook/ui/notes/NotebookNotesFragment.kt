@@ -12,8 +12,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentNotebookNotesBinding
+import com.cbaelectronics.bitacoradefamilia.usecases.common.NotesRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.notes.AddNotesRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
@@ -22,9 +25,14 @@ import com.google.android.material.snackbar.Snackbar
 
 class NotebookNotesFragment : Fragment() {
 
+    // Properties
+
     private lateinit var _binding: FragmentNotebookNotesBinding
     private val binding get() = _binding
     private lateinit var viewModel: NotebookNotesViewModel
+    private lateinit var adapter: NotesRecyclerViewAdapter
+
+    // Initialization
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,15 +45,18 @@ class NotebookNotesFragment : Fragment() {
         // ViewModel
         viewModel = ViewModelProvider(this)[NotebookNotesViewModel::class.java]
 
-        // Localize
-        localize()
+        // Adapter
+        adapter = NotesRecyclerViewAdapter(binding.root.context)
 
         // Setup
+        localize()
         setup()
         footer()
 
         return binding.root
     }
+
+    // Private
 
     private fun localize() {
         binding.textViewNotesTitle.text = getString(viewModel.title)
@@ -55,6 +66,11 @@ class NotebookNotesFragment : Fragment() {
     private fun setup() {
         // UI
         binding.textViewNotesTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+
+        binding.recyclerViewNotebookNotes.layoutManager = LinearLayoutManager(binding.root.context)
+        binding.recyclerViewNotebookNotes.adapter = adapter
+
+        observeData()
     }
 
     private fun footer() {
@@ -63,5 +79,11 @@ class NotebookNotesFragment : Fragment() {
         }
     }
 
+    private fun observeData(){
+        viewModel.load().observe(viewLifecycleOwner, Observer {
+            adapter.setDataList(it)
+            adapter.notifyDataSetChanged()
+        })
+    }
 
 }
