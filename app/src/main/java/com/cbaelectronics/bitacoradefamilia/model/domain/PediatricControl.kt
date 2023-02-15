@@ -35,7 +35,7 @@ data class PediatricControl(
             DatabaseField.HEIGHT.key to (height ?: ""),
             DatabaseField.OBSERVATIONS.key to (observation ?: ""),
             DatabaseField.NEXT_CONTROL.key to (nextControl ?: ""),
-            DatabaseField.NOTES.key to (notes ?: "-"),
+            DatabaseField.FIELD_NOTES.key to (notes ?: "-"),
             DatabaseField.REGISTERED_BY.key to (registeredBy ?: ""),
             DatabaseField.REGISTERED_DATE.key to (registeredDate ?: "")
         )

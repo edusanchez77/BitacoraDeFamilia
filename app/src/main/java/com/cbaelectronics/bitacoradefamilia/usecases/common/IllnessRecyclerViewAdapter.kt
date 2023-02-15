@@ -68,7 +68,6 @@ class IllnessRecyclerViewAdapter(private val context: Context) :
 
         val binding = ContentItemIllnessBinding.bind(itemView)
 
-
         @SuppressLint("SetTextI18n")
         fun bindView(illness: Illness) {
 
