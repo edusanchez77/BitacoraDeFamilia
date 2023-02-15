@@ -12,10 +12,17 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddNotesBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.Notes
+import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
+import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
+import com.cbaelectronics.bitacoradefamilia.util.extension.toDate
+import java.text.SimpleDateFormat
 
 class AddNotesActivity : AppCompatActivity() {
 
@@ -74,11 +81,42 @@ class AddNotesActivity : AppCompatActivity() {
 
     private fun footer() {
         binding.buttonSaveNote.setOnClickListener {
-            Toast.makeText(this, "Add Note", Toast.LENGTH_SHORT).show()
+            validForm()
         }
 
         binding.buttonCancelNote.setOnClickListener {
-            Toast.makeText(this, "Cancel Note", Toast.LENGTH_SHORT).show()
+            onBackPressed()
         }
+    }
+
+    private fun validForm() {
+        val date = binding.editTextAddNoteDate.text
+        val notes = binding.editTextAddNote.text
+
+        if (date.isNullOrEmpty() || notes.isNullOrEmpty()) {
+            showAlert(this, getString(viewModel.errorIncomplete))
+        } else {
+
+            val sdf = SimpleDateFormat(Constants.DATE)
+            val dateFormat = sdf.parse(date.toString())
+
+            val note = Notes(viewModel.children?.id, dateFormat, notes.toString(), viewModel.user)
+            
+            saveDatabase(note)
+        }
+    }
+
+    private fun saveDatabase(note: Notes) {
+        viewModel.save(note)
+
+        clearEditText()
+        hideSoftInput()
+        UIUtil.showAlert(this, getString(viewModel.ok))
+        onBackPressed()
+    }
+
+    private fun clearEditText() {
+        binding.editTextAddNoteDate.text = null
+        binding.editTextAddNote.text = null
     }
 }

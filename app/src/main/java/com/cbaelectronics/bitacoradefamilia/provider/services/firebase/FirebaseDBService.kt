@@ -27,13 +27,14 @@ enum class DatabaseField(val key: String) {
     GROWTH("growth"),
     ILLNESS("illness"),
     PEDIATRIC_CONTROL("pediatric_control"),
+    NOTES("notes"),
 
     // Generic Field
     SETTINGS("settings"),
     REGISTERED_DATE("registerDate"),
     REGISTERED_BY("registeredBy"),
     SHARED_WITH("sharedBy"),
-    NOTES("notes"),
+    FIELD_NOTES("notes"),
 
     // User
     DISPLAY_NAME("displayName"),
@@ -77,8 +78,8 @@ object FirebaseDBService {
     private val childreRef = FirebaseFirestore.getInstance().collection(DatabaseField.CHILDREN.key)
     private val growthRef = FirebaseFirestore.getInstance().collection(DatabaseField.GROWTH.key)
     private val illnessRef = FirebaseFirestore.getInstance().collection(DatabaseField.ILLNESS.key)
-    private val controlRef =
-        FirebaseFirestore.getInstance().collection(DatabaseField.PEDIATRIC_CONTROL.key)
+    private val controlRef = FirebaseFirestore.getInstance().collection(DatabaseField.PEDIATRIC_CONTROL.key)
+    private val notesRef = FirebaseFirestore.getInstance().collection(DatabaseField.NOTES.key)
 
     // Public
 
@@ -285,7 +286,7 @@ object FirebaseDBService {
                     val height = document.getLong(DatabaseField.HEIGHT.key)
                     val observation = document.get(DatabaseField.OBSERVATIONS.key)
                     val next = document.getDate(DatabaseField.NEXT_CONTROL.key)
-                    val notes = document.get(DatabaseField.NOTES.key)
+                    val notes = document.get(DatabaseField.FIELD_NOTES.key)
                     val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
 
                     val usrEmail = registeredByData[DatabaseField.EMAIL.key].toString()
@@ -321,6 +322,12 @@ object FirebaseDBService {
             }
 
         return mutableList
+    }
+
+    fun save(notes: Notes){
+        notes.childrenId.let {
+            notesRef.document().set(notes.toJSON())
+        }
     }
 
 }
