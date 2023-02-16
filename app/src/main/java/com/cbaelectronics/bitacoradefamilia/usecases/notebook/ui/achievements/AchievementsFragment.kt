@@ -14,12 +14,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentAchievementsBinding
+import com.cbaelectronics.bitacoradefamilia.usecases.common.AchievementRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.achievements.AddAchievementsRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.illness.AddIllnessRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -33,6 +38,7 @@ class AchievementsFragment : Fragment() {
     private lateinit var _binding: FragmentAchievementsBinding
     private val binding get() = _binding
     private lateinit var viewModel: AchievementsViewModel
+    private lateinit var adapter: AchievementRecyclerViewAdapter
 
     // Initialization
 
@@ -47,6 +53,9 @@ class AchievementsFragment : Fragment() {
 
         // ViewModel
         viewModel = ViewModelProvider(this)[AchievementsViewModel::class.java]
+
+        // Adapter
+        adapter = AchievementRecyclerViewAdapter(binding.root.context)
 
         // Setup
         localize()
@@ -65,11 +74,23 @@ class AchievementsFragment : Fragment() {
     private fun setup(){
         // UI
         binding.textViewAchievementsTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+
+        binding.recyclerViewAchievements.layoutManager = LinearLayoutManager(binding.root.context)
+        binding.recyclerViewAchievements.adapter = adapter
+
+        observeData()
     }
 
     private fun footer(){
         binding.buttonAchievementsAdd.setOnClickListener {
             AddAchievementsRouter().launch(binding.root.context)
         }
+    }
+
+    private fun observeData(){
+        viewModel.load().observe(viewLifecycleOwner, Observer {
+            adapter.setDataList(it)
+            adapter.notifyDataSetChanged()
+        })
     }
 }

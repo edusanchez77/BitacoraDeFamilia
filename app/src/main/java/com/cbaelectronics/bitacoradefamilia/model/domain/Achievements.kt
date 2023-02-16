@@ -17,7 +17,8 @@ data class Achievements(
     val achievement: String? = null,
     val detail: String? = null,
     val registeredBy: User,
-    val registeredDate: Date? = Timestamp(Date().time)
+    val registeredDate: Date? = Timestamp(Date().time),
+    var isExpandable: Boolean = false
 ){
     fun toJSON(): Map<String, Any> {
 
@@ -25,7 +26,7 @@ data class Achievements(
             DatabaseField.CHILDREN_ID.key to (childrenId ?: ""),
             DatabaseField.DATE.key to (date ?: ""),
             DatabaseField.ACHIEVEMENT_NAME.key to (achievement ?: ""),
-            DatabaseField.DETAIL.key to (detail ?: ""),
+            DatabaseField.DETAIL.key to (detail ?: "-"),
             DatabaseField.REGISTERED_BY.key to (registeredBy ?: ""),
             DatabaseField.REGISTERED_DATE.key to (registeredDate ?: "")
         )
