@@ -49,6 +49,17 @@
                     app:layout_constraintStart_toEndOf="@id/textViewItemAchievement"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
+                <ImageView
+                    android:id="@+id/imageViewItemAchievementArrow"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/keyboard_arrow_left"
+                    app:layout_constraintHorizontal_bias=".98"
+                    app:layout_constraintStart_toEndOf="@id/textViewItemAchievementName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/textViewItemAchievement"
+                    app:layout_constraintBottom_toBottomOf="@id/textViewItemAchievement"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout

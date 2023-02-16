@@ -79,10 +79,15 @@ class AchievementRecyclerViewAdapter(private val context: Context): RecyclerView
             Glide.with(context).load(achievements.registeredBy.photoProfile).into(binding.imageViewAchievementAuthor)
 
             binding.constraintLayoutAchievementsDetails.visibility = if(achievements.isExpandable) View.VISIBLE else View.GONE
+            when (achievements.isExpandable){
+                true -> Glide.with(context).load(R.drawable.up_arrow).into(binding.imageViewItemAchievementArrow)
+                false -> Glide.with(context).load(R.drawable.down_arrow).into(binding.imageViewItemAchievementArrow)
+            }
         }
 
         fun collapseExpandedView(){
             binding.constraintLayoutAchievementsDetails.visibility = View.GONE
+            Glide.with(context).load(R.drawable.down_arrow).into(binding.imageViewItemAchievementArrow)
         }
     }
 
