@@ -28,6 +28,7 @@ enum class DatabaseField(val key: String) {
     ILLNESS("illness"),
     PEDIATRIC_CONTROL("pediatric_control"),
     NOTES("notes"),
+    ACHIEVEMENTS("achievements"),
 
     // Generic Field
     SETTINGS("settings"),
@@ -71,7 +72,11 @@ enum class DatabaseField(val key: String) {
     NEXT_CONTROL("nextControl"),
 
     // Notes
-    NOTE_TYPE("type")
+    NOTE_TYPE("type"),
+
+    // Achievements
+    ACHIEVEMENT_NAME("achievement"),
+    DETAIL("detail")
 
 }
 
@@ -82,8 +87,11 @@ object FirebaseDBService {
     private val childreRef = FirebaseFirestore.getInstance().collection(DatabaseField.CHILDREN.key)
     private val growthRef = FirebaseFirestore.getInstance().collection(DatabaseField.GROWTH.key)
     private val illnessRef = FirebaseFirestore.getInstance().collection(DatabaseField.ILLNESS.key)
-    private val controlRef = FirebaseFirestore.getInstance().collection(DatabaseField.PEDIATRIC_CONTROL.key)
+    private val controlRef =
+        FirebaseFirestore.getInstance().collection(DatabaseField.PEDIATRIC_CONTROL.key)
     private val notesRef = FirebaseFirestore.getInstance().collection(DatabaseField.NOTES.key)
+    private val achievementRef =
+        FirebaseFirestore.getInstance().collection(DatabaseField.ACHIEVEMENTS.key)
 
     // Public
 
@@ -328,13 +336,13 @@ object FirebaseDBService {
         return mutableList
     }
 
-    fun save(notes: Notes){
+    fun save(notes: Notes) {
         notes.childrenId.let {
             notesRef.document().set(notes.toJSON())
         }
     }
 
-    fun load(childrenId: String, type: String):LiveData<MutableList<Notes>>{
+    fun load(childrenId: String, type: String): LiveData<MutableList<Notes>> {
         val mutableList = MutableLiveData<MutableList<Notes>>()
 
         notesRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
@@ -373,6 +381,59 @@ object FirebaseDBService {
                     )
 
                     listData.add(note)
+                }
+
+                mutableList.value = listData
+
+            }
+
+        return mutableList
+    }
+
+    fun save(achievements: Achievements) {
+        achievements.childrenId.let {
+            achievementRef.document().set(achievements.toJSON())
+        }
+    }
+
+    fun loadAchievement(childrenId: String): LiveData<MutableList<Achievements>> {
+        val mutableList = MutableLiveData<MutableList<Achievements>>()
+
+        achievementRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .addSnapshotListener { value, error ->
+
+                val listData = mutableListOf<Achievements>()
+
+                for (document in value!!) {
+                    val registeredByData =
+                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+
+                    val date = document.getDate(DatabaseField.DATE.key)
+                    val achievementName = document.get(DatabaseField.ACHIEVEMENT_NAME.key)
+                    val details = document.get(DatabaseField.DETAIL.key)
+                    val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
+                    val usrEmail = registeredByData[DatabaseField.EMAIL.key].toString()
+                    val usrName = registeredByData[DatabaseField.DISPLAY_NAME.key].toString()
+                    val usrPhoto =
+                        registeredByData[DatabaseField.PROFILE_IMAGE_URL.key].toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = registeredByData[DatabaseField.TOKEN.key].toString()
+                    val usrType = registeredByData[DatabaseField.TYPE.key].toString().toInt()
+
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val achievement = Achievements(
+                        childrenId,
+                        date,
+                        achievementName.toString(),
+                        details.toString(),
+                        user,
+                        registeredDate
+                    )
+
+                    listData.add(achievement)
                 }
 
                 mutableList.value = listData

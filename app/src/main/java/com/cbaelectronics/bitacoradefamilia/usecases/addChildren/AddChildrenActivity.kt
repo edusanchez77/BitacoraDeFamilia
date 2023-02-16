@@ -107,7 +107,7 @@ class AddChildrenActivity : AppCompatActivity() {
 
         // Button Save
 
-        binding.buttonSaveChildren.enable(false)
+        disableSave()
         binding.buttonSaveChildren.setOnClickListener {
             validForm()
         }
@@ -125,7 +125,6 @@ class AddChildrenActivity : AppCompatActivity() {
 
         binding.editTextAddChildrenName.addTextChangedListener ( object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                Log.d("LogEdu", "addTextChangedListener")
                 nameEditText = binding.editTextAddChildrenName.text.toString()
                 checkEnable()
             }
