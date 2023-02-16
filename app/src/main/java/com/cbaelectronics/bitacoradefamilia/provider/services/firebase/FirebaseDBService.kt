@@ -28,6 +28,7 @@ enum class DatabaseField(val key: String) {
     ILLNESS("illness"),
     PEDIATRIC_CONTROL("pediatric_control"),
     NOTES("notes"),
+    ACHIEVEMENTS("achievements"),
 
     // Generic Field
     SETTINGS("settings"),
@@ -71,7 +72,11 @@ enum class DatabaseField(val key: String) {
     NEXT_CONTROL("nextControl"),
 
     // Notes
-    NOTE_TYPE("type")
+    NOTE_TYPE("type"),
+
+    // Achievements
+    ACHIEVEMENT_NAME("achievement"),
+    DETAIL("detail")
 
 }
 
@@ -84,6 +89,7 @@ object FirebaseDBService {
     private val illnessRef = FirebaseFirestore.getInstance().collection(DatabaseField.ILLNESS.key)
     private val controlRef = FirebaseFirestore.getInstance().collection(DatabaseField.PEDIATRIC_CONTROL.key)
     private val notesRef = FirebaseFirestore.getInstance().collection(DatabaseField.NOTES.key)
+    private val achievementRef = FirebaseFirestore.getInstance().collection(DatabaseField.ACHIEVEMENTS.key)
 
     // Public
 
@@ -380,6 +386,12 @@ object FirebaseDBService {
             }
 
         return mutableList
+    }
+
+    fun save(achievements: Achievements){
+        achievements.childrenId.let {
+            achievementRef.document().set(achievements.toJSON())
+        }
     }
 
 }
