@@ -13,17 +13,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
-import com.cbaelectronics.bitacoradefamilia.databinding.FragmentIllnessBinding
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentPediatricControlBinding
-import com.cbaelectronics.bitacoradefamilia.usecases.common.PediatricControlRecyclerViewAdapter
+import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.PediatricControlRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.pediatric_control.AddPediatricControlRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
-import com.google.android.material.snackbar.Snackbar
 
 class PediatricControlFragment : Fragment() {
 

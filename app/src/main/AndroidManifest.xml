@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BitacoraDeFamilia"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.pregnant.ui.add.names.AddNamesActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.addChildren.AddChildrenActivity"
             android:exported="false" />
         <activity
@@ -59,14 +62,12 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.BitacoraDeFamilia" />
 
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/logo_nombre" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/primary" />
-
     </application>
 
 </manifest>

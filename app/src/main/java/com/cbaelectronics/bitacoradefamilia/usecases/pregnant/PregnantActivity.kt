@@ -18,10 +18,18 @@ import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityPregnantBinding
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import androidx.appcompat.widget.Toolbar;
+import com.cbaelectronics.bitacoradefamilia.model.domain.Children
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 
 class PregnantActivity : AppCompatActivity() {
 
+    // Properties
+
     private lateinit var binding: ActivityPregnantBinding
+    private lateinit var childrenJSON: String
+    private lateinit var children: Children
+
+    // Initialization
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,18 +54,8 @@ class PregnantActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         // Setup
-
+        data()
         setup()
-    }
-
-    private fun setup() {
-        addClose(this)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -78,5 +76,23 @@ class PregnantActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_back_in_up, R.anim.slide_back_out_up)
+    }
+
+    // Public
+
+    private fun data(){
+        val bundle = intent.extras
+        childrenJSON = bundle?.getString(DatabaseField.CHILDREN.key).toString()
+        children = Children.fromJson(childrenJSON)!!
+    }
+
+    private fun setup() {
+        addClose(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
     }
 }

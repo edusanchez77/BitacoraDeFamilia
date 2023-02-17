@@ -21,6 +21,7 @@ import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 
@@ -55,6 +56,7 @@ class MenuActivity : AppCompatActivity() {
         val bundle = intent.extras
         childrenJSON = bundle?.getString(DatabaseField.CHILDREN.key).toString()
         children = Children.fromJson(childrenJSON)!!
+        viewModel.childrenInstance(children)
     }
 
     private fun localize() {
@@ -86,11 +88,10 @@ class MenuActivity : AppCompatActivity() {
     private fun buttons() {
 
         binding.cardViewPregnant.setOnClickListener {
-            PregnantRouter().launch(this)
+            PregnantRouter().launch(this, children)
         }
 
         binding.cardViewNotebook.setOnClickListener {
-            viewModel.childrenInstance(children)
             NotebookRouter().launch(this, children)
         }
 

@@ -7,14 +7,11 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.illness
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Adapter
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddIllnessBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Illness
-import com.cbaelectronics.bitacoradefamilia.usecases.common.IllnessRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType

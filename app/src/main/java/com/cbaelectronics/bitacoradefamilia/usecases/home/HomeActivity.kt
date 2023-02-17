@@ -1,7 +1,6 @@
 package com.cbaelectronics.bitacoradefamilia.usecases.home
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.ui.AppBarConfiguration
@@ -10,17 +9,12 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityHomeBinding
 import com.cbaelectronics.bitacoradefamilia.usecases.addChildren.AddChildrenRouter
-import com.cbaelectronics.bitacoradefamilia.usecases.common.ChildrenRecyclerViewAdapter
-import com.cbaelectronics.bitacoradefamilia.usecases.menu.MenuRouter
-import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
+import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.ChildrenRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
-import com.cbaelectronics.bitacoradefamilia.util.UIUtil
-import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.addCloseWithoutArrow
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 

@@ -29,6 +29,7 @@ enum class DatabaseField(val key: String) {
     PEDIATRIC_CONTROL("pediatric_control"),
     NOTES("notes"),
     ACHIEVEMENTS("achievements"),
+    POSIBLE_NAMES("posibleNames"),
 
     // Generic Field
     SETTINGS("settings"),
@@ -92,6 +93,7 @@ object FirebaseDBService {
     private val notesRef = FirebaseFirestore.getInstance().collection(DatabaseField.NOTES.key)
     private val achievementRef =
         FirebaseFirestore.getInstance().collection(DatabaseField.ACHIEVEMENTS.key)
+    private val namesRef = FirebaseFirestore.getInstance().collection(DatabaseField.POSIBLE_NAMES.key)
 
     // Public
 
@@ -441,6 +443,12 @@ object FirebaseDBService {
             }
 
         return mutableList
+    }
+
+    public fun save(names: PosibleNames){
+        names.childrenId.let {
+            namesRef.document().set(names.toJSON())
+        }
     }
 
 }
