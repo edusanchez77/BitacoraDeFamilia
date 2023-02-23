@@ -75,6 +75,8 @@
     <string name="info.button.info">Cargar info</string>
     <string name="info.button.weight">Cargar peso</string>
     <string name="info.button.names">Agregar nombre</string>
+    <string name="info.tabs.weight.header.week">Semana</string>
+    <string name="info.tabs.weight.header.weight">Peso</string>
 
     <!-- Adds -->
     <string name="add.button.cancel">Cancelar</string>
@@ -120,6 +122,9 @@
     <string name="add.names.title">Agregar posible nombre</string>
     <string name="add.names.edittext.name">Nombre</string>
     <string name="add.names.edittext.genre">Sexo</string>
+    <string name="add.weight.title">Agregar peso semanal</string>
+    <string name="add.weight.edittext.week">Semana</string>
+    <string name="add.weight.edittext.weight">Peso</string>
 
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>

@@ -6,14 +6,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".usecases.pregnant.ui.info.tabs.WeightFragment">
 
+    <LinearLayout
+        android:id="@+id/layoutWeightTableHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/background_table_header_secondary"
+        android:layout_margin="16dp"
+        android:padding="12dp"
+        app:layout_constraintVertical_bias="0.03"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recyclerViewPregnantTabWeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/textViewWeightTableHeaderWeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="Semana"/>
+
+        <TextView
+            android:id="@+id/textViewWeightTableHeaderWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="Peso"/>
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPregnantTabWeight"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintWidth_percent=".9"
         app:layout_constraintBottom_toTopOf="@+id/layoutButtons"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/layoutWeightTableHeader"
+        app:layout_constraintStart_toStartOf="@+id/layoutWeightTableHeader"
+        app:layout_constraintTop_toBottomOf="@id/layoutWeightTableHeader" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutButtons"

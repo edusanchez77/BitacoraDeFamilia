@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BitacoraDeFamilia"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.pregnant.ui.add.weight.AddWeightActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.pregnant.ui.add.names.AddNamesActivity"
             android:exported="false" />
         <activity

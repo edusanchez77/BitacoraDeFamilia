@@ -30,6 +30,7 @@ enum class DatabaseField(val key: String) {
     NOTES("notes"),
     ACHIEVEMENTS("achievements"),
     POSIBLE_NAMES("posibleNames"),
+    CONTROL_WEIGHT("controlWeight"),
 
     // Generic Field
     SETTINGS("settings"),
@@ -77,7 +78,10 @@ enum class DatabaseField(val key: String) {
 
     // Achievements
     ACHIEVEMENT_NAME("achievement"),
-    DETAIL("detail")
+    DETAIL("detail"),
+
+    // Control Weight
+    WEEK("week")
 
 }
 
@@ -94,6 +98,7 @@ object FirebaseDBService {
     private val achievementRef =
         FirebaseFirestore.getInstance().collection(DatabaseField.ACHIEVEMENTS.key)
     private val namesRef = FirebaseFirestore.getInstance().collection(DatabaseField.POSIBLE_NAMES.key)
+    private val controlWeightRef = FirebaseFirestore.getInstance().collection(DatabaseField.CONTROL_WEIGHT.key)
 
     // Public
 
@@ -492,6 +497,57 @@ object FirebaseDBService {
 
                 mutableList.value = listData
             }
+        return mutableList
+    }
+
+    fun save(weight: ControlWeight){
+        weight.childrenId.let {
+            controlWeightRef.document().set(weight.toJSON())
+        }
+    }
+
+    fun loadWeight(childrenId: String): LiveData<MutableList<ControlWeight>>{
+        val mutableList = MutableLiveData<MutableList<ControlWeight>>()
+
+        controlWeightRef
+            .whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .orderBy(DatabaseField.WEEK.key, Query.Direction.ASCENDING)
+            .addSnapshotListener { value, error ->
+                val listData = mutableListOf<ControlWeight>()
+
+                for (document in value!!) {
+                    val registeredByData =
+                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+
+                    val week = document.getLong(DatabaseField.WEEK.key)
+                    val weight = document.get(DatabaseField.WEIGHT.key)
+                    val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
+                    val usrEmail = registeredByData[DatabaseField.EMAIL.key].toString()
+                    val usrName = registeredByData[DatabaseField.DISPLAY_NAME.key].toString()
+                    val usrPhoto =
+                        registeredByData[DatabaseField.PROFILE_IMAGE_URL.key].toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = registeredByData[DatabaseField.TOKEN.key].toString()
+                    val usrType = registeredByData[DatabaseField.TYPE.key].toString().toInt()
+
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val controlWeight = ControlWeight(
+                        childrenId,
+                        week?.toInt(),
+                        weight.toString(),
+                        user,
+                        registeredDate
+                    )
+
+                    listData.add(controlWeight)
+                }
+
+                mutableList.value = listData
+            }
+
         return mutableList
     }
 
