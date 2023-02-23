@@ -70,9 +70,11 @@
     <string name="info.tabs.info">Info</string>
     <string name="info.tabs.weight">Control de Peso</string>
     <string name="info.tabs.names">Posibles Nombres</string>
+    <string name="info.tabs.names.boy">Varón</string>
+    <string name="info.tabs.names.woman">Mujer</string>
     <string name="info.button.info">Cargar info</string>
     <string name="info.button.weight">Cargar peso</string>
-    <string name="info.button.names">Carnar nombre</string>
+    <string name="info.button.names">Agregar nombre</string>
 
     <!-- Adds -->
     <string name="add.button.cancel">Cancelar</string>
@@ -115,6 +117,7 @@
     <string name="add.children.edittext.hour">Hora de nacimiento (opcional)</string>
     <string name="add.children.edittext.weight">Peso (opcional)</string>
     <string name="add.children.edittext.height">Altura (opcional)</string>
+    <string name="add.names.title">Agregar posible nombre</string>
     <string name="add.names.edittext.name">Nombre</string>
     <string name="add.names.edittext.genre">Sexo</string>
 

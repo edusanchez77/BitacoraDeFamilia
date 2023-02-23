@@ -16,7 +16,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:cardBackgroundColor="@color/primary_light"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
         app:layout_constraintVertical_bias="0.02"
@@ -29,6 +28,8 @@
             android:id="@+id/constraintLayoutPregnantTabNamesBoy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/primary_light"
+            android:padding="8dp"
             app:layout_constraintBottom_toTopOf="@+id/layoutButtons"
             app:layout_constraintEnd_toStartOf="@id/constraintLayoutPregnantTabNamesWoman"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +63,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:cardBackgroundColor="@color/secondary_light"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
         app:layout_constraintVertical_bias="0.02"
@@ -75,6 +75,8 @@
             android:id="@+id/constraintLayoutPregnantTabNamesWoman"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/secondary_light"
+            android:padding="8dp"
             app:layout_constraintBottom_toTopOf="@+id/layoutButtons"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cardViewPregnantTabNamesBoy"
@@ -85,11 +87,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mujer"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/recyclerViewPregnantTabNamesWoman"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.02" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewPregnantTabNamesWoman"
