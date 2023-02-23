@@ -31,6 +31,7 @@ enum class DatabaseField(val key: String) {
     ACHIEVEMENTS("achievements"),
     POSIBLE_NAMES("posibleNames"),
     CONTROL_WEIGHT("controlWeight"),
+    PREGNANT_INFO("pregnantInformation"),
 
     // Generic Field
     SETTINGS("settings"),
@@ -81,7 +82,12 @@ enum class DatabaseField(val key: String) {
     DETAIL("detail"),
 
     // Control Weight
-    WEEK("week")
+    WEEK("week"),
+
+    // Info
+    WHEN("when"),
+    HOW("how"),
+    REACTIONS("reactions")
 
 }
 
@@ -99,6 +105,7 @@ object FirebaseDBService {
         FirebaseFirestore.getInstance().collection(DatabaseField.ACHIEVEMENTS.key)
     private val namesRef = FirebaseFirestore.getInstance().collection(DatabaseField.POSIBLE_NAMES.key)
     private val controlWeightRef = FirebaseFirestore.getInstance().collection(DatabaseField.CONTROL_WEIGHT.key)
+    private val pregnantInfoRef = FirebaseFirestore.getInstance().collection(DatabaseField.PREGNANT_INFO.key)
 
     // Public
 
@@ -549,6 +556,12 @@ object FirebaseDBService {
             }
 
         return mutableList
+    }
+
+    fun save(pregnantInfo: PregnantInfo){
+        pregnantInfo.childrenId.let {
+            pregnantInfoRef.document().set(pregnantInfo.toJSON())
+        }
     }
 
 }

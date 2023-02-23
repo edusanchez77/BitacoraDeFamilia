@@ -15,6 +15,7 @@ import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentInfoBinding
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentInformationBinding
 import com.cbaelectronics.bitacoradefamilia.usecases.common.tabs.tabInfoAdapter
+import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.add.info.AddInfoRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.info.InfoViewModel
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 
@@ -57,7 +58,7 @@ class InformationFragment : Fragment() {
 
     private fun footer() {
         binding.buttonPregnantTabInformationAdd.setOnClickListener {
-            showAlert(binding.root.context, "Add Info")
+            AddInfoRouter().launch(binding.root.context)
         }
     }
 

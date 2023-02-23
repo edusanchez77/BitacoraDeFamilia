@@ -125,6 +125,10 @@
     <string name="add.weight.title">Agregar peso semanal</string>
     <string name="add.weight.edittext.week">Semana</string>
     <string name="add.weight.edittext.weight">Peso</string>
+    <string name="add.info.title">Agregar información</string>
+    <string name="add.info.edittext.when">¿Cuándo me enteré?</string>
+    <string name="add.info.edittext.how">¿Cómo me enteré?</string>
+    <string name="add.info.edittext.reactions">¿Cómo reaccionaron nuestras familias?</string>
 
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>
