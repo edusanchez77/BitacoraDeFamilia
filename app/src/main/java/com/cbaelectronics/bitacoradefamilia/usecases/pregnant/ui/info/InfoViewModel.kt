@@ -14,9 +14,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
+import com.cbaelectronics.bitacoradefamilia.model.domain.PosibleNames
 import com.cbaelectronics.bitacoradefamilia.model.domain.User
 import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
 import com.cbaelectronics.bitacoradefamilia.model.session.Session
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.FirebaseDBService
 
 class InfoViewModel : ViewModel() {
 
@@ -35,6 +37,17 @@ class InfoViewModel : ViewModel() {
     val buttonAddInfo = R.string.info_button_info
     val buttonAddWeight = R.string.info_button_weight
     val buttonAddNames = R.string.info_button_names
+    val boy = R.string.info_tabs_names_boy
+    val woman = R.string.info_tabs_names_woman
 
     // Public
+    fun load(genre: String): LiveData<MutableList<PosibleNames>>{
+        val mutableList = MutableLiveData<MutableList<PosibleNames>>()
+
+        FirebaseDBService.loadNames(children?.id!!, genre).observeForever {
+            mutableList.value = it
+        }
+
+        return mutableList
+    }
 }

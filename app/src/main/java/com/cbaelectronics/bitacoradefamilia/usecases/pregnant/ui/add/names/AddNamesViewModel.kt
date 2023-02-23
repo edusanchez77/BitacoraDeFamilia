@@ -23,7 +23,7 @@ class AddNamesViewModel: ViewModel() {
 
     // Localization
 
-    val title = R.string.add_illness_title
+    val title = R.string.add_names_title
     val save = R.string.add_button_save
     val cancel = R.string.add_button_cancel
     val back = R.string.add_button_back
