@@ -8,6 +8,7 @@ package com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.add.names
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
@@ -92,6 +93,8 @@ class AddNamesActivity : AppCompatActivity() {
             arrayGenre
         )
         binding.editTextAddNameGenre.setAdapter(adapterGenre)
+
+        binding.editTextAddNameGenre.inputType = InputType.TYPE_NULL
 
         setupInfo()
     }
