@@ -78,6 +78,10 @@
     <string name="info.tabs.weight.header.week">Semana</string>
     <string name="info.tabs.weight.header.weight">Peso</string>
 
+    <!-- Medical Meeting -->
+    <string name="medmeeting.title">Citas Médicas</string>
+    <string name="medmeeting.button">Agregar cita</string>
+
     <!-- Adds -->
     <string name="add.button.cancel">Cancelar</string>
     <string name="add.button.save">Guardar</string>
@@ -129,6 +133,10 @@
     <string name="add.info.edittext.when">¿Cuándo me enteré?</string>
     <string name="add.info.edittext.how">¿Cómo me enteré?</string>
     <string name="add.info.edittext.reactions">¿Cómo reaccionaron nuestras familias?</string>
+    <string name="add.medmeeting.title">Agregar cita médica</string>
+    <string name="add.medmeeting.edittext.date">Fecha</string>
+    <string name="add.medmeeting.edittext.doctor">Doctor</string>
+    <string name="add.medmeeting.edittext.note">Notas</string>
 
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>

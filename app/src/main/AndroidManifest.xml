@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BitacoraDeFamilia"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.pregnant.ui.add.medical_meeting.AddMedicalMeetingActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.pregnant.ui.add.info.AddInfoActivity"
             android:exported="false" />
         <activity

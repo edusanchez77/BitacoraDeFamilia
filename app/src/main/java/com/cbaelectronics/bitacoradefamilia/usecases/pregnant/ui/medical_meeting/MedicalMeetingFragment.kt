@@ -15,34 +15,79 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentMedicalMeetingBinding
+import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.MeetingRecyclerViewAdapter
+import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.add.medical_meeting.AddMedicalMeetingRouter
+import com.cbaelectronics.bitacoradefamilia.util.FontSize
+import com.cbaelectronics.bitacoradefamilia.util.FontType
+import com.cbaelectronics.bitacoradefamilia.util.extension.font
 
 class MedicalMeetingFragment : Fragment() {
 
-    private var _binding: FragmentMedicalMeetingBinding? = null
+    // Properties
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var _binding: FragmentMedicalMeetingBinding
+    private val binding get() = _binding
+    private lateinit var viewModel: MedicalMeetingViewModel
+    private lateinit var adapter: MeetingRecyclerViewAdapter
+
+    // Initialization
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(MedicalMeetingViewModel::class.java)
-
+        // Content
         _binding = FragmentMedicalMeetingBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        return root
+        // ViewModel
+        viewModel = ViewModelProvider(this)[MedicalMeetingViewModel::class.java]
+
+        // Adapter
+        adapter = MeetingRecyclerViewAdapter(binding.root.context)
+
+        // Setup
+        localize()
+        setup()
+        footer()
+
+        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    // Private
+    private fun localize() {
+        binding.textViewMedicalMeetingTitle.text = getString(viewModel.title)
+        binding.buttonMedicalMeetingAdd.text = getString(viewModel.button)
     }
+
+    private fun setup() {
+        // UI
+        binding.textViewMedicalMeetingTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+
+        binding.recyclerViewMedicalMeeting.layoutManager = LinearLayoutManager(binding.root.context)
+        binding.recyclerViewMedicalMeeting.adapter = adapter
+
+        observeData()
+    }
+
+    private fun footer() {
+        binding.buttonMedicalMeetingAdd.setOnClickListener {
+            AddMedicalMeetingRouter().launch(binding.root.context)
+        }
+    }
+
+    private fun observeData(){
+        viewModel.load().observe(viewLifecycleOwner, Observer {
+            adapter.setDataList(it)
+            adapter.notifyDataSetChanged()
+        })
+    }
+
 }
