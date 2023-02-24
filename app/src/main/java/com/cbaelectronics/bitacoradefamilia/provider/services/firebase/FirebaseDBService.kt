@@ -31,6 +31,7 @@ enum class DatabaseField(val key: String) {
     ACHIEVEMENTS("achievements"),
     POSIBLE_NAMES("posibleNames"),
     CONTROL_WEIGHT("controlWeight"),
+    PREGNANT_INFO("pregnantInformation"),
 
     // Generic Field
     SETTINGS("settings"),
@@ -81,7 +82,12 @@ enum class DatabaseField(val key: String) {
     DETAIL("detail"),
 
     // Control Weight
-    WEEK("week")
+    WEEK("week"),
+
+    // Info
+    WHEN("when"),
+    HOW("how"),
+    REACTIONS("reactions")
 
 }
 
@@ -99,6 +105,7 @@ object FirebaseDBService {
         FirebaseFirestore.getInstance().collection(DatabaseField.ACHIEVEMENTS.key)
     private val namesRef = FirebaseFirestore.getInstance().collection(DatabaseField.POSIBLE_NAMES.key)
     private val controlWeightRef = FirebaseFirestore.getInstance().collection(DatabaseField.CONTROL_WEIGHT.key)
+    private val pregnantInfoRef = FirebaseFirestore.getInstance().collection(DatabaseField.PREGNANT_INFO.key)
 
     // Public
 
@@ -543,6 +550,57 @@ object FirebaseDBService {
                     )
 
                     listData.add(controlWeight)
+                }
+
+                mutableList.value = listData
+            }
+
+        return mutableList
+    }
+
+    fun save(pregnantInfo: PregnantInfo){
+        pregnantInfo.childrenId.let {
+            pregnantInfoRef.document().set(pregnantInfo.toJSON())
+        }
+    }
+
+    fun loadPregnantInfo(childrenId: String): LiveData<MutableList<PregnantInfo>>{
+        val mutableList = MutableLiveData<MutableList<PregnantInfo>>()
+
+        pregnantInfoRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .addSnapshotListener { value, error ->
+                val listData = mutableListOf<PregnantInfo>()
+
+                for (document in value!!) {
+                    val registeredByData =
+                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+
+                    val mWhen = document.get(DatabaseField.WHEN.key)
+                    val how = document.get(DatabaseField.HOW.key)
+                    val reactions = document.get(DatabaseField.REACTIONS.key)
+                    val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
+                    val usrEmail = registeredByData[DatabaseField.EMAIL.key].toString()
+                    val usrName = registeredByData[DatabaseField.DISPLAY_NAME.key].toString()
+                    val usrPhoto =
+                        registeredByData[DatabaseField.PROFILE_IMAGE_URL.key].toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = registeredByData[DatabaseField.TOKEN.key].toString()
+                    val usrType = registeredByData[DatabaseField.TYPE.key].toString().toInt()
+
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val info = PregnantInfo(
+                        childrenId,
+                        mWhen.toString(),
+                        how.toString(),
+                        reactions.toString(),
+                        user,
+                        registeredDate
+                    )
+
+                    listData.add(info)
                 }
 
                 mutableList.value = listData

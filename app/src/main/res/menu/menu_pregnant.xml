@@ -13,17 +13,17 @@
 
     <item
         android:id="@+id/navigation_medical_meeting"
-        android:icon="@drawable/logros"
+        android:icon="@drawable/medical_meeting"
         android:title="@string/bottommenu.pregnant.medicalmeeting" />
 
     <item
         android:id="@+id/navigation_echography"
-        android:icon="@drawable/crecimiento"
+        android:icon="@drawable/echography"
         android:title="@string/bottommenu.pregnant.echography" />
 
     <item
         android:id="@+id/navigation_pregnant_notes"
-        android:icon="@drawable/enfermedades"
+        android:icon="@drawable/notas"
         android:title="@string/bottommenu.pregnant.notes" />
 
 </menu>
