@@ -14,10 +14,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
-import com.cbaelectronics.bitacoradefamilia.model.domain.ControlWeight
-import com.cbaelectronics.bitacoradefamilia.model.domain.PosibleNames
-import com.cbaelectronics.bitacoradefamilia.model.domain.User
-import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
+import com.cbaelectronics.bitacoradefamilia.model.domain.*
 import com.cbaelectronics.bitacoradefamilia.model.session.Session
 import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.FirebaseDBService
 
@@ -42,6 +39,9 @@ class InfoViewModel : ViewModel() {
     val woman = R.string.info_tabs_names_woman
     val headerWeek = R.string.info_tabs_weight_header_week
     val headerWeight = R.string.info_tabs_weight_header_weight
+    var mWhen = R.string.add_info_edittext_when
+    var how = R.string.add_info_edittext_how
+    var reactions = R.string.add_info_edittext_reactions
 
     // Public
     fun load(genre: String): LiveData<MutableList<PosibleNames>>{
@@ -61,6 +61,14 @@ class InfoViewModel : ViewModel() {
             mutableList.value = it
         }
 
+        return mutableList
+    }
+
+    fun loadInfo(): LiveData<MutableList<PregnantInfo>>{
+        val mutableList = MutableLiveData<MutableList<PregnantInfo>>()
+        FirebaseDBService.loadPregnantInfo(children?.id!!).observeForever {
+            mutableList.value = it
+        }
         return mutableList
     }
 }

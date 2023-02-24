@@ -564,4 +564,49 @@ object FirebaseDBService {
         }
     }
 
+    fun loadPregnantInfo(childrenId: String): LiveData<MutableList<PregnantInfo>>{
+        val mutableList = MutableLiveData<MutableList<PregnantInfo>>()
+
+        pregnantInfoRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .addSnapshotListener { value, error ->
+                val listData = mutableListOf<PregnantInfo>()
+
+                for (document in value!!) {
+                    val registeredByData =
+                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+
+                    val mWhen = document.get(DatabaseField.WHEN.key)
+                    val how = document.get(DatabaseField.HOW.key)
+                    val reactions = document.get(DatabaseField.REACTIONS.key)
+                    val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
+                    val usrEmail = registeredByData[DatabaseField.EMAIL.key].toString()
+                    val usrName = registeredByData[DatabaseField.DISPLAY_NAME.key].toString()
+                    val usrPhoto =
+                        registeredByData[DatabaseField.PROFILE_IMAGE_URL.key].toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = registeredByData[DatabaseField.TOKEN.key].toString()
+                    val usrType = registeredByData[DatabaseField.TYPE.key].toString().toInt()
+
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val info = PregnantInfo(
+                        childrenId,
+                        mWhen.toString(),
+                        how.toString(),
+                        reactions.toString(),
+                        user,
+                        registeredDate
+                    )
+
+                    listData.add(info)
+                }
+
+                mutableList.value = listData
+            }
+
+        return mutableList
+    }
+
 }
