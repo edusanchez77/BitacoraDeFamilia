@@ -32,6 +32,7 @@ enum class DatabaseField(val key: String) {
     POSIBLE_NAMES("posibleNames"),
     CONTROL_WEIGHT("controlWeight"),
     PREGNANT_INFO("pregnantInformation"),
+    MEDICAL_MEETING("medicalMeeting"),
 
     // Generic Field
     SETTINGS("settings"),
@@ -106,6 +107,7 @@ object FirebaseDBService {
     private val namesRef = FirebaseFirestore.getInstance().collection(DatabaseField.POSIBLE_NAMES.key)
     private val controlWeightRef = FirebaseFirestore.getInstance().collection(DatabaseField.CONTROL_WEIGHT.key)
     private val pregnantInfoRef = FirebaseFirestore.getInstance().collection(DatabaseField.PREGNANT_INFO.key)
+    private val medicalMeetingRef = FirebaseFirestore.getInstance().collection(DatabaseField.MEDICAL_MEETING.key)
 
     // Public
 
@@ -607,6 +609,12 @@ object FirebaseDBService {
             }
 
         return mutableList
+    }
+
+    fun save(meeting: MedicalMeeting){
+        meeting.childrenId.let {
+            medicalMeetingRef.document().set(meeting.toJSON())
+        }
     }
 
 }
