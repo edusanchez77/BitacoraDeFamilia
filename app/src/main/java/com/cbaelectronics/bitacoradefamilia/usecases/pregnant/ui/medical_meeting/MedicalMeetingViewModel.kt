@@ -10,9 +10,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
+import com.cbaelectronics.bitacoradefamilia.model.domain.MedicalMeeting
 import com.cbaelectronics.bitacoradefamilia.model.domain.User
 import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
 import com.cbaelectronics.bitacoradefamilia.model.session.Session
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.FirebaseDBService
 
 class MedicalMeetingViewModel : ViewModel() {
 
@@ -26,4 +28,16 @@ class MedicalMeetingViewModel : ViewModel() {
 
     val title = R.string.medmeeting_title
     val button = R.string.medmeeting_button
+
+    // Public
+
+    fun load(): LiveData<MutableList<MedicalMeeting>>{
+        val mutableList = MutableLiveData<MutableList<MedicalMeeting>>()
+
+        FirebaseDBService.loadMedicalMeeting(children?.id!!).observeForever {
+            mutableList.value = it
+        }
+
+        return mutableList
+    }
 }

@@ -617,4 +617,49 @@ object FirebaseDBService {
         }
     }
 
+    fun loadMedicalMeeting(childrenId: String): LiveData<MutableList<MedicalMeeting>>{
+        val mutableList = MutableLiveData<MutableList<MedicalMeeting>>()
+
+        medicalMeetingRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .addSnapshotListener { value, error ->
+                val listData = mutableListOf<MedicalMeeting>()
+
+                for (document in value!!) {
+                    val registeredByData =
+                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+
+                    val date = document.getDate(DatabaseField.DATE.key)
+                    val doctor = document.get(DatabaseField.DOCTOR.key)
+                    val note = document.get(DatabaseField.FIELD_NOTES.key)
+                    val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
+                    val usrEmail = registeredByData[DatabaseField.EMAIL.key].toString()
+                    val usrName = registeredByData[DatabaseField.DISPLAY_NAME.key].toString()
+                    val usrPhoto =
+                        registeredByData[DatabaseField.PROFILE_IMAGE_URL.key].toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = registeredByData[DatabaseField.TOKEN.key].toString()
+                    val usrType = registeredByData[DatabaseField.TYPE.key].toString().toInt()
+
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val meeting = MedicalMeeting(
+                        childrenId,
+                        date,
+                        doctor.toString(),
+                        note.toString(),
+                        user,
+                        registeredDate
+                    )
+
+                    listData.add(meeting)
+                }
+
+                mutableList.value = listData
+            }
+
+        return mutableList
+    }
+
 }
