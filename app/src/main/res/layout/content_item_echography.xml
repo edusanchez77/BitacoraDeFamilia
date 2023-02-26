@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?><!--~
+  ~  Created by CbaElectronics by Eduardo Sanchez on 2/2/23, 4:05 PM.
+  ~  www.cbaelectronics.com.ar
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/secondary_light"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/textViewItemEchographyDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha: "
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/textViewItemEchographyDateOfControl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xx/xx/xxxx"
+                app:layout_constraintHorizontal_bias=".02"
+                app:layout_constraintTop_toTopOf="@id/textViewItemEchographyDate"
+                app:layout_constraintBottom_toBottomOf="@id/textViewItemEchographyDate"
+                app:layout_constraintStart_toEndOf="@id/textViewItemEchographyDate"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/textViewItemEchographyWeek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Semana: "
+                android:layout_marginTop="16dp"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintTop_toBottomOf="@id/textViewItemEchographyDate"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/textViewItemEchographyDate"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/textViewItemEchographyWeekName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxxxxxxxx"
+                app:layout_constraintHorizontal_bias=".02"
+                app:layout_constraintTop_toTopOf="@id/textViewItemEchographyWeek"
+                app:layout_constraintBottom_toBottomOf="@id/textViewItemEchographyWeek"
+                app:layout_constraintStart_toEndOf="@id/textViewItemEchographyWeek"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+            <TextView
+                android:id="@+id/textViewItemEchographyNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notas:"
+                android:layout_marginTop="16dp"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintTop_toBottomOf="@id/textViewItemEchographyWeek"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/textViewItemEchographyNotesName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="xxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxx\nxxxxxxxxxxxxxxx"
+                android:inputType="textMultiLine"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintHorizontal_bias=".02"
+                app:layout_constraintTop_toTopOf="@id/textViewItemEchographyNotes"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textViewItemEchographyNotes"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/textViewItemEchographyAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxxxxxxxxxx"
+                android:layout_marginTop="20dp"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintTop_toBottomOf="@id/textViewItemEchographyNotesName"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewEchographyAvatar"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_user"
+                app:layout_constraintHorizontal_bias=".98"
+                app:layout_constraintTop_toTopOf="@id/textViewItemEchographyAuthor"
+                app:layout_constraintBottom_toBottomOf="@id/textViewItemEchographyAuthor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/textViewItemEchographyAuthor"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
