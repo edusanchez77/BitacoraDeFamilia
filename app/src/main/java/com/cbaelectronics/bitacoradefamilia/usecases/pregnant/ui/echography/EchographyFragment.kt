@@ -17,9 +17,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentEchographyBinding
+import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.EchographyRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.add.echography.AddEchographyRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
@@ -30,6 +33,7 @@ class EchographyFragment : Fragment() {
     private lateinit var _binding: FragmentEchographyBinding
     private val binding get() = _binding
     private lateinit var viewModel: EchographyViewModel
+    private lateinit var adapter: EchographyRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +45,9 @@ class EchographyFragment : Fragment() {
 
         // ViewModel
         viewModel = ViewModelProvider(this).get(EchographyViewModel::class.java)
+
+        // Adapter
+        adapter = EchographyRecyclerViewAdapter(binding.root.context)
 
         // Setup
         localize()
@@ -59,12 +66,24 @@ class EchographyFragment : Fragment() {
     private fun setup() {
         // UI
         binding.textViewEchographyTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+
+        binding.recyclerViewEchography.layoutManager = LinearLayoutManager(binding.root.context)
+        binding.recyclerViewEchography.adapter = adapter
+
+        observeData()
     }
 
     private fun footer() {
         binding.buttonEchographyAdd.setOnClickListener {
             AddEchographyRouter().launch(binding.root.context)
         }
+    }
+
+    private fun observeData(){
+        viewModel.load().observe(viewLifecycleOwner, Observer {
+            adapter.setDataList(it)
+            adapter.notifyDataSetChanged()
+        })
     }
 
 }

@@ -674,6 +674,7 @@ object FirebaseDBService {
         val mutableList = MutableLiveData<MutableList<Echography>>()
 
         echographyRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .orderBy(DatabaseField.WEEK.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<Echography>()
 
