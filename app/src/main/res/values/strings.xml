@@ -82,6 +82,10 @@
     <string name="medmeeting.title">Citas Médicas</string>
     <string name="medmeeting.button">Agregar cita</string>
 
+    <!-- Medical Meeting -->
+    <string name="echography.title">Ecografías</string>
+    <string name="echography.button">Agregar ecografía</string>
+
     <!-- Adds -->
     <string name="add.button.cancel">Cancelar</string>
     <string name="add.button.save">Guardar</string>
@@ -137,6 +141,10 @@
     <string name="add.medmeeting.edittext.date">Fecha</string>
     <string name="add.medmeeting.edittext.doctor">Doctor</string>
     <string name="add.medmeeting.edittext.note">Notas</string>
+    <string name="add.echography.title">Agregar ecografía</string>
+    <string name="add.echography.edittext.date">Fecha</string>
+    <string name="add.echography.edittext.week">Semana</string>
+    <string name="add.echography.edittext.note">Notas</string>
 
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>

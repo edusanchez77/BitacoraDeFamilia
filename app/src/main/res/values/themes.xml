@@ -39,6 +39,4 @@
     <style name="Theme.BitacoraDeFamilia.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.BitacoraDeFamilia.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-
 </resources>
