@@ -1,4 +1,4 @@
-package com.cbaelectronics.bitacoradefamilia.usecases.menu.launch
+package com.cbaelectronics.bitacoradefamilia.usecases.launch
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

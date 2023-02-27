@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddNotesBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Notes
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.Constants.TYPE_NOTEBOOK
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -31,6 +32,7 @@ class AddNotesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddNotesBinding
     private lateinit var viewModel: AddNotesViewModel
+    private lateinit var type: String
 
     // Initialization
 
@@ -47,6 +49,7 @@ class AddNotesActivity : AppCompatActivity() {
         // Setup
         localize()
         setup()
+        data()
         footer()
     }
 
@@ -80,6 +83,11 @@ class AddNotesActivity : AppCompatActivity() {
         )
     }
 
+    private fun data(){
+        val bundle = intent.extras
+        type = bundle?.getString(DatabaseField.NOTE_TYPE.key).toString()
+    }
+
     private fun footer() {
         binding.buttonSaveNote.setOnClickListener {
             validForm()
@@ -105,7 +113,7 @@ class AddNotesActivity : AppCompatActivity() {
                 viewModel.children?.id,
                 dateFormat,
                 notes.toString(),
-                TYPE_NOTEBOOK,
+                type,
                 viewModel.user
             )
 

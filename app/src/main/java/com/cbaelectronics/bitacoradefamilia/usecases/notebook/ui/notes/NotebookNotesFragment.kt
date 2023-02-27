@@ -18,6 +18,7 @@ import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentNotebookNotesBinding
 import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.NotesRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.notes.AddNotesRouter
+import com.cbaelectronics.bitacoradefamilia.util.Constants.TYPE_NOTEBOOK
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
@@ -74,7 +75,7 @@ class NotebookNotesFragment : Fragment() {
 
     private fun footer() {
         binding.buttonNotebookNotesAdd.setOnClickListener {
-            AddNotesRouter().launch(binding.root.context)
+            AddNotesRouter().launch(binding.root.context, TYPE_NOTEBOOK)
         }
     }
 
