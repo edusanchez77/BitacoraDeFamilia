@@ -14,12 +14,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentPregnantNotesBinding
+import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.NotesRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.notes.AddNotesRouter
 import com.cbaelectronics.bitacoradefamilia.util.Constants.TYPE_PREGNANT
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -34,6 +38,7 @@ class PregnantNotesFragment : Fragment() {
     private lateinit var _binding: FragmentPregnantNotesBinding
     private val binding get() = _binding
     private lateinit var viewModel: PregnantNotesViewModel
+    private lateinit var adapter: NotesRecyclerViewAdapter
 
     // Initialization
 
@@ -47,6 +52,9 @@ class PregnantNotesFragment : Fragment() {
 
         // ViewModel
         viewModel = ViewModelProvider(this).get(PregnantNotesViewModel::class.java)
+
+        // Adapter
+        adapter = NotesRecyclerViewAdapter(binding.root.context)
 
         // Setup
         localize()
@@ -66,6 +74,11 @@ class PregnantNotesFragment : Fragment() {
     private fun setup() {
         // UI
         binding.textViewControlTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+
+        binding.recyclerViewPregnantNotes.layoutManager = LinearLayoutManager(binding.root.context)
+        binding.recyclerViewPregnantNotes.adapter = adapter
+
+        observeData()
     }
 
     private fun footer() {
@@ -74,5 +87,11 @@ class PregnantNotesFragment : Fragment() {
         }
     }
 
+    private fun observeData(){
+        viewModel.load().observe(viewLifecycleOwner, Observer {
+            adapter.setDataList(it)
+            adapter.notifyDataSetChanged()
+        })
+    }
 
 }

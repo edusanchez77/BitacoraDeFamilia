@@ -19,6 +19,8 @@ import com.bumptech.glide.Glide
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ContentItemNotesBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Notes
+import com.cbaelectronics.bitacoradefamilia.util.Constants.TYPE_NOTEBOOK
+import com.cbaelectronics.bitacoradefamilia.util.Constants.TYPE_PREGNANT
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.calendarDate
@@ -63,6 +65,16 @@ class NotesRecyclerViewAdapter(private val context: Context): RecyclerView.Adapt
        val binding = ContentItemNotesBinding.bind(itemView)
 
         fun bindView(note: Notes){
+
+            // UI
+            val background = when (note.type){
+                TYPE_NOTEBOOK -> R.color.primary_light
+                TYPE_PREGNANT -> R.color.secondary_light
+                else -> R.color.primary_light
+            }
+            binding.constraintLayout.background = context.getDrawable(background)
+
+
             binding.textViewItemNoteDate.text = note.date?.calendarDate()
             binding.textViewItemNotesName.text = note.notes
             binding.textViewItemNotesAuthor.text = note.registeredBy.displayName

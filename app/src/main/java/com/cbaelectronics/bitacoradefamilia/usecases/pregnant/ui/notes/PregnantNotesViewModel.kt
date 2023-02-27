@@ -9,9 +9,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
+import com.cbaelectronics.bitacoradefamilia.model.domain.Notes
 import com.cbaelectronics.bitacoradefamilia.model.domain.User
 import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
 import com.cbaelectronics.bitacoradefamilia.model.session.Session
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.FirebaseDBService
+import com.cbaelectronics.bitacoradefamilia.util.Constants
 
 class PregnantNotesViewModel : ViewModel() {
 
@@ -28,8 +31,12 @@ class PregnantNotesViewModel : ViewModel() {
 
     // Public
 
-    fun load(){
-
+    fun load(): LiveData<MutableList<Notes>>{
+        val mutableList = MutableLiveData<MutableList<Notes>>()
+        FirebaseDBService.load(children?.id!!, Constants.TYPE_PREGNANT).observeForever {
+            mutableList.value = it
+        }
+        return mutableList
     }
 
 }
