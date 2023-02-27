@@ -59,7 +59,7 @@
             android:exported="false"
             android:label="@string/activity.pregnant.title" />
         <activity
-            android:name=".usecases.menu.launch.LaunchActivity"
+            android:name=".usecases.launch.LaunchActivity"
             android:exported="true"
             android:theme="@style/FullScreen">
             <intent-filter>
