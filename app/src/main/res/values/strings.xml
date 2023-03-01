@@ -17,6 +17,9 @@
     <!-- Options -->
     <string name="option.settings">Ajustes</string>
     <string name="option.share">Compartir</string>
+    <string name="option.onboard">Ver tutorial</string>
+    <string name="option.about">Acerca de nosotros</string>
+    <string name="option.close">Cerrar sesión</string>
 
     <!-- Login -->
     <string name="login.title">Iniciá sesión de forma segura con tu cuenta de Google</string>
@@ -145,6 +148,11 @@
     <string name="add.echography.edittext.date">Fecha</string>
     <string name="add.echography.edittext.week">Semana</string>
     <string name="add.echography.edittext.note">Notas</string>
+
+    <!-- Close Session -->
+    <string name="session.alert.logout">¿Estás seguro en cerrar sesión?</string>
+    <string name="session.alert.button.ok">Si</string>
+    <string name="session.alert.button.cancel">No</string>
 
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>
