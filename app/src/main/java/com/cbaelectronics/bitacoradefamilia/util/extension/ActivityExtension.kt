@@ -17,7 +17,20 @@ import com.cbaelectronics.bitacoradefamilia.R
 
 fun AppCompatActivity.addClose(context: Context) {
 
-    supportActionBar?.title = "Bitacora de Familia"
+    supportActionBar?.title = getString(R.string.app_name)
+    supportActionBar?.elevation = 0f
+    supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(context, R.color.primary)))
+
+    val closeIcon = (ContextCompat.getDrawable(this, R.drawable.keyboard_arrow_left) as BitmapDrawable).bitmap
+    val resizedCloseIcon: Drawable = BitmapDrawable(resources, Bitmap.createScaledBitmap(closeIcon, 48, 48, false))
+    resizedCloseIcon.setTint(ContextCompat.getColor(this, R.color.light))
+    supportActionBar?.setHomeAsUpIndicator(resizedCloseIcon)
+    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+}
+
+fun AppCompatActivity.addCloseWithoutTitle(context: Context) {
+
+    supportActionBar?.title = ""
     supportActionBar?.elevation = 0f
     supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(context, R.color.primary)))
 

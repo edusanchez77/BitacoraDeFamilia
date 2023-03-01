@@ -43,4 +43,13 @@ object Constants {
     // Notes
     const val TYPE_NOTEBOOK = "notebook"
     const val TYPE_PREGNANT = "pregnant"
+
+    // Networks
+    const val BITACORA_URI = "https://bitacoradefamilia.com.ar"
+    const val TWITTER_CBAELECTRONICS_URI = "https://twitter.com/cba_electronics"
+    const val INSTAGRAM_CBAELECTRONICS_URI = "https://instagram.com/cbaelectronics"
+    const val FACEBOOK_CBAELECTRONICS_URI = "https://facebook.com/cbaelectronics"
+    const val TWITTER_URI = "https://twitter.com/"
+    const val INSTAGRAM_URI = "https://instagram.com/"
+    const val FACEBOOK_URI = "https://facebook.com/"
 }

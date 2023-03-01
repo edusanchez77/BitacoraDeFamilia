@@ -6,7 +6,6 @@
 package com.cbaelectronics.bitacoradefamilia.usecases.menu
 
 import android.app.Dialog
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -23,16 +22,13 @@ import com.cbaelectronics.bitacoradefamilia.databinding.ActivityMenuBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 import com.cbaelectronics.bitacoradefamilia.usecases.about.AboutRouter
-import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookActivity
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookRouter
-import com.cbaelectronics.bitacoradefamilia.usecases.onboard.OnboardRouter
+import com.cbaelectronics.bitacoradefamilia.usecases.onboarding.OnboardingRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.settings.SettingsRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.share.ShareRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
-import com.cbaelectronics.bitacoradefamilia.util.UIUtil
-import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 
@@ -120,7 +116,7 @@ class MenuActivity : AppCompatActivity() {
                 ShareRouter().launch(this)
             }
             R.id.action_onboard -> {
-                OnboardRouter().launch(this)
+                OnboardingRouter().launch(this)
             }
             R.id.action_about -> {
                 AboutRouter().launch(this)

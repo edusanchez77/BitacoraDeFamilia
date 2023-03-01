@@ -6,7 +6,7 @@
     <item
         android:id="@+id/more"
         android:title=""
-        android:icon="@drawable/navigation_menu_horizontal"
+        android:icon="@drawable/ic_more"
         android:iconTint="@color/light"
         app:showAsAction="always">
 
