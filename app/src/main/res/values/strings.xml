@@ -161,6 +161,9 @@
     <string name="about.onboarding">Visualizá de nuevo el tutorial de bienvenida</string>
     <string name="about.version">Versión %s. </string>
 
+    <!-- Settings -->
+    <string name="settings.title">Ajustes</string>
+
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>
     <string name="activity.pregnant.title">Diario de Embarazo</string>
