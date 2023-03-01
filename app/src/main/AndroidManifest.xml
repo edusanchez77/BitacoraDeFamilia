@@ -15,7 +15,7 @@
             android:name=".usecases.share.ShareActivity"
             android:exported="false" />
         <activity
-            android:name=".usecases.onboard.OnboardActivity"
+            android:name=".usecases.onboarding.OnboardingActivity"
             android:exported="false" />
         <activity
             android:name=".usecases.settings.SettingsActivity"

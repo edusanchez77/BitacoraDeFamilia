@@ -154,6 +154,13 @@
     <string name="session.alert.button.ok">Si</string>
     <string name="session.alert.button.cancel">No</string>
 
+    <!-- About -->
+    <string name="about.by">por</string>
+    <string name="about.info">¡Hola! Mi nombre es Eduardo Sanchez, soy el creador de la aplicación de Bitácora de Familia.\nEsta app se ha desarrollado para llevar un registro de la vida de tus hijos, desde el embarazo.\n\nPronto se vienen más novedades.\n\nSi te gusta, podes dejarme algún tipo de sugerencia para mejorar, o compartir la app para que crezca.\nPueden encontrarme en redes sociales como @cbaelectronics.</string>
+    <string name="about.site">Visitá www.bitacoradefamilia.com.ar para consultar toda la información oficial</string>
+    <string name="about.onboarding">Visualizá de nuevo el tutorial de bienvenida</string>
+    <string name="about.version">Versión %s. </string>
+
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>
     <string name="activity.pregnant.title">Diario de Embarazo</string>

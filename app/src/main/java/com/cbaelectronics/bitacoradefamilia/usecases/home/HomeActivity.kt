@@ -20,12 +20,10 @@ import com.cbaelectronics.bitacoradefamilia.databinding.ActivityHomeBinding
 import com.cbaelectronics.bitacoradefamilia.usecases.about.AboutRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.addChildren.AddChildrenRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.ChildrenRecyclerViewAdapter
-import com.cbaelectronics.bitacoradefamilia.usecases.onboard.OnboardRouter
+import com.cbaelectronics.bitacoradefamilia.usecases.onboarding.OnboardingRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.settings.SettingsRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
-import com.cbaelectronics.bitacoradefamilia.util.UIUtil
-import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addCloseWithoutArrow
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 
@@ -94,7 +92,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_onboard -> {
-                OnboardRouter().launch(this)
+                OnboardingRouter().launch(this)
             }
             R.id.action_about -> {
                 AboutRouter().launch(this)
