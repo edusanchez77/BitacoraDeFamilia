@@ -12,6 +12,18 @@
         android:theme="@style/Theme.BitacoraDeFamilia"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.share.ShareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.onboard.OnboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.settings.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.about.AboutActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.pregnant.ui.add.echography.AddEchographyActivity"
             android:exported="false" />
         <activity

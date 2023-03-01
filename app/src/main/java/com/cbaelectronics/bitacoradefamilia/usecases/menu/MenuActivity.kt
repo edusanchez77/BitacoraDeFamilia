@@ -5,22 +5,33 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.menu
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.airbnb.lottie.LottieAnimationView
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityMenuBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
+import com.cbaelectronics.bitacoradefamilia.usecases.about.AboutRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookActivity
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookRouter
+import com.cbaelectronics.bitacoradefamilia.usecases.onboard.OnboardRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
+import com.cbaelectronics.bitacoradefamilia.usecases.settings.SettingsRouter
+import com.cbaelectronics.bitacoradefamilia.usecases.share.ShareRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
@@ -104,13 +115,25 @@ class MenuActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            R.id.action_share -> {
+                ShareRouter().launch(this)
+            }
+            R.id.action_onboard -> {
+                OnboardRouter().launch(this)
+            }
+            R.id.action_about -> {
+                AboutRouter().launch(this)
+            }
+            R.id.action_settings -> {
+                SettingsRouter().launch(this)
+            }
+            R.id.action_close -> {
+                loadAlertDialog()
+            }
         }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -121,6 +144,43 @@ class MenuActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_back_in_up, R.anim.slide_back_out_up)
+    }
+
+    // Private
+
+    private fun loadAlertDialog() {
+        val mDialog = Dialog(binding.root.context)
+        val mWindows = mDialog.window!!
+
+        mWindows.attributes.windowAnimations = R.style.DialogAnimation
+        mDialog.setContentView(R.layout.custom_dialog_opciones)
+        mDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        mDialog.setCancelable(false)
+        val mText = mDialog.findViewById<TextView>(R.id.txtDialog)
+        val mBtnOK = mDialog.findViewById<Button>(R.id.btnDialogAcept)
+        val mBtnCancel = mDialog.findViewById<Button>(R.id.btnDialogCancel)
+        val lottieDialog = mDialog.findViewById<LottieAnimationView>(R.id.lottieDialog)
+
+        mText.text = getString(viewModel.alertLogout)
+        lottieDialog.setAnimation(R.raw.logout)
+
+
+        lottieDialog.loop(true)
+        lottieDialog.playAnimation()
+
+        mBtnOK.text = getString(viewModel.alertButtonOk)
+        mBtnCancel.text = getString(viewModel.alertButtonCancel)
+
+        mDialog.show()
+
+        mBtnOK.setOnClickListener {
+            mDialog.cancel()
+            viewModel.close(this)
+        }
+        mBtnCancel.setOnClickListener {
+            mDialog.cancel()
+
+        }
     }
 
 }
