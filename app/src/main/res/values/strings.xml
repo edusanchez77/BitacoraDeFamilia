@@ -164,6 +164,9 @@
     <!-- Settings -->
     <string name="settings.title">Ajustes</string>
 
+    <!-- Share -->
+    <string name="share.title">Seleccioná el usuario con el que queres compartir la información de:</string>
+
     <!-- Onboarding -->
     <string name="onboarding.page0.title">Bienvenido a Bitácora de Familia</string>
     <string name="onboarding.page0.body">Donde podrás registrar todo lo relacionado con tus hijos.</string>
