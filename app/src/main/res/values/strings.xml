@@ -164,6 +164,20 @@
     <!-- Settings -->
     <string name="settings.title">Ajustes</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding.page0.title">Bienvenido a Bitácora de Familia</string>
+    <string name="onboarding.page0.body">Donde podrás registrar todo lo relacionado con tus hijos.</string>
+    <string name="onboarding.page1.title">Durante el embarazo</string>
+    <string name="onboarding.page1.body">Registrá tu control de peso, posibles nombres y controles médicos.</string>
+    <string name="onboarding.page2.title"></string>
+    <string name="onboarding.page2.body">También vas a poder registrar tus ecografías.</string>
+    <string name="onboarding.page3.title">Desde el nacimiento</string>
+    <string name="onboarding.page3.body">Registrá sus logros, consultas médicas, enfermedades.</string>
+    <string name="onboarding.page4.title"></string>
+    <string name="onboarding.page4.body">También podes llevar un control sobre su crecimiento.</string>
+    <string name="onboarding.page5.title">Compartí</string>
+    <string name="onboarding.page5.body">Podrás compartir la información de tus hijos con los familiares o amigos que vos quieras.</string>
+
     <!-- Titles Activity -->
     <string name="activity.notebook.title">Cuaderno Pediátrico</string>
     <string name="activity.pregnant.title">Diario de Embarazo</string>
