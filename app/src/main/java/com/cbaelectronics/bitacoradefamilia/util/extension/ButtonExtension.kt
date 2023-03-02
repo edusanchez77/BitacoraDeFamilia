@@ -33,6 +33,17 @@ fun Button.navigation(listener: View.OnClickListener) {
 
 }
 
+fun AppCompatButton.primary(listener: View.OnClickListener) {
+
+    maxLines = 1
+    ellipsize = TextUtils.TruncateAt.END
+    setTextSize(TypedValue.COMPLEX_UNIT_SP, FontSize.BUTTON.size.toFloat())
+    setTextColor(ContextCompat.getColor(context, R.color.light))
+    setTypeface(Typeface.createFromAsset(context.assets, FontType.BOLD.path), Typeface.NORMAL)
+    background = ContextCompat.getDrawable(context, R.drawable.primary_button_round)
+    setOnClickListener(listener)
+}
+
 fun AppCompatButton.secondary(listener: View.OnClickListener) {
 
     maxLines = 1
