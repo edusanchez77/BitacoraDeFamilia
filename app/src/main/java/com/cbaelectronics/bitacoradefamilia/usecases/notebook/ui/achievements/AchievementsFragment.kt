@@ -63,13 +63,13 @@ class AchievementsFragment : Fragment() {
 
     // Private
     private fun localize(){
-        binding.textViewAchievementsTitle.text = getString(viewModel.title)
+        //binding.textViewAchievementsTitle.text = getString(viewModel.title)
         binding.buttonAchievementsAdd.text = getString(viewModel.button)
     }
 
     private fun setup(){
         // UI
-        binding.textViewAchievementsTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        //binding.textViewAchievementsTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
 
         binding.recyclerViewAchievements.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewAchievements.adapter = adapter

@@ -25,6 +25,8 @@ import com.cbaelectronics.bitacoradefamilia.usecases.settings.SettingsRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.extension.addCloseWithoutArrow
+import com.cbaelectronics.bitacoradefamilia.util.extension.addCloseWithoutArrowAndTitle
+import com.cbaelectronics.bitacoradefamilia.util.extension.addCloseWithoutTitle
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 
 class HomeActivity : AppCompatActivity() {
@@ -49,19 +51,21 @@ class HomeActivity : AppCompatActivity() {
         adapter = ChildrenRecyclerViewAdapter(this)
 
         // Setup
+        localize()
         setup()
 
     }
 
+    private fun localize() {
+        binding.textViewTitleApp.text = ""//getString(viewModel.title)
+    }
+
     private fun setup() {
-
         addCloseWithoutArrow(this)
-
         // UI
-
         binding.textViewTitleApp.font(FontSize.TITLE, FontType.GALADA, getColor(R.color.light))
 
-        binding.recyclerViewHome.layoutManager = GridLayoutManager(this, 3)
+        binding.recyclerViewHome.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerViewHome.adapter = adapter
 
         observeDate()

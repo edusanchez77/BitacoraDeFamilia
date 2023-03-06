@@ -67,13 +67,13 @@ class PregnantNotesFragment : Fragment() {
     // Private
 
     private fun localize() {
-        binding.textViewControlTitle.text = getString(viewModel.title)
+        //binding.textViewControlTitle.text = getString(viewModel.title)
         binding.buttonPregnantNotesAdd.text = getString(viewModel.button)
     }
 
     private fun setup() {
         // UI
-        binding.textViewControlTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        //binding.textViewControlTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
 
         binding.recyclerViewPregnantNotes.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewPregnantNotes.adapter = adapter

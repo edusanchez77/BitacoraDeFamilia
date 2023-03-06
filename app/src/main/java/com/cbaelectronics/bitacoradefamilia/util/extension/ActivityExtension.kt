@@ -49,6 +49,14 @@ fun AppCompatActivity.addCloseWithoutArrow(context: Context) {
     supportActionBar?.setDisplayHomeAsUpEnabled(false)
 }
 
+fun AppCompatActivity.addCloseWithoutArrowAndTitle(context: Context) {
+
+    supportActionBar?.title = ""
+    supportActionBar?.elevation = 0f
+    supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(context, R.color.primary)))
+    supportActionBar?.setDisplayHomeAsUpEnabled(false)
+}
+
 fun AppCompatActivity.hideSoftInput() {
     val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)

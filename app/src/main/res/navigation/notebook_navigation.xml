@@ -13,31 +13,31 @@
     <fragment
         android:id="@+id/navigation_achievements"
         android:name="com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.achievements.AchievementsFragment"
-        android:label="@string/title_home"
+        android:label="@string/achievements.title"
         tools:layout="@layout/fragment_achievements" />
 
     <fragment
         android:id="@+id/navigation_growth"
         android:name="com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.growth.GrowthFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/growth.title"
         tools:layout="@layout/fragment_growth" />
 
     <fragment
         android:id="@+id/navigation_illness"
         android:name="com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.illness.IllnessFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/illness.title"
         tools:layout="@layout/fragment_illness" />
 
     <fragment
         android:id="@+id/navigation_pediatric_control"
         android:name="com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.pediatric_control.PediatricControlFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/bottommenu.notebook.pediatriccontrol"
         tools:layout="@layout/fragment_pediatric_control" />
 
     <fragment
         android:id="@+id/navigation_notebook_notes"
         android:name="com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.notes.NotebookNotesFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/bottommenu.notebook.notes"
         tools:layout="@layout/fragment_notebook_notes" />
 
 </navigation>

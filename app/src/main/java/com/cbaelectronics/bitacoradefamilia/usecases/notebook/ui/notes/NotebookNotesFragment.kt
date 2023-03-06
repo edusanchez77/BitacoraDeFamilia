@@ -59,13 +59,13 @@ class NotebookNotesFragment : Fragment() {
     // Private
 
     private fun localize() {
-        binding.textViewNotesTitle.text = getString(viewModel.title)
+        //binding.textViewNotesTitle.text = getString(viewModel.title)
         binding.buttonNotebookNotesAdd.text = getString(viewModel.button)
     }
 
     private fun setup() {
         // UI
-        binding.textViewNotesTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        //binding.textViewNotesTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
 
         binding.recyclerViewNotebookNotes.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewNotebookNotes.adapter = adapter

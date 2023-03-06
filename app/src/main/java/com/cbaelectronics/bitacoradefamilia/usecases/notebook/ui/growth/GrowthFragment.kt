@@ -67,7 +67,7 @@ class GrowthFragment : Fragment() {
     // Private
 
     private fun localize() {
-        binding.textViewGrowthTitle.text = getString(viewModel.title)
+        //binding.textViewGrowthTitle.text = getString(viewModel.title)
         binding.textViewGrowthTableHeaderDate.text = getString(viewModel.headerDate)
         binding.textViewGrowthTableHeaderWeight.text = getString(viewModel.headerWeight)
         binding.textViewGrowthTableHeaderHeight.text = getString(viewModel.headerHeight)
@@ -77,7 +77,7 @@ class GrowthFragment : Fragment() {
 
     private fun setup() {
         // UI
-        binding.textViewGrowthTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        //binding.textViewGrowthTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
         binding.textViewGrowthTableHeaderDate.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
         binding.textViewGrowthTableHeaderWeight.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
         binding.textViewGrowthTableHeaderHeight.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))

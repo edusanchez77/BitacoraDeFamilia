@@ -27,6 +27,7 @@ class HomeViewModel: ViewModel() {
 
     // Localization
 
+    val title = R.string.app_name
     val alertLogout = R.string.session_alert_logout
     val alertButtonOk = R.string.session_alert_button_ok
     val alertButtonCancel = R.string.session_alert_button_cancel

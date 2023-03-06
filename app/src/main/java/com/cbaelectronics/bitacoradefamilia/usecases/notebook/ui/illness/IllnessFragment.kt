@@ -57,13 +57,13 @@ class IllnessFragment : Fragment() {
     // Private
 
     private fun localize() {
-        binding.textViewIllnessTitle.text = getString(viewModel.title)
+        //binding.textViewIllnessTitle.text = getString(viewModel.title)
         binding.buttonIllnessAdd.text = getString(viewModel.button)
     }
 
     private fun setup() {
         // UI
-        binding.textViewIllnessTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        //binding.textViewIllnessTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
 
         binding.recyclerViewIllness.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewIllness.adapter = adapter

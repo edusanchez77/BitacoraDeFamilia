@@ -63,13 +63,13 @@ class MedicalMeetingFragment : Fragment() {
 
     // Private
     private fun localize() {
-        binding.textViewMedicalMeetingTitle.text = getString(viewModel.title)
+        //binding.textViewMedicalMeetingTitle.text = getString(viewModel.title)
         binding.buttonMedicalMeetingAdd.text = getString(viewModel.button)
     }
 
     private fun setup() {
         // UI
-        binding.textViewMedicalMeetingTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        //binding.textViewMedicalMeetingTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
 
         binding.recyclerViewMedicalMeeting.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewMedicalMeeting.adapter = adapter

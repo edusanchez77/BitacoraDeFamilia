@@ -58,13 +58,13 @@ class PediatricControlFragment : Fragment() {
     // Public
 
     private fun localize() {
-        binding.textViewControlTitle.text = getString(viewModel.title)
+        //binding.textViewControlTitle.text = getString(viewModel.title)
         binding.buttonControlAdd.text = getString(viewModel.button)
     }
 
     private fun setup() {
         // UI
-        binding.textViewControlTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        //binding.textViewControlTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
 
         binding.recyclerViewPediatricControl.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewPediatricControl.adapter = adapter
