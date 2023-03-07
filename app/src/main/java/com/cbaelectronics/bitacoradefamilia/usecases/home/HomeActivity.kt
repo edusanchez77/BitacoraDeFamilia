@@ -35,6 +35,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var adapter: ChildrenRecyclerViewAdapter
+    private lateinit var adapterShared: ChildrenRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -49,6 +50,7 @@ class HomeActivity : AppCompatActivity() {
 
         // Adapter
         adapter = ChildrenRecyclerViewAdapter(this)
+        adapterShared = ChildrenRecyclerViewAdapter(this)
 
         // Setup
         localize()
@@ -68,6 +70,9 @@ class HomeActivity : AppCompatActivity() {
         binding.recyclerViewHome.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerViewHome.adapter = adapter
 
+        binding.recyclerViewHomeShare.layoutManager = GridLayoutManager(this, 2)
+        binding.recyclerViewHomeShare.adapter = adapterShared
+
         observeDate()
         buttons()
 
@@ -78,6 +83,11 @@ class HomeActivity : AppCompatActivity() {
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
         })
+
+        /*viewModel.loadShared().observe(this, Observer {
+            adapterShared.setDataList(it)
+            adapter.notifyDataSetChanged()
+        })*/
     }
 
     private fun buttons() {

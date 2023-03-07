@@ -18,6 +18,7 @@ import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityShareBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.ControlWeight
 import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
+import com.cbaelectronics.bitacoradefamilia.model.domain.SharedChildren
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil
@@ -115,10 +116,10 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-    private fun footerInfo(){
+    private fun footerInfo() {
         // Email
 
-        binding.editTextShareUser.addTextChangedListener ( object : TextWatcher {
+        binding.editTextShareUser.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 emailEditText = binding.editTextShareUser.text.toString()
                 checkEnable()
@@ -131,7 +132,7 @@ class ShareActivity : AppCompatActivity() {
             override fun afterTextChanged(p0: Editable?) {
                 // Do nothing
             }
-        } )
+        })
 
         // Permission
 
@@ -142,30 +143,40 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkEnable(){
-        if (!emailEditText.isNullOrEmpty() && !permissionEditText.isNullOrEmpty()){
+    private fun checkEnable() {
+        if (!emailEditText.isNullOrEmpty() && !permissionEditText.isNullOrEmpty()) {
             enableSave()
         }
     }
 
-    private fun validForm(){
+    private fun validForm() {
         val email = binding.editTextShareUser.text
         val permission = binding.editTextSharePermission.text
 
         if (email.isNullOrBlank() || permission.isNullOrBlank()) {
             UIUtil.showAlert(this, getString(viewModel.errorIncomplete))
         } else {
-            val permissionInt = when(permission.toString()){
+            val permissionInt = when (permission.toString()) {
                 Permission.READ.type -> Permission.READ.value
                 Permission.WRITE.type -> Permission.WRITE.value
                 else -> Permission.READ.value
             }
-            saveDatabase(email.toString(), permissionInt)
+
+            val shared = SharedChildren(
+                viewModel.children?.id,
+                viewModel.children?.name,
+                viewModel.children?.genre,
+                viewModel.children?.avatar,
+                viewModel.user,
+                null,
+                permissionInt
+            )
+            saveDatabase(shared)
         }
     }
 
-    private fun saveDatabase(email: String, permission: Int) {
-        viewModel.share(email, permission)
+    private fun saveDatabase(sharedChildren: SharedChildren) {
+        viewModel.save(sharedChildren)
 
         clearEditText()
         hideSoftInput()

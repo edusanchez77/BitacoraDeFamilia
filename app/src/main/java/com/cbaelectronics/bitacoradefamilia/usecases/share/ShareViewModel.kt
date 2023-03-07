@@ -8,6 +8,7 @@ package com.cbaelectronics.bitacoradefamilia.usecases.share
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
+import com.cbaelectronics.bitacoradefamilia.model.domain.SharedChildren
 import com.cbaelectronics.bitacoradefamilia.model.domain.User
 import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
 import com.cbaelectronics.bitacoradefamilia.model.session.Session
@@ -34,8 +35,8 @@ class ShareViewModel: ViewModel() {
 
     // Public
 
-    fun share(email:String, permission:Int){
-        FirebaseDBService.update(children?.id!!, email, permission)
+    fun save(sharedChildren: SharedChildren){
+        FirebaseDBService.save(sharedChildren)
     }
 
 }

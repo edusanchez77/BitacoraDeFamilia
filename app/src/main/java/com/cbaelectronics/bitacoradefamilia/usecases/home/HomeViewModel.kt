@@ -44,6 +44,16 @@ class HomeViewModel: ViewModel() {
         return mutableData
     }
 
+    /*fun loadShared():LiveData<MutableList<Children>>{
+        val mutableData = MutableLiveData<MutableList<Children>>()
+
+        FirebaseDBService.loadShared(user).observeForever{
+            mutableData.value = it
+        }
+
+        return mutableData
+    }*/
+
     fun close(context: Context) {
         PreferencesProvider.clear(context)
         LoginRouter().launch(context)

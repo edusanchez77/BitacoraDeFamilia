@@ -17,11 +17,6 @@ enum class Genre(val type: String){
     INDETERMINATE("No Definido")
 }
 
-enum class Permission(val type: String, val value: Int){
-    READ("Solo Lectura", 0),
-    WRITE("Editar Información", 1)
-}
-
 data class Children(
     val id: String? = null,
     var name: String? = null,
