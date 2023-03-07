@@ -5,6 +5,11 @@
         <item>No Especificado</item>
     </string-array>
 
+    <string-array name="permission">
+        <item>Solo Lectura</item>
+        <item>Editar Información</item>
+    </string-array>
+
     <string-array name="week">
         <item>1</item>
         <item>2</item>

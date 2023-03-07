@@ -30,6 +30,10 @@ object Constants {
     const val CREATOR = 1
     const val ADMIN = 2
 
+    // Permission
+    const val READ = 0
+    const val WRITE = 1
+
     // Settings
     const val NOTIFICATIONS = true
 

@@ -34,12 +34,13 @@ enum class DatabaseField(val key: String) {
     PREGNANT_INFO("pregnantInformation"),
     MEDICAL_MEETING("medicalMeeting"),
     ECHOGRAPHY("echography"),
+    SHARED("shared"),
 
     // Generic Field
     SETTINGS("settings"),
     REGISTERED_DATE("registerDate"),
     REGISTERED_BY("registeredBy"),
-    SHARED_WITH("sharedBy"),
+    SHARED_WITH("sharedWith"),
     FIELD_NOTES("notes"),
 
     // User
@@ -59,6 +60,7 @@ enum class DatabaseField(val key: String) {
     WEIGHT("weight"),
     HEIGHT("height"),
     AVATAR("childrenAvatar"),
+    PERMISSION("permission"),
 
     // Growth
     DATE("date"),
@@ -110,6 +112,7 @@ object FirebaseDBService {
     private val pregnantInfoRef = FirebaseFirestore.getInstance().collection(DatabaseField.PREGNANT_INFO.key)
     private val medicalMeetingRef = FirebaseFirestore.getInstance().collection(DatabaseField.MEDICAL_MEETING.key)
     private val echographyRef = FirebaseFirestore.getInstance().collection(DatabaseField.ECHOGRAPHY.key)
+    private val sharedRef = FirebaseFirestore.getInstance().collection(DatabaseField.SHARED.key)
 
     // Public
 
@@ -133,6 +136,57 @@ object FirebaseDBService {
 
         childreRef.whereEqualTo(
             "${DatabaseField.REGISTERED_BY.key}.${DatabaseField.EMAIL.key}", user?.email
+        ).addSnapshotListener { value, error ->
+            val listData = mutableListOf<Children>()
+
+            for (document in value!!) {
+
+                val registeredByData =
+                    document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+                val id = document.id
+                val name = document.get(DatabaseField.NAME.key).toString()
+                val genre = document.get(DatabaseField.GENRE.key).toString()
+                val date = document.get(DatabaseField.DATE_OF_BIRTH.key).toString()
+                val hour = document.get(DatabaseField.HOUR_OF_BIRTH.key).toString()
+                val weight = document.get(DatabaseField.WEIGHT.key).toString()
+                val height = document.get(DatabaseField.HEIGHT.key).toString()
+                val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+                val usrEmail = registeredByData.get(DatabaseField.EMAIL.key).toString()
+                val usrName = registeredByData.get(DatabaseField.DISPLAY_NAME.key).toString()
+                val usrPhoto =
+                    registeredByData.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                val usrRegisteredDate =
+                    document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                val usrToken = registeredByData.get(DatabaseField.TOKEN.key).toString()
+                val usrType = registeredByData.get(DatabaseField.TYPE.key).toString().toInt()
+
+                val user =
+                    User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                val children = Children(
+                    id = id,
+                    name = name,
+                    genre = genre,
+                    date = date,
+                    hour = hour,
+                    weight = weight,
+                    height = height,
+                    registeredDate = registeredDate,
+                    registeredBy = user
+                )
+
+                listData.add(children!!)
+            }
+            mutableData.value = listData
+        }
+
+        return mutableData
+    }
+
+    fun loadShared(user: User): LiveData<MutableList<Children>> {
+        val mutableData = MutableLiveData<MutableList<Children>>()
+
+        childreRef.document().collection(DatabaseField.SHARED_WITH.key)
+            .whereEqualTo(DatabaseField.EMAIL.key, user?.email
         ).addSnapshotListener { value, error ->
             val listData = mutableListOf<Children>()
 
@@ -714,6 +768,16 @@ object FirebaseDBService {
             }
 
         return mutableList
+    }
+
+    fun update(childrenId: String, email:String, permission: Int){
+        val share = mapOf(
+            DatabaseField.EMAIL.key to email,
+            DatabaseField.PERMISSION.key to permission
+        )
+        childrenId.let {
+            childreRef.document(childrenId).collection(DatabaseField.SHARED_WITH.key).add(share)
+        }
     }
 
 }

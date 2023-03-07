@@ -93,7 +93,6 @@ class AddNamesActivity : AppCompatActivity() {
             arrayGenre
         )
         binding.editTextAddNameGenre.setAdapter(adapterGenre)
-
         binding.editTextAddNameGenre.inputType = InputType.TYPE_NULL
 
         setupInfo()

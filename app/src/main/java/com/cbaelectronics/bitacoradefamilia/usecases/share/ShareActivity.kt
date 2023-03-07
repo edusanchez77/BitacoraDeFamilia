@@ -7,16 +7,24 @@ package com.cbaelectronics.bitacoradefamilia.usecases.share
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputType
+import android.text.TextWatcher
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityShareBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.ControlWeight
+import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.enable
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
+import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
 
 class ShareActivity : AppCompatActivity() {
 
@@ -24,6 +32,8 @@ class ShareActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityShareBinding
     private lateinit var viewModel: ShareViewModel
+    private var emailEditText: String? = null
+    private var permissionEditText: String? = null
 
     // Initialization
 
@@ -79,6 +89,19 @@ class ShareActivity : AppCompatActivity() {
             FontType.GALADA,
             ContextCompat.getColor(this, R.color.text)
         )
+
+        // Permission
+
+        val arrayPermission = resources.getStringArray(R.array.permission)
+        val adapterPermission = ArrayAdapter(
+            this,
+            R.layout.dropdown_menu_popup_item,
+            arrayPermission
+        )
+        binding.editTextSharePermission.setAdapter(adapterPermission)
+        binding.editTextSharePermission.inputType = InputType.TYPE_NULL
+
+        footerInfo()
     }
 
     private fun footer() {
@@ -88,8 +111,72 @@ class ShareActivity : AppCompatActivity() {
         }
 
         binding.buttonSaveShare.setOnClickListener {
-
+            validForm()
         }
+    }
+
+    private fun footerInfo(){
+        // Email
+
+        binding.editTextShareUser.addTextChangedListener ( object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                emailEditText = binding.editTextShareUser.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        } )
+
+        // Permission
+
+        binding.editTextSharePermission.setOnItemClickListener { adapterView, view, i, l ->
+            hideSoftInput()
+            permissionEditText = binding.editTextSharePermission.text.toString()
+            checkEnable()
+        }
+    }
+
+    private fun checkEnable(){
+        if (!emailEditText.isNullOrEmpty() && !permissionEditText.isNullOrEmpty()){
+            enableSave()
+        }
+    }
+
+    private fun validForm(){
+        val email = binding.editTextShareUser.text
+        val permission = binding.editTextSharePermission.text
+
+        if (email.isNullOrBlank() || permission.isNullOrBlank()) {
+            UIUtil.showAlert(this, getString(viewModel.errorIncomplete))
+        } else {
+            val permissionInt = when(permission.toString()){
+                Permission.READ.type -> Permission.READ.value
+                Permission.WRITE.type -> Permission.WRITE.value
+                else -> Permission.READ.value
+            }
+            saveDatabase(email.toString(), permissionInt)
+        }
+    }
+
+    private fun saveDatabase(email: String, permission: Int) {
+        viewModel.share(email, permission)
+
+        clearEditText()
+        hideSoftInput()
+        UIUtil.showAlert(this, getString(viewModel.ok))
+        disableSave()
+        finish()
+    }
+
+    private fun clearEditText() {
+        binding.editTextShareUser.text = null
+        binding.editTextSharePermission.text = null
     }
 
     private fun disableSave() {
