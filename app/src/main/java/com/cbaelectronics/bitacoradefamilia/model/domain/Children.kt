@@ -63,3 +63,16 @@ data class Children(
     }
 
 }
+
+data class ChildrenPermission(
+    var permission: Int = Permission.READ.value
+){
+    fun toJSON() : MutableMap<String, Any>{
+
+        return mutableMapOf(
+            DatabaseField.PERMISSION.key to permission
+        )
+
+    }
+
+}

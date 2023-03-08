@@ -9,6 +9,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentNamesBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Genre
+import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.NamesRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.add.names.AddNamesRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.info.InfoViewModel
@@ -78,6 +81,14 @@ class NamesFragment : Fragment() {
         binding.recyclerViewPregnantTabNamesWoman.adapter = adapterWoman
 
         observeData()
+
+        // Footer
+
+        if (viewModel.permission == Permission.READ.value){
+            binding.layoutButtons.visibility = GONE
+        }else{
+            binding.layoutButtons.visibility = VISIBLE
+        }
     }
 
     private fun footer() {

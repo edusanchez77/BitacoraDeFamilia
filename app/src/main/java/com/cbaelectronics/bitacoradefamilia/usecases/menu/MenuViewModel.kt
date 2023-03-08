@@ -9,6 +9,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
+import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.model.domain.User
 import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
 import com.cbaelectronics.bitacoradefamilia.model.session.Session
@@ -26,6 +27,7 @@ class MenuViewModel: ViewModel() {
     var user = Session.instance.user ?: User()
     var settings = Session.instance.user?.settings ?: UserSettings()
     var children = Session.instance.children
+    var permission = Session.instance.permission
     var childrenShared: Children? = null
 
     // Localization
@@ -77,9 +79,9 @@ class MenuViewModel: ViewModel() {
         }.await()
     }
 
-    fun childrenInstance(children: Children){
+    fun childrenInstance(children: Children, permission: Int){
 
-        Session.instance.childrenInstance(children)
+        Session.instance.childrenInstance(children, permission)
 
     }
 

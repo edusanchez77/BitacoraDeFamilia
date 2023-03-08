@@ -7,6 +7,7 @@ package com.cbaelectronics.bitacoradefamilia.model.session
 
 import android.content.Context
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
+import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.model.domain.User
 import com.cbaelectronics.bitacoradefamilia.provider.preferences.PreferencesKey
 import com.cbaelectronics.bitacoradefamilia.provider.preferences.PreferencesProvider
@@ -25,6 +26,8 @@ class Session {
         private set
     var children: Children? = null
         private set
+    var permission: Int? = null
+        private set
 
     // Life Cycle
 
@@ -37,8 +40,9 @@ class Session {
 
     }
 
-    fun childrenInstance(pChildren: Children){
+    fun childrenInstance(pChildren: Children, pPermission: Int){
         children = pChildren
+        permission = pPermission
     }
 
     // Private

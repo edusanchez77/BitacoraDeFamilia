@@ -68,7 +68,8 @@ class MenuActivity : AppCompatActivity() {
         //childrenJSON = bundle?.getString(DatabaseField.CHILDREN.key).toString()
         //children = Children.fromJson(childrenJSON)!!
         val childrenId = bundle?.getString(DatabaseField.CHILDREN_ID.key)
-        loadChildren(childrenId!!)
+        val permission = bundle?.getInt(DatabaseField.PERMISSION.key)
+        loadChildren(childrenId!!, permission!!)
     }
 
     private fun localize() {
@@ -109,16 +110,16 @@ class MenuActivity : AppCompatActivity() {
 
     }
 
-    private fun loadChildren(email: String) = runBlocking {
+    private fun loadChildren(childrenId: String, permission: Int) = runBlocking {
 
         withContext(Dispatchers.Default) {
-            viewModel.load(email)
+            viewModel.load(childrenId)
         }
 
         if (viewModel.childrenShared == null) {
             showAlert(this@MenuActivity, "No se pudo levantar el nombre")
         } else {
-            viewModel.childrenInstance(viewModel.childrenShared!!)
+            viewModel.childrenInstance(viewModel.childrenShared!!, permission)
         }
 
     }

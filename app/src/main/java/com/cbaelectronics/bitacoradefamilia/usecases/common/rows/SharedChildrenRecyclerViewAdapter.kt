@@ -76,7 +76,7 @@ class SharedChildrenRecyclerViewAdapter(private val context: Context): RecyclerV
 
             itemView.setOnClickListener {
                 Log.d("LogEdu", children.toString())
-                MenuRouter().launch(context, children.id.toString())
+                MenuRouter().launch(context, children.id.toString(), children.permission)
             }
         }
 

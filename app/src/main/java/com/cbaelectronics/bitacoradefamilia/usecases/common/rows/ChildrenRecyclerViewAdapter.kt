@@ -20,6 +20,7 @@ import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ContentItemChildrenBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.model.domain.Genre
+import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.usecases.menu.MenuRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
@@ -75,7 +76,7 @@ class ChildrenRecyclerViewAdapter(private val context: Context): RecyclerView.Ad
 
             itemView.setOnClickListener {
                 Log.d("LogEdu", children.toString())
-                MenuRouter().launch(context, children.id.toString())
+                MenuRouter().launch(context, children.id.toString(), Permission.WRITE.value)
             }
         }
 

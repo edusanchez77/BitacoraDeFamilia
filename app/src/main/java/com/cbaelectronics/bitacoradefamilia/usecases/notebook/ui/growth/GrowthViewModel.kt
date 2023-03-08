@@ -15,6 +15,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
+import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.model.domain.Growth
 import com.cbaelectronics.bitacoradefamilia.model.domain.User
 import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
@@ -28,6 +29,7 @@ class GrowthViewModel : ViewModel() {
     var user = Session.instance.user ?: User()
     var settings = Session.instance.user?.settings ?: UserSettings()
     var children = Session.instance.children
+    var permission = Session.instance.permission
 
     // Localization
 

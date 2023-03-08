@@ -13,6 +13,8 @@ package com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.echography
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -22,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentEchographyBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.EchographyRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.add.echography.AddEchographyRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -71,6 +74,14 @@ class EchographyFragment : Fragment() {
         binding.recyclerViewEchography.adapter = adapter
 
         observeData()
+
+        // Footer
+
+        if (viewModel.permission == Permission.READ.value){
+            binding.layoutButtons.visibility = GONE
+        }else{
+            binding.layoutButtons.visibility = VISIBLE
+        }
     }
 
     private fun footer() {

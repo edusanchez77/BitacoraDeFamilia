@@ -17,6 +17,7 @@ class IllnessViewModel : ViewModel() {
     var user = Session.instance.user ?: User()
     var settings = Session.instance.user?.settings ?: UserSettings()
     var children = Session.instance.children
+    var permission = Session.instance.permission
 
     // Localization
 

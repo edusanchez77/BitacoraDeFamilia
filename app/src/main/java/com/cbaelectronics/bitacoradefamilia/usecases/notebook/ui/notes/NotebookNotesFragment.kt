@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentNotebookNotesBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.NotesRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.notes.AddNotesRouter
 import com.cbaelectronics.bitacoradefamilia.util.Constants.TYPE_NOTEBOOK
@@ -71,6 +72,14 @@ class NotebookNotesFragment : Fragment() {
         binding.recyclerViewNotebookNotes.adapter = adapter
 
         observeData()
+
+        // Footer
+
+        if (viewModel.permission == Permission.READ.value){
+            binding.layoutButtons.visibility = View.GONE
+        }else{
+            binding.layoutButtons.visibility = View.VISIBLE
+        }
     }
 
     private fun footer() {

@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentAchievementsBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.AchievementRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.achievements.AddAchievementsRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -75,6 +76,14 @@ class AchievementsFragment : Fragment() {
         binding.recyclerViewAchievements.adapter = adapter
 
         observeData()
+
+        // Footer
+
+        if (viewModel.permission == Permission.READ.value){
+            binding.layoutButtons.visibility = View.GONE
+        }else{
+            binding.layoutButtons.visibility = View.VISIBLE
+        }
     }
 
     private fun footer(){

@@ -147,9 +147,10 @@ object FirebaseDBService {
     fun load(user: User): LiveData<MutableList<Children>> {
         val mutableData = MutableLiveData<MutableList<Children>>()
 
-        childreRef.whereEqualTo(
-            "${DatabaseField.REGISTERED_BY.key}.${DatabaseField.EMAIL.key}", user?.email
-        ).addSnapshotListener { value, error ->
+        childreRef
+            .whereEqualTo("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.EMAIL.key}", user?.email)
+            .orderBy(DatabaseField.REGISTERED_DATE.key, Query.Direction.ASCENDING)
+            .addSnapshotListener { value, error ->
             val listData = mutableListOf<Children>()
 
             for (document in value!!) {
@@ -258,7 +259,9 @@ object FirebaseDBService {
 
         val mutableList = MutableLiveData<MutableList<Illness>>()
 
-        illnessRef.orderBy(DatabaseField.DATE.key)
+        illnessRef
+            .whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .orderBy(DatabaseField.DATE.key)
             .addSnapshotListener { value, error ->
 
                 val listData = mutableListOf<Illness>()
@@ -320,6 +323,7 @@ object FirebaseDBService {
         val mutableList = MutableLiveData<MutableList<PediatricControl>>()
 
         controlRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .orderBy(DatabaseField.DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
 
                 val listData = mutableListOf<PediatricControl>()
@@ -384,6 +388,7 @@ object FirebaseDBService {
 
         notesRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
             .whereEqualTo(DatabaseField.NOTE_TYPE.key, type)
+            .orderBy(DatabaseField.DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
 
                 val listData = mutableListOf<Notes>()
@@ -436,7 +441,9 @@ object FirebaseDBService {
     fun loadAchievement(childrenId: String): LiveData<MutableList<Achievements>> {
         val mutableList = MutableLiveData<MutableList<Achievements>>()
 
-        achievementRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+        achievementRef
+            .whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .orderBy(DatabaseField.DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
 
                 val listData = mutableListOf<Achievements>()
@@ -492,6 +499,7 @@ object FirebaseDBService {
         namesRef
             .whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
             .whereEqualTo(DatabaseField.GENRE.key, genre)
+            .orderBy(DatabaseField.REGISTERED_DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<PosibleNames>()
 
@@ -642,6 +650,7 @@ object FirebaseDBService {
         val mutableList = MutableLiveData<MutableList<MedicalMeeting>>()
 
         medicalMeetingRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .orderBy(DatabaseField.DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<MedicalMeeting>()
 
@@ -693,7 +702,7 @@ object FirebaseDBService {
         val mutableList = MutableLiveData<MutableList<Echography>>()
 
         echographyRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
-            .orderBy(DatabaseField.WEEK.key, Query.Direction.ASCENDING)
+            .orderBy(DatabaseField.DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<Echography>()
 
@@ -746,6 +755,7 @@ object FirebaseDBService {
 
         sharedRef
             .whereEqualTo(DatabaseField.EMAIL.key, email)
+            .orderBy(DatabaseField.REGISTERED_DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<SharedChildren>()
 
