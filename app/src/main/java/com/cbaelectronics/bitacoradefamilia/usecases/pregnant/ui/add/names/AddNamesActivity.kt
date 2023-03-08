@@ -14,11 +14,8 @@ import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
-import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddIllnessBinding
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddNamesBinding
-import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.model.domain.PosibleNames
-import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.illness.AddIllnessViewModel
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert

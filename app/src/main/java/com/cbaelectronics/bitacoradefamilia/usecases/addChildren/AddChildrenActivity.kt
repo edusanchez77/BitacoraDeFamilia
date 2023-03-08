@@ -5,24 +5,19 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.addChildren
 
-import android.os.Binder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddChildrenBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
-import com.cbaelectronics.bitacoradefamilia.util.UIUtil
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.enable

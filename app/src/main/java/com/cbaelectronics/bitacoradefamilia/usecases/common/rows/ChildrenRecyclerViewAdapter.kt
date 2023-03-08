@@ -75,7 +75,7 @@ class ChildrenRecyclerViewAdapter(private val context: Context): RecyclerView.Ad
 
             itemView.setOnClickListener {
                 Log.d("LogEdu", children.toString())
-                MenuRouter().launch(context, children)
+                MenuRouter().launch(context, children.id.toString())
             }
         }
 

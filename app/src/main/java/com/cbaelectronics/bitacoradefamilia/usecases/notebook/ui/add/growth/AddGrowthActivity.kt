@@ -7,7 +7,6 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.growth
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
@@ -19,7 +18,6 @@ import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil
 import com.cbaelectronics.bitacoradefamilia.util.extension.*
 import java.text.SimpleDateFormat
-import kotlin.text.toDouble
 
 class AddGrowthActivity : AppCompatActivity() {
 

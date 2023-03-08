@@ -29,8 +29,12 @@ import com.cbaelectronics.bitacoradefamilia.usecases.settings.SettingsRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.share.ShareRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class MenuActivity : AppCompatActivity() {
 
@@ -38,8 +42,8 @@ class MenuActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMenuBinding
     private lateinit var viewModel: MenuViewModel
-    private lateinit var childrenJSON: String
-    private lateinit var children: Children
+    //private lateinit var childrenJSON: String
+    //private lateinit var children: Children
 
     // Initialization
 
@@ -61,17 +65,18 @@ class MenuActivity : AppCompatActivity() {
 
     private fun data(){
         val bundle = intent.extras
-        childrenJSON = bundle?.getString(DatabaseField.CHILDREN.key).toString()
-        children = Children.fromJson(childrenJSON)!!
-        viewModel.childrenInstance(children)
+        //childrenJSON = bundle?.getString(DatabaseField.CHILDREN.key).toString()
+        //children = Children.fromJson(childrenJSON)!!
+        val childrenId = bundle?.getString(DatabaseField.CHILDREN_ID.key)
+        loadChildren(childrenId!!)
     }
 
     private fun localize() {
-        binding.textViewName.text = children.name
-        binding.textViewMenuDateOfBirth.text = children.date
-        binding.textViewMenuHourOfBirth.text = children.hour
-        binding.textViewMenuWeigthOfBirth.text = children.weight.toString()
-        binding.textViewMenuHeigthOfBirth.text = children.height.toString()
+        binding.textViewName.text = viewModel.childrenShared?.name
+        binding.textViewMenuDateOfBirth.text = viewModel.childrenShared?.date
+        binding.textViewMenuHourOfBirth.text = viewModel.childrenShared?.hour
+        binding.textViewMenuWeigthOfBirth.text = viewModel.childrenShared?.weight.toString()
+        binding.textViewMenuHeigthOfBirth.text = viewModel.childrenShared?.height.toString()
 
         binding.textViewPregnancyDiary.text = getString(viewModel.pregnancyDiary)
         binding.textViewPediatricNotebook.text = getString(viewModel.pediatricNotebook)
@@ -95,11 +100,25 @@ class MenuActivity : AppCompatActivity() {
     private fun buttons() {
 
         binding.cardViewPregnant.setOnClickListener {
-            PregnantRouter().launch(this, children)
+            PregnantRouter().launch(this, viewModel.childrenShared!!)
         }
 
         binding.cardViewNotebook.setOnClickListener {
-            NotebookRouter().launch(this, children)
+            NotebookRouter().launch(this, viewModel.childrenShared!!)
+        }
+
+    }
+
+    private fun loadChildren(email: String) = runBlocking {
+
+        withContext(Dispatchers.Default) {
+            viewModel.load(email)
+        }
+
+        if (viewModel.childrenShared == null) {
+            showAlert(this@MenuActivity, "No se pudo levantar el nombre")
+        } else {
+            viewModel.childrenInstance(viewModel.childrenShared!!)
         }
 
     }

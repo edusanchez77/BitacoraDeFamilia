@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddEchographyBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Echography
-import com.cbaelectronics.bitacoradefamilia.model.domain.MedicalMeeting
 import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType

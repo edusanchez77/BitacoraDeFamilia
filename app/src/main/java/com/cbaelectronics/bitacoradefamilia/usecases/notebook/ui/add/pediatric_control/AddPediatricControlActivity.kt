@@ -7,7 +7,6 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.pediatric_
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
@@ -21,7 +20,6 @@ import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
-import com.cbaelectronics.bitacoradefamilia.util.extension.toDate
 import java.text.SimpleDateFormat
 
 class AddPediatricControlActivity : AppCompatActivity() {

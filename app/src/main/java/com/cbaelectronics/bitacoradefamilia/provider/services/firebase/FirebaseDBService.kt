@@ -16,8 +16,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cbaelectronics.bitacoradefamilia.model.domain.*
 import com.cbaelectronics.bitacoradefamilia.util.extension.removeFirebaseInvalidCharacters
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 enum class DatabaseField(val key: String) {
 
@@ -131,6 +135,15 @@ object FirebaseDBService {
 
     }
 
+    suspend fun loadChildren(childrenId: String): DocumentSnapshot? {
+
+        return withContext(Dispatchers.IO) {
+            childreRef.document(childrenId)
+                .get()
+                .await()
+        }
+    }
+
     fun load(user: User): LiveData<MutableList<Children>> {
         val mutableData = MutableLiveData<MutableList<Children>>()
 
@@ -146,6 +159,7 @@ object FirebaseDBService {
                 val id = document.id
                 val name = document.get(DatabaseField.NAME.key).toString()
                 val genre = document.get(DatabaseField.GENRE.key).toString()
+                val avatar = document.get(DatabaseField.AVATAR.key).toString()
                 val date = document.get(DatabaseField.DATE_OF_BIRTH.key).toString()
                 val hour = document.get(DatabaseField.HOUR_OF_BIRTH.key).toString()
                 val weight = document.get(DatabaseField.WEIGHT.key).toString()
@@ -166,6 +180,7 @@ object FirebaseDBService {
                     id = id,
                     name = name,
                     genre = genre,
+                    avatar = avatar,
                     date = date,
                     hour = hour,
                     weight = weight,
@@ -724,6 +739,57 @@ object FirebaseDBService {
         sharedChildren.id.let {
             sharedRef.document().set(sharedChildren.toJSON())
         }
+    }
+
+    fun loadShared(email: String): LiveData<MutableList<SharedChildren>>{
+        val mutableList = MutableLiveData<MutableList<SharedChildren>>()
+
+        sharedRef
+            .whereEqualTo(DatabaseField.EMAIL.key, email)
+            .addSnapshotListener { value, error ->
+                val listData = mutableListOf<SharedChildren>()
+
+                for (document in value!!) {
+
+                    val registeredByData =
+                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+                    val id = document.get(DatabaseField.CHILDREN_ID.key).toString()
+                    val name = document.get(DatabaseField.NAME.key).toString()
+                    val genre = document.get(DatabaseField.GENRE.key).toString()
+                    val avatar = document.get(DatabaseField.AVATAR.key).toString()
+                    val email = document.get(DatabaseField.EMAIL.key).toString()
+                    val permission = document.getLong(DatabaseField.PERMISSION.key)?.toInt()
+                    val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
+                    val usrEmail = registeredByData.get(DatabaseField.EMAIL.key).toString()
+                    val usrName = registeredByData.get(DatabaseField.DISPLAY_NAME.key).toString()
+                    val usrPhoto =
+                        registeredByData.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = registeredByData.get(DatabaseField.TOKEN.key).toString()
+                    val usrType = registeredByData.get(DatabaseField.TYPE.key).toString().toInt()
+
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val sharedChildren = SharedChildren(
+                        id = id,
+                        name = name,
+                        genre = genre,
+                        avatar = avatar,
+                        registeredDate = registeredDate,
+                        registeredBy = user,
+                        email = email,
+                        permission = permission!!.toInt()
+                    )
+
+                    listData.add(sharedChildren)
+                }
+
+                mutableList.value = listData
+            }
+
+        return mutableList
     }
 
 }

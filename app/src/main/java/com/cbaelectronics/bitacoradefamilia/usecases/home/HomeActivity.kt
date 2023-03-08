@@ -20,6 +20,7 @@ import com.cbaelectronics.bitacoradefamilia.databinding.ActivityHomeBinding
 import com.cbaelectronics.bitacoradefamilia.usecases.about.AboutRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.addChildren.AddChildrenRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.ChildrenRecyclerViewAdapter
+import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.SharedChildrenRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.onboarding.OnboardingRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.settings.SettingsRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -35,7 +36,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var adapter: ChildrenRecyclerViewAdapter
-    private lateinit var adapterShared: ChildrenRecyclerViewAdapter
+    private lateinit var adapterShared: SharedChildrenRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -50,7 +51,7 @@ class HomeActivity : AppCompatActivity() {
 
         // Adapter
         adapter = ChildrenRecyclerViewAdapter(this)
-        adapterShared = ChildrenRecyclerViewAdapter(this)
+        adapterShared = SharedChildrenRecyclerViewAdapter(this)
 
         // Setup
         localize()
@@ -84,10 +85,10 @@ class HomeActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
         })
 
-        /*viewModel.loadShared().observe(this, Observer {
+        viewModel.loadShared().observe(this, Observer {
             adapterShared.setDataList(it)
-            adapter.notifyDataSetChanged()
-        })*/
+            adapterShared.notifyDataSetChanged()
+        })
     }
 
     private fun buttons() {

@@ -28,4 +28,11 @@ class MenuRouter: BaseActivityRouter {
         })
     }
 
+    fun launch(activity: Context, childrenId: String){
+        activity.startActivity(intent(activity).apply {
+            putExtra(DatabaseField.CHILDREN_ID.key, childrenId)
+        })
+    }
+
+
 }

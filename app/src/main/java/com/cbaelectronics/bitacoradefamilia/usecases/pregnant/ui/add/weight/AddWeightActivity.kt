@@ -12,12 +12,10 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddWeightBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.ControlWeight
-import com.cbaelectronics.bitacoradefamilia.model.domain.PosibleNames
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil

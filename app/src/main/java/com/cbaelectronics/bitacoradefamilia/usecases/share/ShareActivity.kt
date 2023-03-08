@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityShareBinding
-import com.cbaelectronics.bitacoradefamilia.model.domain.ControlWeight
 import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.model.domain.SharedChildren
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -163,13 +162,13 @@ class ShareActivity : AppCompatActivity() {
             }
 
             val shared = SharedChildren(
-                viewModel.children?.id,
-                viewModel.children?.name,
-                viewModel.children?.genre,
-                viewModel.children?.avatar,
-                viewModel.user,
-                null,
-                permissionInt
+                id = viewModel.children?.id,
+                name = viewModel.children?.name,
+                genre = viewModel.children?.genre,
+                avatar = viewModel.children?.avatar,
+                registeredBy = viewModel.user,
+                email = email.toString(),
+                permission = permissionInt
             )
             saveDatabase(shared)
         }

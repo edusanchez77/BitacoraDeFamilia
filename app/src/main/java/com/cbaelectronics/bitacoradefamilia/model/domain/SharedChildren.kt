@@ -23,6 +23,7 @@ data class SharedChildren(
     var avatar: String? = null,
     val registeredBy: User,
     val registeredDate: Date? = Timestamp(Date().time),
+    val email: String,
     val permission: Int
 ) {
 
@@ -35,6 +36,7 @@ data class SharedChildren(
             DatabaseField.AVATAR.key to (avatar ?: ""),
             DatabaseField.REGISTERED_BY.key to (registeredBy ?: ""),
             DatabaseField.REGISTERED_DATE.key to (registeredDate ?: ""),
+            DatabaseField.EMAIL.key to (email ?: ""),
             DatabaseField.PERMISSION.key to (permission ?: 0)
         )
 
