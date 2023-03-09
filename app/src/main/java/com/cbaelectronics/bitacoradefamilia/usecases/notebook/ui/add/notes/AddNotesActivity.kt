@@ -7,7 +7,6 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.notes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
@@ -15,7 +14,6 @@ import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddNotesBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Notes
 import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 import com.cbaelectronics.bitacoradefamilia.util.Constants
-import com.cbaelectronics.bitacoradefamilia.util.Constants.TYPE_NOTEBOOK
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil
@@ -23,7 +21,6 @@ import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
-import com.cbaelectronics.bitacoradefamilia.util.extension.toDate
 import java.text.SimpleDateFormat
 
 class AddNotesActivity : AppCompatActivity() {

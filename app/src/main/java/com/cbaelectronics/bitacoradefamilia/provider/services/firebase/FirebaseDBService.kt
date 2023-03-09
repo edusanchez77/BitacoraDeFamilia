@@ -16,8 +16,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cbaelectronics.bitacoradefamilia.model.domain.*
 import com.cbaelectronics.bitacoradefamilia.util.extension.removeFirebaseInvalidCharacters
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 enum class DatabaseField(val key: String) {
 
@@ -34,12 +38,13 @@ enum class DatabaseField(val key: String) {
     PREGNANT_INFO("pregnantInformation"),
     MEDICAL_MEETING("medicalMeeting"),
     ECHOGRAPHY("echography"),
+    SHARED("shared"),
 
     // Generic Field
     SETTINGS("settings"),
     REGISTERED_DATE("registerDate"),
     REGISTERED_BY("registeredBy"),
-    SHARED_WITH("sharedBy"),
+    SHARED_WITH("sharedWith"),
     FIELD_NOTES("notes"),
 
     // User
@@ -59,6 +64,7 @@ enum class DatabaseField(val key: String) {
     WEIGHT("weight"),
     HEIGHT("height"),
     AVATAR("childrenAvatar"),
+    PERMISSION("permission"),
 
     // Growth
     DATE("date"),
@@ -110,6 +116,7 @@ object FirebaseDBService {
     private val pregnantInfoRef = FirebaseFirestore.getInstance().collection(DatabaseField.PREGNANT_INFO.key)
     private val medicalMeetingRef = FirebaseFirestore.getInstance().collection(DatabaseField.MEDICAL_MEETING.key)
     private val echographyRef = FirebaseFirestore.getInstance().collection(DatabaseField.ECHOGRAPHY.key)
+    private val sharedRef = FirebaseFirestore.getInstance().collection(DatabaseField.SHARED.key)
 
     // Public
 
@@ -128,12 +135,22 @@ object FirebaseDBService {
 
     }
 
+    suspend fun loadChildren(childrenId: String): DocumentSnapshot? {
+
+        return withContext(Dispatchers.IO) {
+            childreRef.document(childrenId)
+                .get()
+                .await()
+        }
+    }
+
     fun load(user: User): LiveData<MutableList<Children>> {
         val mutableData = MutableLiveData<MutableList<Children>>()
 
-        childreRef.whereEqualTo(
-            "${DatabaseField.REGISTERED_BY.key}.${DatabaseField.EMAIL.key}", user?.email
-        ).addSnapshotListener { value, error ->
+        childreRef
+            .whereEqualTo("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.EMAIL.key}", user?.email)
+            .orderBy(DatabaseField.REGISTERED_DATE.key, Query.Direction.ASCENDING)
+            .addSnapshotListener { value, error ->
             val listData = mutableListOf<Children>()
 
             for (document in value!!) {
@@ -143,11 +160,14 @@ object FirebaseDBService {
                 val id = document.id
                 val name = document.get(DatabaseField.NAME.key).toString()
                 val genre = document.get(DatabaseField.GENRE.key).toString()
+                val avatar = document.get(DatabaseField.AVATAR.key).toString()
                 val date = document.get(DatabaseField.DATE_OF_BIRTH.key).toString()
                 val hour = document.get(DatabaseField.HOUR_OF_BIRTH.key).toString()
                 val weight = document.get(DatabaseField.WEIGHT.key).toString()
                 val height = document.get(DatabaseField.HEIGHT.key).toString()
+                val permission = document.getLong(DatabaseField.PERMISSION.key)?.toInt()
                 val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
                 val usrEmail = registeredByData.get(DatabaseField.EMAIL.key).toString()
                 val usrName = registeredByData.get(DatabaseField.DISPLAY_NAME.key).toString()
                 val usrPhoto =
@@ -163,12 +183,14 @@ object FirebaseDBService {
                     id = id,
                     name = name,
                     genre = genre,
+                    avatar = avatar,
                     date = date,
                     hour = hour,
                     weight = weight,
                     height = height,
                     registeredDate = registeredDate,
-                    registeredBy = user
+                    registeredBy = user,
+                    permission = permission
                 )
 
                 listData.add(children!!)
@@ -178,6 +200,7 @@ object FirebaseDBService {
 
         return mutableData
     }
+
 
     fun save(growth: Growth) {
 
@@ -239,7 +262,9 @@ object FirebaseDBService {
 
         val mutableList = MutableLiveData<MutableList<Illness>>()
 
-        illnessRef.orderBy(DatabaseField.DATE.key)
+        illnessRef
+            .whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .orderBy(DatabaseField.DATE.key)
             .addSnapshotListener { value, error ->
 
                 val listData = mutableListOf<Illness>()
@@ -301,6 +326,7 @@ object FirebaseDBService {
         val mutableList = MutableLiveData<MutableList<PediatricControl>>()
 
         controlRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .orderBy(DatabaseField.DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
 
                 val listData = mutableListOf<PediatricControl>()
@@ -365,6 +391,7 @@ object FirebaseDBService {
 
         notesRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
             .whereEqualTo(DatabaseField.NOTE_TYPE.key, type)
+            .orderBy(DatabaseField.DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
 
                 val listData = mutableListOf<Notes>()
@@ -417,7 +444,9 @@ object FirebaseDBService {
     fun loadAchievement(childrenId: String): LiveData<MutableList<Achievements>> {
         val mutableList = MutableLiveData<MutableList<Achievements>>()
 
-        achievementRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+        achievementRef
+            .whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .orderBy(DatabaseField.DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
 
                 val listData = mutableListOf<Achievements>()
@@ -473,6 +502,7 @@ object FirebaseDBService {
         namesRef
             .whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
             .whereEqualTo(DatabaseField.GENRE.key, genre)
+            .orderBy(DatabaseField.REGISTERED_DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<PosibleNames>()
 
@@ -623,6 +653,7 @@ object FirebaseDBService {
         val mutableList = MutableLiveData<MutableList<MedicalMeeting>>()
 
         medicalMeetingRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .orderBy(DatabaseField.DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<MedicalMeeting>()
 
@@ -674,7 +705,7 @@ object FirebaseDBService {
         val mutableList = MutableLiveData<MutableList<Echography>>()
 
         echographyRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
-            .orderBy(DatabaseField.WEEK.key, Query.Direction.ASCENDING)
+            .orderBy(DatabaseField.DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<Echography>()
 
@@ -708,6 +739,64 @@ object FirebaseDBService {
                     )
 
                     listData.add(echography)
+                }
+
+                mutableList.value = listData
+            }
+
+        return mutableList
+    }
+
+    fun save(sharedChildren: SharedChildren){
+        sharedChildren.id.let {
+            sharedRef.document().set(sharedChildren.toJSON())
+        }
+    }
+
+    fun loadShared(email: String): LiveData<MutableList<SharedChildren>>{
+        val mutableList = MutableLiveData<MutableList<SharedChildren>>()
+
+        sharedRef
+            .whereEqualTo(DatabaseField.EMAIL.key, email)
+            .orderBy(DatabaseField.REGISTERED_DATE.key, Query.Direction.ASCENDING)
+            .addSnapshotListener { value, error ->
+                val listData = mutableListOf<SharedChildren>()
+
+                for (document in value!!) {
+
+                    val registeredByData =
+                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+                    val id = document.get(DatabaseField.CHILDREN_ID.key).toString()
+                    val name = document.get(DatabaseField.NAME.key).toString()
+                    val genre = document.get(DatabaseField.GENRE.key).toString()
+                    val avatar = document.get(DatabaseField.AVATAR.key).toString()
+                    val email = document.get(DatabaseField.EMAIL.key).toString()
+                    val permission = document.getLong(DatabaseField.PERMISSION.key)?.toInt()
+                    val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
+                    val usrEmail = registeredByData.get(DatabaseField.EMAIL.key).toString()
+                    val usrName = registeredByData.get(DatabaseField.DISPLAY_NAME.key).toString()
+                    val usrPhoto =
+                        registeredByData.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = registeredByData.get(DatabaseField.TOKEN.key).toString()
+                    val usrType = registeredByData.get(DatabaseField.TYPE.key).toString().toInt()
+
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val sharedChildren = SharedChildren(
+                        id = id,
+                        name = name,
+                        genre = genre,
+                        avatar = avatar,
+                        registeredDate = registeredDate,
+                        registeredBy = user,
+                        email = email,
+                        permission = permission!!.toInt()
+                    )
+
+                    listData.add(sharedChildren)
                 }
 
                 mutableList.value = listData

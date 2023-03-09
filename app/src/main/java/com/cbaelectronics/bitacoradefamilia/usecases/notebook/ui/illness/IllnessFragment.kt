@@ -10,12 +10,15 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentIllnessBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.IllnessRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.illness.AddIllnessRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -69,6 +72,14 @@ class IllnessFragment : Fragment() {
         binding.recyclerViewIllness.adapter = adapter
 
         observeData()
+
+        // Footer
+
+        if (viewModel.permission == Permission.READ.value){
+            binding.layoutButtons.visibility = GONE
+        }else{
+            binding.layoutButtons.visibility = VISIBLE
+        }
     }
 
     private fun footer() {

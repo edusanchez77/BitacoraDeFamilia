@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
+import com.cbaelectronics.bitacoradefamilia.model.domain.SharedChildren
 import com.cbaelectronics.bitacoradefamilia.model.domain.User
 import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
 import com.cbaelectronics.bitacoradefamilia.model.session.Session
@@ -38,6 +39,16 @@ class HomeViewModel: ViewModel() {
         val mutableData = MutableLiveData<MutableList<Children>>()
 
         FirebaseDBService.load(user).observeForever{
+            mutableData.value = it
+        }
+
+        return mutableData
+    }
+
+    fun loadShared():LiveData<MutableList<SharedChildren>>{
+        val mutableData = MutableLiveData<MutableList<SharedChildren>>()
+
+        FirebaseDBService.loadShared(user.email!!).observeForever{
             mutableData.value = it
         }
 

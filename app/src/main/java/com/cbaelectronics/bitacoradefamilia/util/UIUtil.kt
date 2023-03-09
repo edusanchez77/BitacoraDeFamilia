@@ -7,6 +7,7 @@ package com.cbaelectronics.bitacoradefamilia.util
 
 import android.content.Context
 import android.widget.Toast
+import kotlinx.coroutines.CoroutineScope
 
 object UIUtil {
 

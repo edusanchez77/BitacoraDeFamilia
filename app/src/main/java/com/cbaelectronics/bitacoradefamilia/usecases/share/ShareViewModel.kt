@@ -5,11 +5,15 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.share
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
+import com.cbaelectronics.bitacoradefamilia.model.domain.SharedChildren
 import com.cbaelectronics.bitacoradefamilia.model.domain.User
 import com.cbaelectronics.bitacoradefamilia.model.domain.UserSettings
 import com.cbaelectronics.bitacoradefamilia.model.session.Session
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.FirebaseDBService
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 
 class ShareViewModel: ViewModel() {
 
@@ -28,5 +32,11 @@ class ShareViewModel: ViewModel() {
     val errorIncomplete = R.string.add_alert_error_incomplete
     val errorUnknown = R.string.add_alert_error_unknown
     val ok = R.string.add_alert_ok
+
+    // Public
+
+    fun save(sharedChildren: SharedChildren){
+        FirebaseDBService.save(sharedChildren)
+    }
 
 }

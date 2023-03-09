@@ -20,6 +20,7 @@ import com.cbaelectronics.bitacoradefamilia.databinding.ActivityHomeBinding
 import com.cbaelectronics.bitacoradefamilia.usecases.about.AboutRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.addChildren.AddChildrenRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.ChildrenRecyclerViewAdapter
+import com.cbaelectronics.bitacoradefamilia.usecases.common.rows.SharedChildrenRecyclerViewAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.onboarding.OnboardingRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.settings.SettingsRouter
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
@@ -35,6 +36,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var adapter: ChildrenRecyclerViewAdapter
+    private lateinit var adapterShared: SharedChildrenRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -49,6 +51,7 @@ class HomeActivity : AppCompatActivity() {
 
         // Adapter
         adapter = ChildrenRecyclerViewAdapter(this)
+        adapterShared = SharedChildrenRecyclerViewAdapter(this)
 
         // Setup
         localize()
@@ -68,6 +71,9 @@ class HomeActivity : AppCompatActivity() {
         binding.recyclerViewHome.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerViewHome.adapter = adapter
 
+        binding.recyclerViewHomeShare.layoutManager = GridLayoutManager(this, 2)
+        binding.recyclerViewHomeShare.adapter = adapterShared
+
         observeDate()
         buttons()
 
@@ -77,6 +83,11 @@ class HomeActivity : AppCompatActivity() {
         viewModel.load().observe(this, Observer {
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
+        })
+
+        viewModel.loadShared().observe(this, Observer {
+            adapterShared.setDataList(it)
+            adapterShared.notifyDataSetChanged()
         })
     }
 

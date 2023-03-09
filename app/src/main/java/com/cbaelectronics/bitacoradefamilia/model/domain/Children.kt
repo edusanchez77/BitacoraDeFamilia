@@ -28,7 +28,7 @@ data class Children(
     var avatar: String? = null,
     val registeredBy: User,
     val registeredDate: Date? = Timestamp(Date().time),
-    val sharedWith: String? = null
+    val permission: Int? = Permission.ADMIN.value
 ){
 
     fun toJSON(): Map<String, Any> {
@@ -44,7 +44,7 @@ data class Children(
             DatabaseField.AVATAR.key to (avatar ?: ""),
             DatabaseField.REGISTERED_BY.key to (registeredBy ?: ""),
             DatabaseField.REGISTERED_DATE.key to (registeredDate ?: ""),
-            DatabaseField.SHARED_WITH.key to (sharedWith ?: "")
+            DatabaseField.PERMISSION.key to (permission ?: "")
         )
 
         return JSON
@@ -59,6 +59,19 @@ data class Children(
         fun fromJson(json: String): Children? {
             return GsonBuilder().setDateFormat(Constants.JSON_DATE_FORMAT).create().fromJson(json, Children::class.java)
         }
+
+    }
+
+}
+
+data class ChildrenPermission(
+    var permission: Int = Permission.READ.value
+){
+    fun toJSON() : MutableMap<String, Any>{
+
+        return mutableMapOf(
+            DatabaseField.PERMISSION.key to permission
+        )
 
     }
 

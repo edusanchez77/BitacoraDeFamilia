@@ -9,6 +9,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -16,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentInfoBinding
 import com.cbaelectronics.bitacoradefamilia.databinding.FragmentInformationBinding
+import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.usecases.common.tabs.tabInfoAdapter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.add.info.AddInfoRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.info.InfoViewModel
@@ -72,6 +75,14 @@ class InformationFragment : Fragment() {
         binding.textViewInfoReactionsBody.font(FontSize.BODY, FontType.LIGHT, ContextCompat.getColor(binding.root.context, R.color.text))
 
         observeData()
+
+        // Footer
+
+        if (viewModel.permission == Permission.READ.value){
+            binding.layoutButtons.visibility = GONE
+        }else{
+            binding.layoutButtons.visibility = VISIBLE
+        }
     }
 
     private fun footer() {
