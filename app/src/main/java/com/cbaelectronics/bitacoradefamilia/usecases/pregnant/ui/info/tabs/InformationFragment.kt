@@ -94,17 +94,18 @@ class InformationFragment : Fragment() {
     }
 
     private fun observeData() = runBlocking{
-        /*viewModel.loadInfo().observe(viewLifecycleOwner, Observer {
-            binding.textViewInfoWhenBody.text = it[0].mWhen
-            binding.textViewInfoHowBody.text = it[0].how
-            binding.textViewInfoReactionsBody.text = it[0].reactions
-        })*/
+
         withContext(Dispatchers.Default){
             viewModel.loadInformation()
 
             binding.textViewInfoWhenBody.text = viewModel.information?.mWhen
             binding.textViewInfoHowBody.text = viewModel.information?.how
             binding.textViewInfoReactionsBody.text = viewModel.information?.reactions
+
+        }
+
+        if(!viewModel.information.registeredBy?.email.isNullOrEmpty()){
+            binding.buttonPregnantTabInformationAdd.text = "Modificar informacion"
         }
     }
 
