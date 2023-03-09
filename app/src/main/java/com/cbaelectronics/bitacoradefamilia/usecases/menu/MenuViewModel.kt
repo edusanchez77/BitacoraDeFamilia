@@ -34,13 +34,15 @@ class MenuViewModel: ViewModel() {
 
     val pregnancyDiary = R.string.menu_card_pregnant
     val pediatricNotebook = R.string.menu_card_notebook
+    val alertShared = R.string.menu_alert_notShared
+    val alertErrorChildren = R.string.menu_alert_children_error
     val alertLogout = R.string.session_alert_logout
     val alertButtonOk = R.string.session_alert_button_ok
     val alertButtonCancel = R.string.session_alert_button_cancel
 
     // Public
 
-    suspend fun load(childrenId: String) = runBlocking {
+    suspend fun load(childrenId: String, permission: Int) = runBlocking {
         async {
             val documentSnapshot = FirebaseDBService.loadChildren(childrenId)
             if (documentSnapshot != null) {
@@ -70,7 +72,7 @@ class MenuViewModel: ViewModel() {
                         avatar = documentSnapshot.getString(DatabaseField.AVATAR.key),
                         registeredBy = user,
                         registeredDate = documentSnapshot.getDate(DatabaseField.REGISTERED_DATE.key),
-                        sharedWith = null
+                        permission = permission
                     )
 
                     childrenShared = children

@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -20,6 +21,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityMenuBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
+import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 import com.cbaelectronics.bitacoradefamilia.usecases.about.AboutRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookRouter
@@ -69,12 +71,13 @@ class MenuActivity : AppCompatActivity() {
         //children = Children.fromJson(childrenJSON)!!
         val childrenId = bundle?.getString(DatabaseField.CHILDREN_ID.key)
         val permission = bundle?.getInt(DatabaseField.PERMISSION.key)
+
         loadChildren(childrenId!!, permission!!)
     }
 
     private fun localize() {
         binding.textViewName.text = viewModel.childrenShared?.name
-        binding.textViewMenuDateOfBirth.text = viewModel.childrenShared?.date
+        binding.textViewMenuDateOfBirth.text = viewModel.childrenShared?.date.toString()
         binding.textViewMenuHourOfBirth.text = viewModel.childrenShared?.hour
         binding.textViewMenuWeigthOfBirth.text = viewModel.childrenShared?.weight.toString()
         binding.textViewMenuHeigthOfBirth.text = viewModel.childrenShared?.height.toString()
@@ -113,11 +116,11 @@ class MenuActivity : AppCompatActivity() {
     private fun loadChildren(childrenId: String, permission: Int) = runBlocking {
 
         withContext(Dispatchers.Default) {
-            viewModel.load(childrenId)
+            viewModel.load(childrenId, permission)
         }
 
         if (viewModel.childrenShared == null) {
-            showAlert(this@MenuActivity, "No se pudo levantar el nombre")
+            showAlert(this@MenuActivity, getString(viewModel.alertErrorChildren))
         } else {
             viewModel.childrenInstance(viewModel.childrenShared!!, permission)
         }
@@ -133,7 +136,11 @@ class MenuActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share -> {
-                ShareRouter().launch(this)
+                if(viewModel.childrenShared?.permission == Permission.ADMIN.value){
+                    ShareRouter().launch(this)
+                }else{
+                    showAlert(this, getString(viewModel.alertShared))
+                }
             }
             R.id.action_onboard -> {
                 OnboardingRouter().launch(this)

@@ -43,6 +43,8 @@
     <!-- Menu -->
     <string name="menu.card.pregnant">Diario de\nEmbarazo</string>
     <string name="menu.card.notebook">Cuaderno\nPediátrico</string>
+    <string name="menu.alert.notShared">No tenes permisos para compartir esta información</string>
+    <string name="menu.alert.children.error">Ocurrió un error inesperado. Intentá de nuevo más tarde.</string>
 
     <!-- Achievements -->
     <string name="achievements.title">Logros Desbloqueados</string>

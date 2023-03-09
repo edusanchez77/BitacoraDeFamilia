@@ -13,7 +13,8 @@ import java.util.*
 
 enum class Permission(val type: String, val value: Int){
     READ("Solo Lectura", 0),
-    WRITE("Editar Información", 1)
+    WRITE("Editar Información", 1),
+    ADMIN("Administrador", 2)
 }
 
 data class SharedChildren(

@@ -165,7 +165,9 @@ object FirebaseDBService {
                 val hour = document.get(DatabaseField.HOUR_OF_BIRTH.key).toString()
                 val weight = document.get(DatabaseField.WEIGHT.key).toString()
                 val height = document.get(DatabaseField.HEIGHT.key).toString()
+                val permission = document.getLong(DatabaseField.PERMISSION.key)?.toInt()
                 val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
                 val usrEmail = registeredByData.get(DatabaseField.EMAIL.key).toString()
                 val usrName = registeredByData.get(DatabaseField.DISPLAY_NAME.key).toString()
                 val usrPhoto =
@@ -187,7 +189,8 @@ object FirebaseDBService {
                     weight = weight,
                     height = height,
                     registeredDate = registeredDate,
-                    registeredBy = user
+                    registeredBy = user,
+                    permission = permission
                 )
 
                 listData.add(children!!)
