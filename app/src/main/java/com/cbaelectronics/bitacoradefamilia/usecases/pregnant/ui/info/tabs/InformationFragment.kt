@@ -26,6 +26,9 @@ import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class InformationFragment : Fragment() {
 
@@ -51,6 +54,7 @@ class InformationFragment : Fragment() {
         // Setup
         localize()
         setup()
+        observeData()
         footer()
 
         return binding.root
@@ -74,8 +78,6 @@ class InformationFragment : Fragment() {
         binding.textViewInfoHowBody.font(FontSize.BODY, FontType.LIGHT, ContextCompat.getColor(binding.root.context, R.color.text))
         binding.textViewInfoReactionsBody.font(FontSize.BODY, FontType.LIGHT, ContextCompat.getColor(binding.root.context, R.color.text))
 
-        observeData()
-
         // Footer
 
         if (viewModel.permission == Permission.READ.value){
@@ -91,12 +93,20 @@ class InformationFragment : Fragment() {
         }
     }
 
-    private fun observeData(){
-        viewModel.loadInfo().observe(viewLifecycleOwner, Observer {
-            binding.textViewInfoWhenBody.text = it[0].mWhen
-            binding.textViewInfoHowBody.text = it[0].how
-            binding.textViewInfoReactionsBody.text = it[0].reactions
-        })
+    private fun observeData() = runBlocking{
+
+        withContext(Dispatchers.Default){
+            viewModel.loadInformation()
+
+            binding.textViewInfoWhenBody.text = viewModel.information?.mWhen
+            binding.textViewInfoHowBody.text = viewModel.information?.how
+            binding.textViewInfoReactionsBody.text = viewModel.information?.reactions
+
+        }
+
+        if(!viewModel.information.registeredBy?.email.isNullOrEmpty()){
+            binding.buttonPregnantTabInformationAdd.text = "Modificar informacion"
+        }
     }
 
 }

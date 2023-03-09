@@ -16,7 +16,7 @@ data class PregnantInfo(
     val mWhen: String? = null,
     val how: String? = null,
     val reactions: String? = null,
-    val registeredBy: User,
+    val registeredBy: User? = null,
     val registeredDate: Date? = Timestamp(Date().time)
 ){
     fun toJSON(): Map<String, Any> {

@@ -593,9 +593,21 @@ object FirebaseDBService {
     }
 
     fun save(pregnantInfo: PregnantInfo){
+        val childrenId = pregnantInfo.childrenId
+
         pregnantInfo.childrenId.let {
-            pregnantInfoRef.document().set(pregnantInfo.toJSON())
+            pregnantInfoRef.document(childrenId.toString()).set(pregnantInfo.toJSON())
         }
+    }
+
+    suspend fun loadPregnantInformation(childrenId: String): DocumentSnapshot? {
+
+        return withContext(Dispatchers.IO) {
+            pregnantInfoRef.document(childrenId)
+                .get()
+                .await()
+        }
+
     }
 
     fun loadPregnantInfo(childrenId: String): LiveData<MutableList<PregnantInfo>>{
