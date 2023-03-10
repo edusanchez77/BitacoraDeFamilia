@@ -8,6 +8,8 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.illness
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +30,11 @@ class AddIllnessActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
 
     private lateinit var binding: ActivityAddIllnessBinding
     private lateinit var viewModel: AddIllnessViewModel
+    private var dateEditText: String? = null
+    private var illnessEditText: String? = null
+    private var durationEditText: String? = null
+    private var symptomEditText: String? = null
+    private var medicationEditText: String? = null
 
     private var day = 0
     private var month = 0
@@ -104,15 +111,113 @@ class AddIllnessActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
                 ).show()
             }
         }
+
+        footerInfo()
     }
 
     private fun footer() {
+        disableSave()
         binding.buttonSaveIllness.setOnClickListener {
             validForm()
         }
 
         binding.buttonCancelIllness.setOnClickListener {
             onBackPressed()
+        }
+    }
+
+    private fun footerInfo() {
+
+        // Date
+
+        binding.editTextAddIllnessDate.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                dateEditText = binding.editTextAddIllnessDate.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Illness
+
+        binding.editTextAddIllnessName.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                illnessEditText = binding.editTextAddIllnessName.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Duration
+
+        binding.editTextAddIllnessDuration.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                durationEditText = binding.editTextAddIllnessDuration.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Symptom
+
+        binding.editTextAddIllnessSymptom.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                symptomEditText = binding.editTextAddIllnessSymptom.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Medication
+
+        binding.editTextAddIllnessMedication.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                medicationEditText = binding.editTextAddIllnessMedication.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+    }
+
+    private fun checkEnable() {
+        if (!dateEditText.isNullOrEmpty() && !illnessEditText.isNullOrEmpty() && !durationEditText.isNullOrEmpty() && !symptomEditText.isNullOrEmpty() && !medicationEditText.isNullOrEmpty()) {
+            enableSave()
         }
     }
 
@@ -146,12 +251,23 @@ class AddIllnessActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
         }
     }
 
+    private fun disableSave() {
+        binding.buttonSaveIllness.enable(false)
+        binding.buttonCancelIllness.text = getString(viewModel.back)
+    }
+
+    private fun enableSave() {
+        binding.buttonSaveIllness.enable(true)
+        binding.buttonCancelIllness.text = getString(viewModel.cancel)
+    }
+
     private fun saveDatabase(illness: Illness) {
         viewModel.save(illness)
 
         clearEditText()
         hideSoftInput()
         UIUtil.showAlert(this, getString(viewModel.ok))
+        disableSave()
         finish()
     }
 

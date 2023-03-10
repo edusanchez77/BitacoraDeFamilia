@@ -71,7 +71,7 @@
                         android:id="@+id/editTextAddPediatricControlDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="text"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,7 +87,7 @@
                         android:id="@+id/editTextAddPediatricControlDoctor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="textCapWords"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,7 +103,7 @@
                         android:id="@+id/editTextAddPediatricControlSpeciality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="textCapSentences"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,7 +119,7 @@
                         android:id="@+id/editTextAddPediatricControlWeight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="numberDecimal"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,7 +135,7 @@
                         android:id="@+id/editTextAddPediatricControlHeight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="number"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -151,7 +151,7 @@
                         android:id="@+id/editTextAddPediatricControlObservation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="textCapSentences|textMultiLine"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,7 +167,7 @@
                         android:id="@+id/editTextAddPediatricControlNextControl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="text"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -183,7 +183,7 @@
                         android:id="@+id/editTextAddPediatricControlNotes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="textCapSentences|textMultiLine"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 

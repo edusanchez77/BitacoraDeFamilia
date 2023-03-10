@@ -8,6 +8,8 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.growth
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +30,9 @@ class AddGrowthActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
     private lateinit var binding: ActivityAddGrowthBinding
     private lateinit var viewModel: AddGrowthViewModel
+    private var dateEditText: String? = null
+    private var weightEditText: String? = null
+    private var heightEditText: String? = null
 
     private var day = 0
     private var month = 0
@@ -102,9 +107,12 @@ class AddGrowthActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
                 ).show()
             }
         }
+
+        footerInfo()
     }
 
     private fun footer() {
+        disableSave()
         binding.buttonSaveGrowth.setOnClickListener {
             validForm()
         }
@@ -113,6 +121,68 @@ class AddGrowthActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
             onBackPressed()
         }
     }
+
+    private fun footerInfo(){
+
+        // Date
+
+        binding.editTextAddGrowthDate.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                dateEditText = binding.editTextAddGrowthDate.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Weight
+
+        binding.editTextAddGrowthWeight.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                weightEditText = binding.editTextAddGrowthWeight.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Height
+
+        binding.editTextAddGrowthHeight.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                heightEditText = binding.editTextAddGrowthHeight.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+    }
+
+    private fun checkEnable(){
+        if (!dateEditText.isNullOrEmpty() && !weightEditText.isNullOrEmpty() && !heightEditText.isNullOrEmpty()){
+            enableSave()
+        }
+    }
+
 
     private fun validForm() {
         val date = binding.editTextAddGrowthDate.text.toString()
@@ -146,7 +216,8 @@ class AddGrowthActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         clearEditText()
         hideSoftInput()
         UIUtil.showAlert(this, getString(viewModel.ok))
-        onBackPressed()
+        disableSave()
+        finish()
     }
 
     private fun clearEditText() {
@@ -154,6 +225,16 @@ class AddGrowthActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         binding.editTextAddGrowthWeight.text = null
         binding.editTextAddGrowthHeight.text = null
         binding.editTextAddGrowthPC.text = null
+    }
+
+    private fun disableSave() {
+        binding.buttonSaveGrowth.enable(false)
+        binding.buttonCancelGrowth.text = getString(viewModel.back)
+    }
+
+    private fun enableSave() {
+        binding.buttonSaveGrowth.enable(true)
+        binding.buttonCancelGrowth.text = getString(viewModel.cancel)
     }
 
     private fun getDateTimeCalendar() {

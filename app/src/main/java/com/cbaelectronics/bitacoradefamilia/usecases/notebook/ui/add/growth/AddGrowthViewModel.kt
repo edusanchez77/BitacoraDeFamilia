@@ -26,6 +26,7 @@ class AddGrowthViewModel: ViewModel() {
     val title = R.string.add_growth_title
     val save = R.string.add_button_save
     val cancel = R.string.add_button_cancel
+    val back = R.string.add_button_back
     val date = R.string.add_growth_edittext_date
     val weight = R.string.add_growth_edittext_weight
     val height = R.string.add_growth_edittext_height

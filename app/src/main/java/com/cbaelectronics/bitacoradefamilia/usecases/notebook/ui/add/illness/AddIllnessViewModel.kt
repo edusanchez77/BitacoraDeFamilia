@@ -26,6 +26,7 @@ class AddIllnessViewModel: ViewModel() {
     val title = R.string.add_illness_title
     val save = R.string.add_button_save
     val cancel = R.string.add_button_cancel
+    val back = R.string.add_button_back
     val editTextDate = R.string.add_illness_edittext_date
     val editTextIllnessName = R.string.add_illness_edittext_name
     val editTextDuration = R.string.add_illness_edittext_duration

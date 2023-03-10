@@ -8,6 +8,8 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.notes
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +23,7 @@ import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
+import com.cbaelectronics.bitacoradefamilia.util.extension.enable
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
 import java.text.SimpleDateFormat
@@ -33,6 +36,8 @@ class AddNotesActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     private lateinit var binding: ActivityAddNotesBinding
     private lateinit var viewModel: AddNotesViewModel
     private lateinit var type: String
+    private var dateEditText: String? = null
+    private var noteEditText: String? = null
 
     private var day = 0
     private var month = 0
@@ -105,6 +110,8 @@ class AddNotesActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 ).show()
             }
         }
+
+        footerInfo()
     }
 
     private fun data(){
@@ -113,12 +120,57 @@ class AddNotesActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     }
 
     private fun footer() {
+        disableSave()
         binding.buttonSaveNote.setOnClickListener {
             validForm()
         }
 
         binding.buttonCancelNote.setOnClickListener {
             onBackPressed()
+        }
+    }
+
+    private fun footerInfo(){
+
+        // Date
+
+        binding.editTextAddNoteDate.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                dateEditText = binding.editTextAddNoteDate.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Notes
+
+        binding.editTextAddNote.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                noteEditText = binding.editTextAddNote.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+    }
+
+    private fun checkEnable(){
+        if (!dateEditText.isNullOrEmpty() && !noteEditText.isNullOrEmpty()){
+            enableSave()
         }
     }
 
@@ -151,6 +203,7 @@ class AddNotesActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         clearEditText()
         hideSoftInput()
         UIUtil.showAlert(this, getString(viewModel.ok))
+        disableSave()
         finish()
     }
 
@@ -158,6 +211,16 @@ class AddNotesActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         binding.editTextAddNoteDate.text = null
         binding.editTextAddNote.text = null
 
+    }
+
+    private fun disableSave() {
+        binding.buttonSaveNote.enable(false)
+        binding.buttonCancelNote.text = getString(viewModel.back)
+    }
+
+    private fun enableSave() {
+        binding.buttonSaveNote.enable(true)
+        binding.buttonCancelNote.text = getString(viewModel.cancel)
     }
 
     private fun getDateTimeCalendar() {

@@ -157,7 +157,7 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
             }
         })
 
-        // Doctor
+        // Week
 
         binding.editTextAddEchographyWeek.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

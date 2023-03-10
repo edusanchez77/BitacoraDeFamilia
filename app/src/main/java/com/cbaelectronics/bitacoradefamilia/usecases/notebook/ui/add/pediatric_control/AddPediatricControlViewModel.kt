@@ -26,6 +26,7 @@ class AddPediatricControlViewModel: ViewModel() {
     val title = R.string.add_pediatriccontrol_title
     val save = R.string.add_button_save
     val cancel = R.string.add_button_cancel
+    val back = R.string.add_button_back
     val editTextDate = R.string.add_pediatriccontrol_edittext_date
     val editTextDoctor = R.string.add_pediatriccontrol_edittext_doctor
     val editTextSpeciality = R.string.add_pediatriccontrol_edittext_speciality
