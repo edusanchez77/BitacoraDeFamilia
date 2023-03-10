@@ -5,8 +5,10 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.illness
 
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.DatePicker
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
@@ -18,13 +20,21 @@ import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil
 import com.cbaelectronics.bitacoradefamilia.util.extension.*
 import java.text.SimpleDateFormat
+import java.util.*
 
-class AddIllnessActivity : AppCompatActivity() {
+class AddIllnessActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
     // Properties
 
     private lateinit var binding: ActivityAddIllnessBinding
     private lateinit var viewModel: AddIllnessViewModel
+
+    private var day = 0
+    private var month = 0
+    private var year = 0
+    private var vDay = 0
+    private var vMonth = 0
+    private var vYear = 0
 
     // Initialization
 
@@ -77,6 +87,23 @@ class AddIllnessActivity : AppCompatActivity() {
             FontType.REGULAR,
             ContextCompat.getColor(binding.root.context, R.color.text)
         )
+
+        // Date and Time
+
+        binding.editTextAddIllnessDate.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                hideSoftInput()
+                getDateTimeCalendar()
+                DatePickerDialog(
+                    this,
+                    R.style.themeOnverlay_timePicker,
+                    this,
+                    year,
+                    month,
+                    day
+                ).show()
+            }
+        }
     }
 
     private fun footer() {
@@ -125,7 +152,7 @@ class AddIllnessActivity : AppCompatActivity() {
         clearEditText()
         hideSoftInput()
         UIUtil.showAlert(this, getString(viewModel.ok))
-        onBackPressed()
+        finish()
     }
 
     private fun clearEditText() {
@@ -135,5 +162,31 @@ class AddIllnessActivity : AppCompatActivity() {
         binding.editTextAddIllnessDuration.text = null
         binding.editTextAddIllnessMedication.text = null
         binding.editTextAddIllnessObservation.text = null
+    }
+
+    private fun getDateTimeCalendar() {
+
+        TimeZone.getDefault()
+        val cal = Calendar.getInstance()
+        day = cal.get(Calendar.DAY_OF_MONTH)
+        month = cal.get(Calendar.MONTH)
+        year = cal.get(Calendar.YEAR)
+
+    }
+
+    override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
+        vYear = p1
+        vMonth = p2 + 1
+        vDay = p3
+
+        getDateTimeCalendar()
+
+        val day = "$vDay/$vMonth/$vYear"
+        val sdf = SimpleDateFormat(Constants.DATE)
+        val date = sdf.parse(day)
+        val newDate = sdf.format(date)
+
+        binding.editTextAddIllnessDate.setText(newDate)
+
     }
 }

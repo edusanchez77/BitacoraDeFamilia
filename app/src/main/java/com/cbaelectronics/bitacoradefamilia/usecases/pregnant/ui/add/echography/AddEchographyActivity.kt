@@ -5,10 +5,14 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.add.echography
 
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
+import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
@@ -23,8 +27,9 @@ import com.cbaelectronics.bitacoradefamilia.util.extension.enable
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
 import java.text.SimpleDateFormat
+import java.util.*
 
-class AddEchographyActivity : AppCompatActivity() {
+class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
     // Properties
 
@@ -33,6 +38,13 @@ class AddEchographyActivity : AppCompatActivity() {
     private var dateEditText: String? = null
     private var weekEditText: String? = null
     private var noteEditText: String? = null
+
+    private var day = 0
+    private var month = 0
+    private var year = 0
+    private var vDay = 0
+    private var vMonth = 0
+    private var vYear = 0
 
     // Initialization
 
@@ -82,6 +94,35 @@ class AddEchographyActivity : AppCompatActivity() {
             FontType.REGULAR,
             ContextCompat.getColor(binding.root.context, R.color.text)
         )
+
+        // Week
+
+        val arrayWeek = resources.getStringArray(R.array.week)
+        val adapterWeek = ArrayAdapter(
+            this,
+            R.layout.dropdown_menu_popup_item,
+            arrayWeek
+        )
+
+        binding.editTextAddEchographyWeek.setAdapter(adapterWeek)
+        binding.editTextAddEchographyWeek.inputType = InputType.TYPE_NULL
+
+        // Date and Time
+
+        binding.editTextAddEchographyDate.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                hideSoftInput()
+                getDateTimeCalendar()
+                DatePickerDialog(
+                    this,
+                    R.style.themeOnverlay_timePicker,
+                    this,
+                    year,
+                    month,
+                    day
+                ).show()
+            }
+        }
 
         footerInfo()
     }
@@ -205,5 +246,31 @@ class AddEchographyActivity : AppCompatActivity() {
     private fun enableSave() {
         binding.buttonSaveEchography.enable(true)
         binding.buttonCancelEchography.text = getString(viewModel.cancel)
+    }
+
+    private fun getDateTimeCalendar() {
+
+        TimeZone.getDefault()
+        val cal = Calendar.getInstance()
+        day = cal.get(Calendar.DAY_OF_MONTH)
+        month = cal.get(Calendar.MONTH)
+        year = cal.get(Calendar.YEAR)
+
+    }
+
+    override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
+        vYear = p1
+        vMonth = p2 + 1
+        vDay = p3
+
+        getDateTimeCalendar()
+
+        val day = "$vDay/$vMonth/$vYear"
+        val sdf = SimpleDateFormat(Constants.DATE)
+        val date = sdf.parse(day)
+        val newDate = sdf.format(date)
+
+        binding.editTextAddEchographyDate.setText(newDate)
+
     }
 }

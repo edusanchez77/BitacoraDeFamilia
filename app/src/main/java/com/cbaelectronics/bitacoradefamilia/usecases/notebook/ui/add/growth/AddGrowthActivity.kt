@@ -5,8 +5,10 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.growth
 
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.DatePicker
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
@@ -18,13 +20,21 @@ import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil
 import com.cbaelectronics.bitacoradefamilia.util.extension.*
 import java.text.SimpleDateFormat
+import java.util.*
 
-class AddGrowthActivity : AppCompatActivity() {
+class AddGrowthActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
     // Properties
 
     private lateinit var binding: ActivityAddGrowthBinding
     private lateinit var viewModel: AddGrowthViewModel
+
+    private var day = 0
+    private var month = 0
+    private var year = 0
+    private var vDay = 0
+    private var vMonth = 0
+    private var vYear = 0
 
     // Initialization
 
@@ -75,6 +85,23 @@ class AddGrowthActivity : AppCompatActivity() {
             FontType.REGULAR,
             ContextCompat.getColor(binding.root.context, R.color.text)
         )
+
+        // Date and Time
+
+        binding.editTextAddGrowthDate.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                hideSoftInput()
+                getDateTimeCalendar()
+                DatePickerDialog(
+                    this,
+                    R.style.themeOnverlay_timePicker,
+                    this,
+                    year,
+                    month,
+                    day
+                ).show()
+            }
+        }
     }
 
     private fun footer() {
@@ -127,5 +154,31 @@ class AddGrowthActivity : AppCompatActivity() {
         binding.editTextAddGrowthWeight.text = null
         binding.editTextAddGrowthHeight.text = null
         binding.editTextAddGrowthPC.text = null
+    }
+
+    private fun getDateTimeCalendar() {
+
+        TimeZone.getDefault()
+        val cal = Calendar.getInstance()
+        day = cal.get(Calendar.DAY_OF_MONTH)
+        month = cal.get(Calendar.MONTH)
+        year = cal.get(Calendar.YEAR)
+
+    }
+
+    override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
+        vYear = p1
+        vMonth = p2 + 1
+        vDay = p3
+
+        getDateTimeCalendar()
+
+        val day = "$vDay/$vMonth/$vYear"
+        val sdf = SimpleDateFormat(Constants.DATE)
+        val date = sdf.parse(day)
+        val newDate = sdf.format(date)
+
+        binding.editTextAddGrowthDate.setText(newDate)
+
     }
 }

@@ -5,6 +5,7 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.menu
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -29,14 +30,15 @@ import com.cbaelectronics.bitacoradefamilia.usecases.onboarding.OnboardingRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.settings.SettingsRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.share.ShareRouter
+import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
-import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
-import com.cbaelectronics.bitacoradefamilia.util.extension.font
+import com.cbaelectronics.bitacoradefamilia.util.extension.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
 
 class MenuActivity : AppCompatActivity() {
 
@@ -75,12 +77,21 @@ class MenuActivity : AppCompatActivity() {
         loadChildren(childrenId!!, permission!!)
     }
 
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     private fun localize() {
+
+        val date = viewModel.childrenShared?.date?.customShortFormat()
+        if(date == Constants.DATE_COMPLETE ){
+            Log.d("FechaEdu ==", date.toString())
+        }else{
+            Log.d("FechaEdu =!", date.toString())
+        }
+
         binding.textViewName.text = viewModel.childrenShared?.name
-        binding.textViewMenuDateOfBirth.text = viewModel.childrenShared?.date.toString()
-        binding.textViewMenuHourOfBirth.text = viewModel.childrenShared?.hour
-        binding.textViewMenuWeigthOfBirth.text = viewModel.childrenShared?.weight.toString()
-        binding.textViewMenuHeigthOfBirth.text = viewModel.childrenShared?.height.toString()
+        binding.textViewMenuDateOfBirth.text = if(date == Constants.DATE_DEFAULT ) "-" else viewModel.childrenShared?.date?.calendarDate()
+        binding.textViewMenuHourOfBirth.text = if(date == Constants.DATE_DEFAULT ) "-" else  viewModel.childrenShared?.date?.calendarHour()
+        binding.textViewMenuWeigthOfBirth.text = if(viewModel.childrenShared?.weight.isNullOrEmpty()) "-" else "${viewModel.childrenShared?.weight} ${Constants.KG}"
+        binding.textViewMenuHeigthOfBirth.text = if(viewModel.childrenShared?.height.isNullOrEmpty()) "-" else "${viewModel.childrenShared?.height} ${Constants.CM}"
 
         binding.textViewPregnancyDiary.text = getString(viewModel.pregnancyDiary)
         binding.textViewPediatricNotebook.text = getString(viewModel.pediatricNotebook)

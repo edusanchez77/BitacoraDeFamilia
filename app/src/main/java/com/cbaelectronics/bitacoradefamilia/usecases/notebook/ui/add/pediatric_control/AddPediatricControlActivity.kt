@@ -5,13 +5,17 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.pediatric_control
 
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.DatePicker
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddPediatricControlBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.PediatricControl
+import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.Constants.DATE
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
@@ -20,14 +24,24 @@ import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
+import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
+import java.util.*
 
-class AddPediatricControlActivity : AppCompatActivity() {
+class AddPediatricControlActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
     // Properties
 
     private lateinit var binding: ActivityAddPediatricControlBinding
     private lateinit var viewModel: AddPediatricControlViewModel
+
+    private var day = 0
+    private var month = 0
+    private var year = 0
+    private var vDay = 0
+    private var vMonth = 0
+    private var vYear = 0
+    private var currentEditText: EditText? = null
 
     // Initialization
 
@@ -84,6 +98,40 @@ class AddPediatricControlActivity : AppCompatActivity() {
             FontType.REGULAR,
             ContextCompat.getColor(binding.root.context, R.color.text)
         )
+
+        // Date and Time
+
+        binding.editTextAddPediatricControlDate.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                hideSoftInput()
+                getDateTimeCalendar()
+                activeEditText(binding.editTextAddPediatricControlDate)
+                DatePickerDialog(
+                    this,
+                    R.style.themeOnverlay_timePicker,
+                    this,
+                    year,
+                    month,
+                    day
+                ).show()
+            }
+        }
+
+        binding.editTextAddPediatricControlNextControl.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                hideSoftInput()
+                getDateTimeCalendar()
+                activeEditText(binding.editTextAddPediatricControlNextControl)
+                DatePickerDialog(
+                    this,
+                    R.style.themeOnverlay_timePicker,
+                    this,
+                    year,
+                    month,
+                    day
+                ).show()
+            }
+        }
     }
 
     private fun footer() {
@@ -137,7 +185,7 @@ class AddPediatricControlActivity : AppCompatActivity() {
         clearEditText()
         hideSoftInput()
         UIUtil.showAlert(this, getString(viewModel.ok))
-        onBackPressed()
+        finish()
     }
 
     private fun clearEditText() {
@@ -149,5 +197,35 @@ class AddPediatricControlActivity : AppCompatActivity() {
         binding.editTextAddPediatricControlObservation.text = null
         binding.editTextAddPediatricControlNextControl.text = null
         binding.editTextAddPediatricControlNotes.text = null
+    }
+
+    private fun getDateTimeCalendar() {
+
+        TimeZone.getDefault()
+        val cal = Calendar.getInstance()
+        day = cal.get(Calendar.DAY_OF_MONTH)
+        month = cal.get(Calendar.MONTH)
+        year = cal.get(Calendar.YEAR)
+
+    }
+
+    private fun activeEditText(editText: TextInputEditText) {
+        showAlert(this, "Next Control")
+        currentEditText = editText
+    }
+
+    override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
+        vYear = p1
+        vMonth = p2 + 1
+        vDay = p3
+
+        val day = "$vDay/$vMonth/$vYear"
+        val sdf = SimpleDateFormat(Constants.DATE)
+        val date = sdf.parse(day)
+        val newDate = sdf.format(date)
+
+        currentEditText?.setText(newDate)
+        //binding.editTextAddPediatricControlDate.setText(newDate)
+
     }
 }

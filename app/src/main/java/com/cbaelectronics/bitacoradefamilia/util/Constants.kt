@@ -10,7 +10,7 @@ import java.util.*
 object Constants {
 
     // Generic
-    const val ADMIN_LOGIN = "andresmujica92@gmail.com"
+    const val ADMIN_LOGIN = "eduardosanchez77@gmail.com"
     const val GAME_TIME = 90
     const val SECOND = 1000
     const val LUNES = "Lunes"
@@ -21,6 +21,9 @@ object Constants {
     const val SABADO = "Sábado"
     const val DOMINGO = "Domingo"
     const val WEEK = 7
+    const val KG = "kg."
+    const val CM = "cm."
+    const val DATE_DEFAULT = "01/01/1900 00:00"
 
     // Login
     const val LOGIN_GOOGLE = 100
@@ -41,8 +44,12 @@ object Constants {
     val DEFAULT_LOCALE = Locale( "en_US_POSIX")
     const val JSON_DATE_FORMAT = "MMM d, yyyy HH:mm:ss"
     const val DATE = "dd/MM/yyyy"
-    const val TURN_DATE_FORMAT = "dd/MM/yyyy HH:mm"
-    const val FIXED_TURN_FORMAT = "HH:mm"
+    const val HOUR = "HH:mm"
+    const val DATE_COMPLETE = "dd/MM/yyyy HH:mm"
+
+    // Pediatric Control
+    const val DATE_CONTROL = "dateControl"
+    const val NEXT_CONTROL = "nextControl"
 
     // Notes
     const val TYPE_NOTEBOOK = "notebook"
