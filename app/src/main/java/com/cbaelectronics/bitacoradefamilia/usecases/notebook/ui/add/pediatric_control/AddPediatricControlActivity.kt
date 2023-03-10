@@ -8,6 +8,8 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.add.pediatric_
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.DatePicker
 import android.widget.EditText
 import androidx.core.content.ContextCompat
@@ -22,6 +24,7 @@ import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
+import com.cbaelectronics.bitacoradefamilia.util.extension.enable
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
 import com.google.android.material.textfield.TextInputEditText
@@ -34,6 +37,13 @@ class AddPediatricControlActivity : AppCompatActivity(), DatePickerDialog.OnDate
 
     private lateinit var binding: ActivityAddPediatricControlBinding
     private lateinit var viewModel: AddPediatricControlViewModel
+    private var dateEditText: String? = null
+    private var doctorEditText: String? = null
+    private var specialityEditText: String? = null
+    private var weightEditText: String? = null
+    private var heightEditText: String? = null
+    private var observationsEditText: String? = null
+    private var nextControlEditText: String? = null
 
     private var day = 0
     private var month = 0
@@ -132,15 +142,147 @@ class AddPediatricControlActivity : AppCompatActivity(), DatePickerDialog.OnDate
                 ).show()
             }
         }
+
+        footerInfo()
     }
 
     private fun footer() {
+        disableSave()
         binding.buttonSavePediatricControl.setOnClickListener {
             validForm()
         }
 
         binding.buttonCancelPediatricControl.setOnClickListener {
             onBackPressed()
+        }
+    }
+
+    private fun footerInfo(){
+
+        // Date
+
+        binding.editTextAddPediatricControlDate.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                dateEditText = binding.editTextAddPediatricControlDate.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Doctor
+
+        binding.editTextAddPediatricControlDoctor.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                doctorEditText = binding.editTextAddPediatricControlDoctor.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Speciality
+
+        binding.editTextAddPediatricControlSpeciality.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                specialityEditText = binding.editTextAddPediatricControlSpeciality.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Weight
+
+        binding.editTextAddPediatricControlWeight.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                weightEditText = binding.editTextAddPediatricControlWeight.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Height
+
+        binding.editTextAddPediatricControlHeight.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                heightEditText = binding.editTextAddPediatricControlHeight.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Observations
+
+        binding.editTextAddPediatricControlObservation.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                observationsEditText = binding.editTextAddPediatricControlObservation.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Next Control
+
+        binding.editTextAddPediatricControlNextControl.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                nextControlEditText = binding.editTextAddPediatricControlNextControl.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+    }
+
+    private fun checkEnable(){
+        if (!dateEditText.isNullOrEmpty() && !doctorEditText.isNullOrEmpty() && !specialityEditText.isNullOrEmpty() && !weightEditText.isNullOrEmpty() && !heightEditText.isNullOrEmpty() && !observationsEditText.isNullOrEmpty() && !nextControlEditText.isNullOrEmpty()){
+            enableSave()
         }
     }
 
@@ -185,6 +327,7 @@ class AddPediatricControlActivity : AppCompatActivity(), DatePickerDialog.OnDate
         clearEditText()
         hideSoftInput()
         UIUtil.showAlert(this, getString(viewModel.ok))
+        disableSave()
         finish()
     }
 
@@ -197,6 +340,16 @@ class AddPediatricControlActivity : AppCompatActivity(), DatePickerDialog.OnDate
         binding.editTextAddPediatricControlObservation.text = null
         binding.editTextAddPediatricControlNextControl.text = null
         binding.editTextAddPediatricControlNotes.text = null
+    }
+
+    private fun disableSave() {
+        binding.buttonSavePediatricControl.enable(false)
+        binding.buttonCancelPediatricControl.text = getString(viewModel.back)
+    }
+
+    private fun enableSave() {
+        binding.buttonSavePediatricControl.enable(true)
+        binding.buttonCancelPediatricControl.text = getString(viewModel.cancel)
     }
 
     private fun getDateTimeCalendar() {

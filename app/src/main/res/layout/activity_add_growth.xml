@@ -71,7 +71,7 @@
                         android:id="@+id/editTextAddGrowthDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="text"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,7 +87,7 @@
                         android:id="@+id/editTextAddGrowthWeight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="numberDecimal"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,7 +103,7 @@
                         android:id="@+id/editTextAddGrowthHeight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="number"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,7 +119,7 @@
                         android:id="@+id/editTextAddGrowthPC"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="number"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 

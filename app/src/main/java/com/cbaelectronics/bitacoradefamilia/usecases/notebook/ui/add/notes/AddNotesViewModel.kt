@@ -26,6 +26,7 @@ class AddNotesViewModel: ViewModel() {
     val title = R.string.add_notes_title
     val save = R.string.add_button_save
     val cancel = R.string.add_button_cancel
+    val back = R.string.add_button_back
     val editTextNote = R.string.add_notes_edittext_note
     val errorIncomplete = R.string.add_alert_error_incomplete
     val errorUnknown = R.string.add_alert_error_unknown
