@@ -5,17 +5,22 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.addChildren
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddChildrenBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
+import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
@@ -23,8 +28,11 @@ import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.enable
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
+import java.text.SimpleDateFormat
+import java.util.*
 
-class AddChildrenActivity : AppCompatActivity() {
+class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
+    TimePickerDialog.OnTimeSetListener {
 
     // Properties
 
@@ -32,6 +40,18 @@ class AddChildrenActivity : AppCompatActivity() {
     private lateinit var viewModel: AddChildrenViewModel
     private var nameEditText: String? = null
     private var genreEditText: String? = null
+
+    private var day = 0
+    private var month = 0
+    private var year = 0
+    private var hour = 0
+    private var minute = 0
+
+    private var vDay = 0
+    private var vMonth = 0
+    private var vYear = 0
+    private var vHour = 0
+    private var vMinute = 0
 
     // Initialization
 
@@ -83,8 +103,6 @@ class AddChildrenActivity : AppCompatActivity() {
             ContextCompat.getColor(binding.root.context, R.color.text)
         )
 
-        binding.editTextAddChildrenGenre.inputType = InputType.TYPE_NULL
-
         // Genre
 
         val arrayGenre = resources.getStringArray(R.array.genre)
@@ -94,6 +112,24 @@ class AddChildrenActivity : AppCompatActivity() {
             arrayGenre
         )
         binding.editTextAddChildrenGenre.setAdapter(adapterGenre)
+        binding.editTextAddChildrenGenre.inputType = InputType.TYPE_NULL
+
+        // Date and Time
+
+        binding.editTextAddChildrenDate.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                hideSoftInput()
+                getDateTimeCalendar()
+                DatePickerDialog(
+                    this,
+                    R.style.themeOnverlay_timePicker,
+                    this,
+                    year,
+                    month,
+                    day
+                ).show()
+            }
+        }
 
         setupInfo()
     }
@@ -152,13 +188,23 @@ class AddChildrenActivity : AppCompatActivity() {
     private fun validForm() {
         val name = binding.editTextAddChildrenName.text
         val genre = binding.editTextAddChildrenGenre.text
+        val date = binding.editTextAddChildrenDate.text
+        val weight = binding.editTextAddChildrenWeight.text
+        val height = binding.editTextAddChildrenHeight.text
 
         if (name.isNullOrBlank() || genre.isNullOrBlank()) {
             showAlert(this, getString(viewModel.errorIncomplete))
         } else {
+
+            val sdf = SimpleDateFormat(Constants.DATE_COMPLETE)
+            val date1 = if (date.isNullOrBlank()) sdf.parse("01/01/1900 00:00") else sdf.parse(date.toString())
+
             val children = Children(
                 name = name.toString(),
                 genre = genre.toString(),
+                date = date1,
+                weight = weight.toString(),
+                height = height.toString(),
                 registeredBy = viewModel.user
             )
 
@@ -172,6 +218,8 @@ class AddChildrenActivity : AppCompatActivity() {
         clearEditText()
         hideSoftInput()
         showAlert(this, getString(viewModel.ok))
+        disableSave()
+        finish()
     }
 
     private fun clearEditText() {
@@ -191,5 +239,39 @@ class AddChildrenActivity : AppCompatActivity() {
     private fun enableSave() {
         binding.buttonSaveChildren.enable(true)
         binding.buttonCancelChildren.text = getString(viewModel.cancel)
+    }
+
+    private fun getDateTimeCalendar() {
+
+        TimeZone.getDefault()
+        val cal = Calendar.getInstance()
+        day = cal.get(Calendar.DAY_OF_MONTH)
+        month = cal.get(Calendar.MONTH)
+        year = cal.get(Calendar.YEAR)
+        hour = cal.get(Calendar.HOUR)
+        minute = cal.get(Calendar.MINUTE)
+
+    }
+
+    override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
+        vYear = p1
+        vMonth = p2 + 1
+        vDay = p3
+
+        getDateTimeCalendar()
+
+        TimePickerDialog(this, R.style.themeOnverlay_timePicker, this, hour, minute, true).show()
+    }
+
+    override fun onTimeSet(p0: TimePicker?, p1: Int, p2: Int) {
+        vHour = p1
+        vMinute = p2
+
+        val hour = "$vDay/$vMonth/$vYear $vHour:$vMinute"
+        val sdf = SimpleDateFormat(Constants.DATE_COMPLETE)
+        val date = sdf.parse(hour)
+        val newHour = sdf.format(date)
+
+        binding.editTextAddChildrenDate.setText(newHour)
     }
 }

@@ -9,11 +9,14 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.ui.AppBarConfiguration
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.GONE
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityHomeBinding
@@ -68,10 +71,10 @@ class HomeActivity : AppCompatActivity() {
         // UI
         binding.textViewTitleApp.font(FontSize.TITLE, FontType.GALADA, getColor(R.color.light))
 
-        binding.recyclerViewHome.layoutManager = GridLayoutManager(this, 2)
+        binding.recyclerViewHome.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerViewHome.adapter = adapter
 
-        binding.recyclerViewHomeShare.layoutManager = GridLayoutManager(this, 2)
+        binding.recyclerViewHomeShare.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerViewHomeShare.adapter = adapterShared
 
         observeDate()
@@ -83,11 +86,17 @@ class HomeActivity : AppCompatActivity() {
         viewModel.load().observe(this, Observer {
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
+            if(it.size == 0){
+                binding.recyclerViewHome.visibility = GONE
+            }
         })
 
         viewModel.loadShared().observe(this, Observer {
             adapterShared.setDataList(it)
             adapterShared.notifyDataSetChanged()
+            if(it.size == 0){
+                binding.recyclerViewHomeShare.visibility = GONE
+            }
         })
     }
 

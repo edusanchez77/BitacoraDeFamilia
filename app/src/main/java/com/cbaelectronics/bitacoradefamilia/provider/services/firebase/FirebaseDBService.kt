@@ -161,8 +161,7 @@ object FirebaseDBService {
                 val name = document.get(DatabaseField.NAME.key).toString()
                 val genre = document.get(DatabaseField.GENRE.key).toString()
                 val avatar = document.get(DatabaseField.AVATAR.key).toString()
-                val date = document.get(DatabaseField.DATE_OF_BIRTH.key).toString()
-                val hour = document.get(DatabaseField.HOUR_OF_BIRTH.key).toString()
+                val date = document.getDate(DatabaseField.DATE_OF_BIRTH.key)
                 val weight = document.get(DatabaseField.WEIGHT.key).toString()
                 val height = document.get(DatabaseField.HEIGHT.key).toString()
                 val permission = document.getLong(DatabaseField.PERMISSION.key)?.toInt()
@@ -185,7 +184,6 @@ object FirebaseDBService {
                     genre = genre,
                     avatar = avatar,
                     date = date,
-                    hour = hour,
                     weight = weight,
                     height = height,
                     registeredDate = registeredDate,

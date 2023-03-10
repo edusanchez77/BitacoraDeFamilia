@@ -9,6 +9,7 @@ import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseF
 import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.google.gson.GsonBuilder
 import java.sql.Timestamp
+import java.text.SimpleDateFormat
 import java.util.*
 
 enum class Genre(val type: String){
@@ -21,8 +22,7 @@ data class Children(
     val id: String? = null,
     var name: String? = null,
     var genre: String? = null,
-    var date: String? = null,
-    var hour: String? = null,
+    var date: Date? = null,
     var weight: String? = null,
     var height: String? = null,
     var avatar: String? = null,
@@ -37,8 +37,7 @@ data class Children(
             DatabaseField.CHILDREN_ID.key to (id ?: ""),
             DatabaseField.NAME.key to (name ?: ""),
             DatabaseField.GENRE.key to (genre ?: ""),
-            DatabaseField.DATE_OF_BIRTH.key to (date ?: "-"),
-            DatabaseField.HOUR_OF_BIRTH.key to (hour ?: "-"),
+            DatabaseField.DATE_OF_BIRTH.key to (date ?: ""),
             DatabaseField.WEIGHT.key to (weight ?: "-"),
             DatabaseField.HEIGHT.key to (height ?: "-"),
             DatabaseField.AVATAR.key to (avatar ?: ""),

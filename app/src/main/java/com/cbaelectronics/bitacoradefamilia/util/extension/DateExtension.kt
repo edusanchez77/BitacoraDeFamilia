@@ -6,6 +6,7 @@
 package com.cbaelectronics.bitacoradefamilia.util.extension
 
 import android.content.Context
+import com.cbaelectronics.bitacoradefamilia.util.Constants
 import java.sql.Timestamp
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -17,7 +18,12 @@ fun Date.toJSON(): String {
 }
 
 fun Date.calendarDate() : String{
-    val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    val formatter = SimpleDateFormat(Constants.DATE, Locale.getDefault())
+    return formatter.format(this)
+}
+
+fun Date.calendarHour() : String{
+    val formatter = SimpleDateFormat(Constants.HOUR, Locale.getDefault())
     return formatter.format(this)
 }
 
@@ -35,7 +41,7 @@ fun Date.shortFormat(): String {
 
 fun Date.customShortFormat(): String {
 
-    val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+    val formatter = SimpleDateFormat(Constants.DATE_COMPLETE, Locale.getDefault())
     return formatter.format(this)
 }
 
