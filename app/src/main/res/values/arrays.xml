@@ -54,4 +54,23 @@
         <item>41</item>
         <item>42</item>
     </string-array>
+
+    <string-array name="achievements">
+        <item>Se me cayó el pupo</item>
+        <item>Mi primera carcajada</item>
+        <item>Levanto la cabeza mientras estoy upa</item>
+        <item>Levanto la cabeza acostada/o boca abajo</item>
+        <item>Sigo con la mirada</item>
+        <item>Puedo rotar de atrás para adelante</item>
+        <item>Sentado, mantengo la cabeza erecta</item>
+        <item>Mi primer diente</item>
+        <item>Me puedo parar sosteniéndome de un objeto</item>
+        <item>Empecé a gatear</item>
+        <item>Ya como la papilla</item>
+        <item>Camino 3 o más pasos sin apoyo</item>
+        <item>Digo mis primeras palabras</item>
+        <item>Identifico los colores</item>
+        <item>Cuento del 1 al 10</item>
+        <item>Comienzo el jardín de infantes</item>
+    </string-array>
 </resources>

@@ -17,107 +17,99 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:background="@color/secondary_light"
             android:padding="8dp">
 
-            <TextView
-                android:id="@+id/textViewItemEchographyDate"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha: "
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textViewItemEchographyDateOfControl"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/textViewItemEchographyDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha: "
+                    android:layout_marginEnd="4dp"/>
+
+                <TextView
+                    android:id="@+id/textViewItemEchographyDateOfControl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="xx/xx/xxxx"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="xx/xx/xxxx"
-                app:layout_constraintHorizontal_bias=".02"
-                app:layout_constraintTop_toTopOf="@id/textViewItemEchographyDate"
-                app:layout_constraintBottom_toBottomOf="@id/textViewItemEchographyDate"
-                app:layout_constraintStart_toEndOf="@id/textViewItemEchographyDate"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
 
-            <TextView
-                android:id="@+id/textViewItemEchographyWeek"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/textViewItemEchographyWeek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Semana: "
+                    android:layout_marginEnd="4dp"/>
+
+                <TextView
+                    android:id="@+id/textViewItemEchographyWeekName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="xxxxxxxxxx"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Semana: "
-                android:layout_marginTop="16dp"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintTop_toBottomOf="@id/textViewItemEchographyDate"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/textViewItemEchographyDate"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
 
-            <TextView
-                android:id="@+id/textViewItemEchographyWeekName"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/textViewItemEchographyNotes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notas:"
+                    android:layout_marginEnd="4dp"/>
+
+                <TextView
+                    android:id="@+id/textViewItemEchographyNotesName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="xxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxx\nxxxxxxxxxxxxxxx"
+                    android:inputType="textMultiLine"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="xxxxxxxxxx"
-                app:layout_constraintHorizontal_bias=".02"
-                app:layout_constraintTop_toTopOf="@id/textViewItemEchographyWeek"
-                app:layout_constraintBottom_toBottomOf="@id/textViewItemEchographyWeek"
-                app:layout_constraintStart_toEndOf="@id/textViewItemEchographyWeek"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-
-
-            <TextView
-                android:id="@+id/textViewItemEchographyNotes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Notas:"
-                android:layout_marginTop="16dp"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintTop_toBottomOf="@id/textViewItemEchographyWeek"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <TextView
-                android:id="@+id/textViewItemEchographyNotesName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="xxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxx\nxxxxxxxxxxxxxxx"
-                android:inputType="textMultiLine"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintHorizontal_bias=".02"
-                app:layout_constraintTop_toTopOf="@id/textViewItemEchographyNotes"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/textViewItemEchographyNotes"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <TextView
-                android:id="@+id/textViewItemEchographyAuthor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="xxxxxxxxxxxx"
+                android:orientation="horizontal"
                 android:layout_marginTop="20dp"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintTop_toBottomOf="@id/textViewItemEchographyNotesName"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:gravity="end|center_vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageViewEchographyAvatar"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_user"
-                app:layout_constraintHorizontal_bias=".98"
-                app:layout_constraintTop_toTopOf="@id/textViewItemEchographyAuthor"
-                app:layout_constraintBottom_toBottomOf="@id/textViewItemEchographyAuthor"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/textViewItemEchographyAuthor"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageViewEchographyAvatar"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_user"
+                    android:layout_marginEnd="4dp"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/textViewItemEchographyAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="xxxxxxxxxxxx" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
