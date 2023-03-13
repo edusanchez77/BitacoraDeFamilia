@@ -19,56 +19,46 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:background="@color/primary_light"
             android:padding="8dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:id="@+id/constraintLayoutAchievements"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textViewItemAchievement"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Logro: "
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    android:layout_marginEnd="4dp"/>
 
                 <TextView
                     android:id="@+id/textViewItemAchievementName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="xxxxxxxx"
-                    app:layout_constraintHorizontal_bias=".02"
-                    app:layout_constraintTop_toTopOf="@id/textViewItemAchievement"
-                    app:layout_constraintStart_toEndOf="@id/textViewItemAchievement"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    android:layout_weight="2"
+                    android:text="xxxxxxxx"/>
 
                 <ImageView
                     android:id="@+id/imageViewItemAchievementArrow"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/keyboard_arrow_left"
-                    app:layout_constraintHorizontal_bias=".98"
-                    app:layout_constraintStart_toEndOf="@id/textViewItemAchievementName"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/textViewItemAchievement"
-                    app:layout_constraintBottom_toBottomOf="@id/textViewItemAchievement"/>
+                    android:src="@drawable/keyboard_arrow_left"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/constraintLayoutAchievementsDetails"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/constraintLayoutAchievements"
-                app:layout_constraintBottom_toBottomOf="parent">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -130,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="20dp"
-                    android:gravity="end">
+                    android:gravity="end|center_vertical">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imageViewAchievementAuthor"
@@ -149,7 +139,7 @@
 
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
