@@ -121,6 +121,7 @@
     <string name="add.button.cancel">Cancelar</string>
     <string name="add.button.save">Guardar</string>
     <string name="add.button.back">Volver</string>
+    <string name="add.button.edit">Modificar</string>
     <string name="add.alert.error.incomplete">Tenés que completar todos los campos</string>
     <string name="add.alert.error.unknown">Ha surgido un error inesperado.\nPor favor intenta más tarde.</string>
     <string name="add.alert.ok">Guardado correctamente</string>

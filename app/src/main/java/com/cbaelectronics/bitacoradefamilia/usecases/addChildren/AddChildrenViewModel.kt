@@ -28,6 +28,7 @@ class AddChildrenViewModel: ViewModel() {
     val save = R.string.add_button_save
     val cancel = R.string.add_button_cancel
     val back = R.string.add_button_back
+    val edit = R.string.add_button_edit
     val editTextName = R.string.add_children_edittext_name
     val editTextGenre = R.string.add_children_edittext_genre
     val editTextDate = R.string.add_children_edittext_date

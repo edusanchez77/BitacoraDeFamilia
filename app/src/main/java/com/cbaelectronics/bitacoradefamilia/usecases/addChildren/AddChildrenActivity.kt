@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.TimePicker
@@ -20,14 +21,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddChildrenBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
-import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
-import com.cbaelectronics.bitacoradefamilia.util.extension.enable
-import com.cbaelectronics.bitacoradefamilia.util.extension.font
-import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
+import com.cbaelectronics.bitacoradefamilia.util.extension.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,6 +39,8 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private lateinit var viewModel: AddChildrenViewModel
     private var nameEditText: String? = null
     private var genreEditText: String? = null
+    private lateinit var childrenJSON: String
+    private var children: Children? = null
 
     private var day = 0
     private var month = 0
@@ -66,6 +67,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         viewModel = ViewModelProvider(this)[AddChildrenViewModel::class.java]
 
         // Setup
+        data()
         localize()
         setup()
         footer()
@@ -82,14 +84,25 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     }
 
     // Private
+
+    private fun data(){
+        val bundle = intent.extras
+        childrenJSON = bundle?.getString(DatabaseField.CHILDREN.key).toString()
+        children = Children.fromJson(childrenJSON)
+
+    }
+
     private fun localize() {
         binding.textViewAddChildrenTitle.text = getString(viewModel.title)
-        binding.textFieldAddChildrenName.hint = getString(viewModel.editTextName)
-        binding.textFieldAddChildrenGenre.hint = getString(viewModel.editTextGenre)
-        binding.textFieldAddChildrenDate.hint = getString(viewModel.editTextDate)
-        binding.textFieldAddChildrenWeight.hint = getString(viewModel.editTextWeight)
-        binding.buttonSaveChildren.text = getString(viewModel.save)
+        binding.textFieldAddChildrenName.hint = if(children?.name.isNullOrEmpty()) getString(viewModel.editTextName) else children?.name
+        binding.textFieldAddChildrenGenre.hint = if(children?.genre.isNullOrEmpty()) getString(viewModel.editTextGenre) else children?.genre
+        binding.textFieldAddChildrenDate.hint = if(children?.date?.customShortFormat() == Constants.DATE_DEFAULT || children?.date?.customShortFormat().isNullOrEmpty()) getString(viewModel.editTextDate) else children?.date?.customShortFormat()
+        binding.textFieldAddChildrenWeight.hint = if(children?.weight.isNullOrEmpty()) getString(viewModel.editTextWeight) else children?.weight
+        binding.textFieldAddChildrenHeight.hint = if(children?.height.isNullOrEmpty()) getString(viewModel.editTextHeight) else children?.height
+        binding.buttonSaveChildren.text = if(children?.name.isNullOrEmpty()) getString(viewModel.save) else getString(viewModel.edit)
         binding.buttonCancelChildren.text = getString(viewModel.cancel)
+
+        Log.d("ChildrenEdu", children?.date?.customShortFormat().toString())
     }
 
     private fun setup() {

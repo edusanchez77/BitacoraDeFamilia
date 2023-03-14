@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -25,6 +26,7 @@ import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 import com.cbaelectronics.bitacoradefamilia.usecases.about.AboutRouter
+import com.cbaelectronics.bitacoradefamilia.usecases.addChildren.AddChildrenRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.onboarding.OnboardingRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
@@ -81,11 +83,6 @@ class MenuActivity : AppCompatActivity() {
     private fun localize() {
 
         val date = viewModel.childrenShared?.date?.customShortFormat()
-        if(date == Constants.DATE_COMPLETE ){
-            Log.d("FechaEdu ==", date.toString())
-        }else{
-            Log.d("FechaEdu =!", date.toString())
-        }
 
         binding.textViewName.text = viewModel.childrenShared?.name
         binding.textViewMenuDateOfBirth.text = if(date == Constants.DATE_DEFAULT ) "-" else viewModel.childrenShared?.date?.calendarDate()
@@ -99,6 +96,7 @@ class MenuActivity : AppCompatActivity() {
 
     private fun setup() {
         addClose(this)
+        disableEdit()
 
         // UI
         binding.textViewName.font(FontSize.TITLE, FontType.GALADA, ContextCompat.getColor(this, R.color.text))
@@ -109,6 +107,7 @@ class MenuActivity : AppCompatActivity() {
         binding.textViewPregnancyDiary.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(this, R.color.light))
         binding.textViewPediatricNotebook.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(this, R.color.light))
 
+        checkEdit()
         buttons()
     }
 
@@ -122,6 +121,26 @@ class MenuActivity : AppCompatActivity() {
             NotebookRouter().launch(this, viewModel.childrenShared!!)
         }
 
+        binding.imageViewMenuEdit.setOnClickListener {
+            AddChildrenRouter().launch(this, viewModel.childrenShared!!)
+        }
+
+    }
+
+    private fun checkEdit(){
+        when(viewModel.childrenShared?.permission){
+            Permission.ADMIN.value -> enableEdit()
+            Permission.WRITE.value -> enableEdit()
+            Permission.READ.value -> disableEdit()
+        }
+    }
+
+    private fun enableEdit(){
+        binding.imageViewMenuEdit.visibility = View.VISIBLE
+    }
+
+    private fun disableEdit(){
+        binding.imageViewMenuEdit.visibility = View.GONE
     }
 
     private fun loadChildren(childrenId: String, permission: Int) = runBlocking {
