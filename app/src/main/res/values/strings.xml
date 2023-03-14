@@ -40,6 +40,15 @@
     <string name="bottommenu.notebook.pediatriccontrol">Controles</string>
     <string name="bottommenu.notebook.notes">Notas</string>
 
+    <!-- Genre -->
+    <string name="male">Masculino</string>
+    <string name="female">Femenino</string>
+    <string name="undefined">No especificado</string>
+
+    <!-- Permission -->
+    <string name="read">Solo lectura</string>
+    <string name="write">Editar información</string>
+
     <!-- Menu -->
     <string name="menu.card.pregnant">Diario de\nEmbarazo</string>
     <string name="menu.card.notebook">Cuaderno\nPediátrico</string>
@@ -49,6 +58,23 @@
     <!-- Achievements -->
     <string name="achievements.title">Logros Desbloqueados</string>
     <string name="achievements.button">Agregar logro</string>
+    <string name="achievements.01">Se me cayó el pupo</string>
+    <string name="achievements.02">Mi primera carcajada</string>
+    <string name="achievements.03">Levanto la cabeza mientras estoy upa</string>
+    <string name="achievements.04">Levanto la cabeza acostada/o boca abajo</string>
+    <string name="achievements.05">Sigo con la mirada</string>
+    <string name="achievements.06">Puedo rotar de atrás para adelante</string>
+    <string name="achievements.07">Sentado, mantengo la cabeza erecta</string>
+    <string name="achievements.08">Mi primer diente</string>
+    <string name="achievements.09">Me puedo parar sosteniéndome de un objeto</string>
+    <string name="achievements.10">Empecé a gatear</string>
+    <string name="achievements.11">Ya como la papilla</string>
+    <string name="achievements.12">Camino 3 o más pasos sin apoyo</string>
+    <string name="achievements.13">Digo mis primeras palabras</string>
+    <string name="achievements.14">Identifico los colores</string>
+    <string name="achievements.15">Cuento del 1 al 10</string>
+    <string name="achievements.16">Comienzo el jardín de infantes</string>
+    <string name="achievements.other">Otro</string>
 
     <!-- Growth -->
     <string name="growth.title">Mi Crecimiento</string>

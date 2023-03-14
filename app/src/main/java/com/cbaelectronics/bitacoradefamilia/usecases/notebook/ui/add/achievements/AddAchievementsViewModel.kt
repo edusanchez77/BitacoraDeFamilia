@@ -33,6 +33,7 @@ class AddAchievementsViewModel: ViewModel() {
     val errorIncomplete = R.string.add_alert_error_incomplete
     val errorUnknown = R.string.add_alert_error_unknown
     val ok = R.string.add_alert_ok
+    val achievementOther = R.string.achievements_other
 
     // Public
 

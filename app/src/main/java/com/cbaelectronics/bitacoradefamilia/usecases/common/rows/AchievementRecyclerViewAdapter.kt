@@ -40,11 +40,11 @@ class AchievementRecyclerViewAdapter(private val context: Context): RecyclerView
         // UI
         val binding = viewHolder.binding
 
-        binding.textViewItemAchievement.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
+        //binding.textViewItemAchievement.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
         binding.textViewItemAchievementDate.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
         binding.textViewAchievementDetails.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
 
-        binding.textViewItemAchievementName.font(FontSize.CAPTION, FontType.LIGHT, context.getColor(R.color.text))
+        binding.textViewItemAchievementName.font(FontSize.SUBHEAD, FontType.REGULAR, context.getColor(R.color.text))
         binding.textViewItemAchievementDateName.font(FontSize.CAPTION, FontType.LIGHT, context.getColor(R.color.text))
         binding.textViewAchievementDetailsName.font(FontSize.CAPTION, FontType.LIGHT, context.getColor(R.color.text))
         binding.textViewItemAchievementAuthor.font(FontSize.CAPTION, FontType.LIGHT, context.getColor(R.color.text))

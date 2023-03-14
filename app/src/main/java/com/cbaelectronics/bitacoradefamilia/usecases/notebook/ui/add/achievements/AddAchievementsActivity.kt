@@ -9,7 +9,10 @@ import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
+import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -36,6 +39,7 @@ class AddAchievementsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
     private lateinit var viewModel: AddAchievementsViewModel
     private var dateEditText: String? = null
     private var achievementEditText: String? = null
+    private var achievementOther: String? = null
 
     private var day = 0
     private var month = 0
@@ -79,12 +83,14 @@ class AddAchievementsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
         binding.textFieldAddAchievementsDate.hint = getString(viewModel.editTextDate)
         binding.textFieldAddAchievementsName.hint = getString(viewModel.editTextAchievementsName)
         binding.textFieldAddAchievementsDetails.hint = getString(viewModel.editTextDetails)
+        binding.textFieldAddAchievementsNameOther.hint = getString(viewModel.editTextAchievementsName)
         binding.buttonSaveAchievements.text = getString(viewModel.save)
         binding.buttonCancelAchievements.text = getString(viewModel.cancel)
     }
 
     private fun setup() {
         addClose(this)
+        disableEditTextAchievement()
 
         // UI
         binding.textViewAddAchievementsTitle.font(
@@ -109,6 +115,17 @@ class AddAchievementsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
                 ).show()
             }
         }
+
+        // Achievement
+
+        val arrayAchievement = resources.getStringArray(R.array.achievements)
+        val adapterAchievement = ArrayAdapter(
+            this,
+            R.layout.dropdown_menu_popup_item,
+            arrayAchievement
+        )
+        binding.editTextAddAchievementsName.setAdapter(adapterAchievement)
+        binding.editTextAddAchievementsName.inputType = InputType.TYPE_NULL
 
         setupInfo()
     }
@@ -149,6 +166,24 @@ class AddAchievementsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
         binding.editTextAddAchievementsName.addTextChangedListener(object : TextWatcher{
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 achievementEditText = binding.editTextAddAchievementsName.text.toString()
+                checkAchievement()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Achievement Other
+
+        binding.editTextAddAchievementsNameOther.addTextChangedListener(object : TextWatcher{
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                achievementOther = binding.editTextAddAchievementsNameOther.text.toString()
                 checkEnable()
             }
 
@@ -163,8 +198,24 @@ class AddAchievementsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
 
     }
 
+    private fun checkAchievement(){
+        if (achievementEditText == getString(viewModel.achievementOther)){
+            enableEditTextAchievement()
+        }else{
+            disableEditTextAchievement()
+        }
+    }
+
+    private fun disableEditTextAchievement(){
+        binding.textFieldAddAchievementsNameOther.visibility = View.GONE
+    }
+
+    private fun enableEditTextAchievement(){
+        binding.textFieldAddAchievementsNameOther.visibility = View.VISIBLE
+    }
+
     private fun checkEnable(){
-        if (!dateEditText.isNullOrEmpty() && !achievementEditText.isNullOrEmpty()){
+        if (!dateEditText.isNullOrEmpty() && !achievementEditText.isNullOrEmpty() && (achievementEditText != getString(viewModel.achievementOther) || !achievementOther.isNullOrEmpty())){
             enableSave()
         }
     }
@@ -181,7 +232,7 @@ class AddAchievementsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
 
     private fun validForm() {
         val date = binding.editTextAddAchievementsDate.text
-        val achievementName = binding.editTextAddAchievementsName.text
+        val achievementName = if(achievementEditText == getString(viewModel.achievementOther)) binding.editTextAddAchievementsNameOther.text else binding.editTextAddAchievementsName.text
         val detail = binding.editTextAddAchievementsDetails.text
 
         if (date.isNullOrEmpty() || achievementName.isNullOrEmpty()) {
