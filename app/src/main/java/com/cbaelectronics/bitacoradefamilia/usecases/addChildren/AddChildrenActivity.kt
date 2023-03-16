@@ -39,6 +39,9 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private lateinit var viewModel: AddChildrenViewModel
     private var nameEditText: String? = null
     private var genreEditText: String? = null
+    private var dateEditText: String? = null
+    private var weightEditText: String? = null
+    private var heightEditText: String? = null
     private lateinit var childrenJSON: String
     private var children: Children? = null
 
@@ -90,19 +93,28 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         childrenJSON = bundle?.getString(DatabaseField.CHILDREN.key).toString()
         children = Children.fromJson(childrenJSON)
 
+
     }
 
     private fun localize() {
+
         binding.textViewAddChildrenTitle.text = getString(viewModel.title)
-        binding.textFieldAddChildrenName.hint = if(children?.name.isNullOrEmpty()) getString(viewModel.editTextName) else children?.name
-        binding.textFieldAddChildrenGenre.hint = if(children?.genre.isNullOrEmpty()) getString(viewModel.editTextGenre) else children?.genre
-        binding.textFieldAddChildrenDate.hint = if(children?.date?.customShortFormat() == Constants.DATE_DEFAULT || children?.date?.customShortFormat().isNullOrEmpty()) getString(viewModel.editTextDate) else children?.date?.customShortFormat()
-        binding.textFieldAddChildrenWeight.hint = if(children?.weight.isNullOrEmpty()) getString(viewModel.editTextWeight) else children?.weight
-        binding.textFieldAddChildrenHeight.hint = if(children?.height.isNullOrEmpty()) getString(viewModel.editTextHeight) else children?.height
         binding.buttonSaveChildren.text = if(children?.name.isNullOrEmpty()) getString(viewModel.save) else getString(viewModel.edit)
         binding.buttonCancelChildren.text = getString(viewModel.cancel)
 
-        Log.d("ChildrenEdu", children?.date?.customShortFormat().toString())
+        if(checkEdit()){
+            binding.editTextAddChildrenName.setText(children?.name)
+            binding.editTextAddChildrenGenre.setText(children?.genre)
+            binding.editTextAddChildrenDate.setText(if(children?.date?.customShortFormat() == Constants.DATE_DEFAULT || children?.date?.customShortFormat().isNullOrEmpty()) getString(viewModel.editTextDate) else children?.date?.customShortFormat())
+            binding.editTextAddChildrenWeight.setText(children?.weight)
+            binding.editTextAddChildrenHeight.setText(children?.height)
+        }else{
+            binding.textFieldAddChildrenName.hint = getString(viewModel.editTextName)
+            binding.textFieldAddChildrenGenre.hint = getString(viewModel.editTextGenre)
+            binding.textFieldAddChildrenDate.hint = getString(viewModel.editTextDate)
+            binding.textFieldAddChildrenWeight.hint = getString(viewModel.editTextWeight)
+            binding.textFieldAddChildrenHeight.hint = getString(viewModel.editTextHeight)
+        }
     }
 
     private fun setup() {
@@ -190,11 +202,68 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
             checkEnable()
         }
 
+        // Date
+
+        binding.editTextAddChildrenDate.addTextChangedListener ( object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                dateEditText = binding.editTextAddChildrenDate.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        } )
+
+        // Weight
+
+        binding.editTextAddChildrenWeight.addTextChangedListener ( object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                weightEditText = binding.editTextAddChildrenWeight.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        } )
+
+        // Height
+
+        binding.editTextAddChildrenHeight.addTextChangedListener ( object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                heightEditText = binding.editTextAddChildrenHeight.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        } )
+
     }
 
     private fun checkEnable(){
-        if (!nameEditText.isNullOrEmpty() && !genreEditText.isNullOrEmpty()){
-            enableSave()
+        if(checkEdit()){
+            if (!nameEditText.isNullOrEmpty() || !genreEditText.isNullOrEmpty() || !dateEditText.isNullOrEmpty() || !weightEditText.isNullOrEmpty() || !heightEditText.isNullOrEmpty()){
+                enableSave()
+            }
+        }else{
+            if (!nameEditText.isNullOrEmpty() && !genreEditText.isNullOrEmpty()){
+                enableSave()
+            }
         }
     }
 
@@ -205,28 +274,29 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         val weight = binding.editTextAddChildrenWeight.text
         val height = binding.editTextAddChildrenHeight.text
 
-        if (name.isNullOrBlank() || genre.isNullOrBlank()) {
-            showAlert(this, getString(viewModel.errorIncomplete))
-        } else {
+        val sdf = SimpleDateFormat(Constants.DATE_COMPLETE)
+        val date1 = if (date.isNullOrBlank()) sdf.parse(Constants.DATE_DEFAULT) else sdf.parse(date.toString())
 
-            val sdf = SimpleDateFormat(Constants.DATE_COMPLETE)
-            val date1 = if (date.isNullOrBlank()) sdf.parse("01/01/1900 00:00") else sdf.parse(date.toString())
+        val childrenNew = Children(
+            id = children?.id,
+            name = name.toString(),
+            genre = genre.toString(),
+            date = date1,
+            weight = weight.toString(),
+            height = height.toString(),
+            registeredBy = viewModel.user
+        )
 
-            val children = Children(
-                name = name.toString(),
-                genre = genre.toString(),
-                date = date1,
-                weight = weight.toString(),
-                height = height.toString(),
-                registeredBy = viewModel.user
-            )
-
-            saveDatabase(children)
-        }
+        saveDatabase(childrenNew)
     }
 
     private fun saveDatabase(children: Children) {
-        viewModel.save(children)
+        if(checkEdit()){
+            viewModel.update(children)
+        }else{
+            viewModel.save(children)
+
+        }
 
         clearEditText()
         hideSoftInput()
@@ -264,6 +334,10 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         hour = cal.get(Calendar.HOUR)
         minute = cal.get(Calendar.MINUTE)
 
+    }
+
+    private fun checkEdit(): Boolean{
+        return childrenJSON != "null"
     }
 
     override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {

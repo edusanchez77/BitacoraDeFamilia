@@ -45,4 +45,8 @@ class AddChildrenViewModel: ViewModel() {
         FirebaseDBService.save(children)
     }
 
+    fun update(children: Children){
+        FirebaseDBService.update(children)
+    }
+
 }

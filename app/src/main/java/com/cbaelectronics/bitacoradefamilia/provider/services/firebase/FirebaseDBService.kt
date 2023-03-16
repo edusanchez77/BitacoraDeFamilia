@@ -111,11 +111,16 @@ object FirebaseDBService {
     private val notesRef = FirebaseFirestore.getInstance().collection(DatabaseField.NOTES.key)
     private val achievementRef =
         FirebaseFirestore.getInstance().collection(DatabaseField.ACHIEVEMENTS.key)
-    private val namesRef = FirebaseFirestore.getInstance().collection(DatabaseField.POSIBLE_NAMES.key)
-    private val controlWeightRef = FirebaseFirestore.getInstance().collection(DatabaseField.CONTROL_WEIGHT.key)
-    private val pregnantInfoRef = FirebaseFirestore.getInstance().collection(DatabaseField.PREGNANT_INFO.key)
-    private val medicalMeetingRef = FirebaseFirestore.getInstance().collection(DatabaseField.MEDICAL_MEETING.key)
-    private val echographyRef = FirebaseFirestore.getInstance().collection(DatabaseField.ECHOGRAPHY.key)
+    private val namesRef =
+        FirebaseFirestore.getInstance().collection(DatabaseField.POSIBLE_NAMES.key)
+    private val controlWeightRef =
+        FirebaseFirestore.getInstance().collection(DatabaseField.CONTROL_WEIGHT.key)
+    private val pregnantInfoRef =
+        FirebaseFirestore.getInstance().collection(DatabaseField.PREGNANT_INFO.key)
+    private val medicalMeetingRef =
+        FirebaseFirestore.getInstance().collection(DatabaseField.MEDICAL_MEETING.key)
+    private val echographyRef =
+        FirebaseFirestore.getInstance().collection(DatabaseField.ECHOGRAPHY.key)
     private val sharedRef = FirebaseFirestore.getInstance().collection(DatabaseField.SHARED.key)
 
     // Public
@@ -135,6 +140,26 @@ object FirebaseDBService {
 
     }
 
+    fun update(children: Children) {
+        val name = children.name
+        val genre = children.genre
+        val date = children.date
+        val weight = children.weight
+        val height = children.height
+        val avatar = children.avatar
+
+        children.id.let { id ->
+            childreRef.document(id!!).update(
+                DatabaseField.NAME.key, name,
+                DatabaseField.GENRE.key, genre,
+                DatabaseField.DATE_OF_BIRTH.key, date,
+                DatabaseField.WEIGHT.key, weight,
+                DatabaseField.HEIGHT.key, height,
+                DatabaseField.AVATAR.key, avatar
+            )
+        }
+    }
+
     suspend fun loadChildren(childrenId: String): DocumentSnapshot? {
 
         return withContext(Dispatchers.IO) {
@@ -148,53 +173,56 @@ object FirebaseDBService {
         val mutableData = MutableLiveData<MutableList<Children>>()
 
         childreRef
-            .whereEqualTo("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.EMAIL.key}", user?.email)
+            .whereEqualTo(
+                "${DatabaseField.REGISTERED_BY.key}.${DatabaseField.EMAIL.key}",
+                user?.email
+            )
             .orderBy(DatabaseField.REGISTERED_DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
-            val listData = mutableListOf<Children>()
+                val listData = mutableListOf<Children>()
 
-            for (document in value!!) {
+                for (document in value!!) {
 
-                val registeredByData =
-                    document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
-                val id = document.id
-                val name = document.get(DatabaseField.NAME.key).toString()
-                val genre = document.get(DatabaseField.GENRE.key).toString()
-                val avatar = document.get(DatabaseField.AVATAR.key).toString()
-                val date = document.getDate(DatabaseField.DATE_OF_BIRTH.key)
-                val weight = document.get(DatabaseField.WEIGHT.key).toString()
-                val height = document.get(DatabaseField.HEIGHT.key).toString()
-                val permission = document.getLong(DatabaseField.PERMISSION.key)?.toInt()
-                val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+                    val registeredByData =
+                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+                    val id = document.id
+                    val name = document.get(DatabaseField.NAME.key).toString()
+                    val genre = document.get(DatabaseField.GENRE.key).toString()
+                    val avatar = document.get(DatabaseField.AVATAR.key).toString()
+                    val date = document.getDate(DatabaseField.DATE_OF_BIRTH.key)
+                    val weight = document.get(DatabaseField.WEIGHT.key).toString()
+                    val height = document.get(DatabaseField.HEIGHT.key).toString()
+                    val permission = document.getLong(DatabaseField.PERMISSION.key)?.toInt()
+                    val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
 
-                val usrEmail = registeredByData.get(DatabaseField.EMAIL.key).toString()
-                val usrName = registeredByData.get(DatabaseField.DISPLAY_NAME.key).toString()
-                val usrPhoto =
-                    registeredByData.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
-                val usrRegisteredDate =
-                    document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
-                val usrToken = registeredByData.get(DatabaseField.TOKEN.key).toString()
-                val usrType = registeredByData.get(DatabaseField.TYPE.key).toString().toInt()
+                    val usrEmail = registeredByData.get(DatabaseField.EMAIL.key).toString()
+                    val usrName = registeredByData.get(DatabaseField.DISPLAY_NAME.key).toString()
+                    val usrPhoto =
+                        registeredByData.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.REGISTERED_BY.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = registeredByData.get(DatabaseField.TOKEN.key).toString()
+                    val usrType = registeredByData.get(DatabaseField.TYPE.key).toString().toInt()
 
-                val user =
-                    User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
-                val children = Children(
-                    id = id,
-                    name = name,
-                    genre = genre,
-                    avatar = avatar,
-                    date = date,
-                    weight = weight,
-                    height = height,
-                    registeredDate = registeredDate,
-                    registeredBy = user,
-                    permission = permission
-                )
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+                    val children = Children(
+                        id = id,
+                        name = name,
+                        genre = genre,
+                        avatar = avatar,
+                        date = date,
+                        weight = weight,
+                        height = height,
+                        registeredDate = registeredDate,
+                        registeredBy = user,
+                        permission = permission
+                    )
 
-                listData.add(children!!)
+                    listData.add(children!!)
+                }
+                mutableData.value = listData
             }
-            mutableData.value = listData
-        }
 
         return mutableData
     }
@@ -488,13 +516,13 @@ object FirebaseDBService {
         return mutableList
     }
 
-    public fun save(names: PosibleNames){
+    public fun save(names: PosibleNames) {
         names.childrenId.let {
             namesRef.document().set(names.toJSON())
         }
     }
 
-    public fun loadNames(childrenId: String, genre: String): LiveData<MutableList<PosibleNames>>{
+    public fun loadNames(childrenId: String, genre: String): LiveData<MutableList<PosibleNames>> {
         val mutableList = MutableLiveData<MutableList<PosibleNames>>()
 
         namesRef
@@ -539,13 +567,13 @@ object FirebaseDBService {
         return mutableList
     }
 
-    fun save(weight: ControlWeight){
+    fun save(weight: ControlWeight) {
         weight.childrenId.let {
             controlWeightRef.document().set(weight.toJSON())
         }
     }
 
-    fun loadWeight(childrenId: String): LiveData<MutableList<ControlWeight>>{
+    fun loadWeight(childrenId: String): LiveData<MutableList<ControlWeight>> {
         val mutableList = MutableLiveData<MutableList<ControlWeight>>()
 
         controlWeightRef
@@ -590,7 +618,7 @@ object FirebaseDBService {
         return mutableList
     }
 
-    fun save(pregnantInfo: PregnantInfo){
+    fun save(pregnantInfo: PregnantInfo) {
         val childrenId = pregnantInfo.childrenId
 
         pregnantInfo.childrenId.let {
@@ -608,7 +636,7 @@ object FirebaseDBService {
 
     }
 
-    fun loadPregnantInfo(childrenId: String): LiveData<MutableList<PregnantInfo>>{
+    fun loadPregnantInfo(childrenId: String): LiveData<MutableList<PregnantInfo>> {
         val mutableList = MutableLiveData<MutableList<PregnantInfo>>()
 
         pregnantInfoRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
@@ -653,13 +681,13 @@ object FirebaseDBService {
         return mutableList
     }
 
-    fun save(meeting: MedicalMeeting){
+    fun save(meeting: MedicalMeeting) {
         meeting.childrenId.let {
             medicalMeetingRef.document().set(meeting.toJSON())
         }
     }
 
-    fun loadMedicalMeeting(childrenId: String): LiveData<MutableList<MedicalMeeting>>{
+    fun loadMedicalMeeting(childrenId: String): LiveData<MutableList<MedicalMeeting>> {
         val mutableList = MutableLiveData<MutableList<MedicalMeeting>>()
 
         medicalMeetingRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
@@ -705,13 +733,13 @@ object FirebaseDBService {
         return mutableList
     }
 
-    fun save(echography: Echography){
+    fun save(echography: Echography) {
         echography.childrenId.let {
             echographyRef.document().set(echography.toJSON())
         }
     }
 
-    fun loadEchography(childrenId: String): LiveData<MutableList<Echography>>{
+    fun loadEchography(childrenId: String): LiveData<MutableList<Echography>> {
         val mutableList = MutableLiveData<MutableList<Echography>>()
 
         echographyRef.whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
@@ -757,13 +785,13 @@ object FirebaseDBService {
         return mutableList
     }
 
-    fun save(sharedChildren: SharedChildren){
+    fun save(sharedChildren: SharedChildren) {
         sharedChildren.id.let {
             sharedRef.document().set(sharedChildren.toJSON())
         }
     }
 
-    fun loadShared(email: String): LiveData<MutableList<SharedChildren>>{
+    fun loadShared(email: String): LiveData<MutableList<SharedChildren>> {
         val mutableList = MutableLiveData<MutableList<SharedChildren>>()
 
         sharedRef

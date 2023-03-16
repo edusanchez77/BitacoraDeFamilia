@@ -14,7 +14,7 @@ class OnboardingViewModel: ViewModel() {
     // Properties
 
     val data = arrayListOf(
-        Onboarding(0, R.drawable.writer, R.string.onboarding_page0_title, R.string.onboarding_page0_body),
+        Onboarding(0, R.drawable.logo, R.string.onboarding_page0_title, R.string.onboarding_page0_body),
         Onboarding(1, R.drawable.pregnancy1, R.string.onboarding_page1_title, R.string.onboarding_page1_body),
         Onboarding(2, R.drawable.ecografia, R.string.onboarding_page2_title, R.string.onboarding_page2_body),
         Onboarding(3, R.drawable.bebe_ciguena, R.string.onboarding_page3_title, R.string.onboarding_page3_body),

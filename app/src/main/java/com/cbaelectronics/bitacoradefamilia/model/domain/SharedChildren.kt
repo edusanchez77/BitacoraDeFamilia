@@ -12,8 +12,8 @@ import java.sql.Timestamp
 import java.util.*
 
 enum class Permission(val type: String, val value: Int){
-    READ("Solo Lectura", 0),
-    WRITE("Editar Información", 1),
+    READ("Solo lectura", 0),
+    WRITE("Editar información", 1),
     ADMIN("Administrador", 2)
 }
 
