@@ -178,6 +178,15 @@
     <string name="add.echography.edittext.week">Semana</string>
     <string name="add.echography.edittext.note">Notas</string>
 
+    <!-- Image -->
+    <string name="image.option.title">Elige una opción</string>
+    <string name="image.option.camera">Tomar una foto</string>
+    <string name="image.option.gallery">Elegir de la galería</string>
+    <string name="image.error.camera">No se puede acceder a la cámara</string>
+    <string name="image.error.images">No se puede acceder a las imágenes</string>
+    <string name="image.error.load">Error al cargar la imagen</string>
+    <string name="image.load">Cargando imagen</string>
+
     <!-- Close Session -->
     <string name="session.alert.logout">¿Estás seguro en cerrar sesión?</string>
     <string name="session.alert.button.ok">Si</string>

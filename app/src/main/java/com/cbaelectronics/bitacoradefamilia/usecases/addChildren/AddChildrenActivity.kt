@@ -5,10 +5,16 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.addChildren
 
+import android.Manifest
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
@@ -16,6 +22,10 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.TimePicker
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.bitacoradefamilia.R
@@ -26,7 +36,9 @@ import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showSnackBar
 import com.cbaelectronics.bitacoradefamilia.util.extension.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,6 +56,8 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private var heightEditText: String? = null
     private lateinit var childrenJSON: String
     private var children: Children? = null
+    val REQUEST_GALLERY = 1001
+    val REQUEST_IMAGE_CAPTURE = 1002
 
     private var day = 0
     private var month = 0
@@ -56,6 +70,24 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private var vYear = 0
     private var vHour = 0
     private var vMinute = 0
+
+    private val pickMedia = registerForActivityResult(PickVisualMedia()){ uri ->
+        if(uri != null){
+            binding.imageViewAddChildrenAvatar.setImageURI(uri)
+        }else{
+            showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorLoad))
+        }
+    }
+
+    private val pickCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ActivityResultCallback() {
+        if(it.resultCode == RESULT_OK){
+            val extras = it.data?.extras
+            val bitmap = extras?.get("data") as Bitmap
+            binding.imageViewAddChildrenAvatar.setImageBitmap(bitmap)
+        }else{
+            showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorLoad))
+        }
+    })
 
     // Initialization
 
@@ -84,6 +116,29 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when(requestCode){
+            REQUEST_GALLERY -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    openGallery()
+                }else{
+                    showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorImages))
+                }
+            }
+
+            REQUEST_IMAGE_CAPTURE -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    openCamera()
+                }else{
+                    showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorCamera))
+                }
+            }
+
+        }
     }
 
     // Private
@@ -253,7 +308,55 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
             }
         } )
 
+        binding.imageViewAddChildrenAvatar.setOnClickListener {
+            createAlertOptions()
+        }
+
     }
+
+    private fun createAlertOptions(){
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(viewModel.optionTitle))
+            .setItems(R.array.optionsCamera, DialogInterface.OnClickListener { _, i ->
+                when(i){
+                    0 -> {
+                        if (checkPermission(Manifest.permission.CAMERA) || checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                        {
+
+                            val mPermisoCamara = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            requestPermissions(mPermisoCamara, REQUEST_IMAGE_CAPTURE)
+
+                        }else{
+                            openCamera()
+                        }
+                    }
+
+                    1 -> {
+                        if(checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        ){
+                            val mPermisoGaleria = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            requestPermissions(mPermisoGaleria, REQUEST_GALLERY)
+                        }else{
+                            openGallery()
+                        }
+                    }
+                }
+            })
+            .show()
+    }
+
+    private fun openCamera() {
+        pickCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+    }
+
+    private fun openGallery(){
+        pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+    }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED
+    }
+
 
     private fun checkEnable(){
         if(checkEdit()){

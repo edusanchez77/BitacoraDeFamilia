@@ -38,6 +38,11 @@ class AddChildrenViewModel: ViewModel() {
     val errorIncomplete = R.string.add_alert_error_incomplete
     val errorUnknown = R.string.add_alert_error_unknown
     val ok = R.string.add_alert_ok
+    val optionTitle = R.string.image_option_title
+    val errorCamera = R.string.image_error_camera
+    val errorImages = R.string.image_error_images
+    val errorLoad = R.string.image_error_load
+    val load = R.string.image_load
 
     // Public
 

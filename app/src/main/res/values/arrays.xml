@@ -74,4 +74,9 @@
         <item>@string/achievements.16</item>
         <item>@string/achievements.other</item>
     </string-array>
+
+    <string-array name="optionsCamera">
+        <item>@string/image.option.camera</item>
+        <item>@string/image.option.gallery</item>
+    </string-array>
 </resources>
