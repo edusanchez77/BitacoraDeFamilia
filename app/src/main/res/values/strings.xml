@@ -195,6 +195,17 @@
 
     <!-- Share -->
     <string name="share.title">Seleccioná el usuario con el que queres compartir la información de:</string>
+    <string name="share.with.title">Ya estas compartiendo este perfil con:</string>
+
+    <!-- Search User -->
+    <string name="search.title">Hacé click en el usuario con el que querés compartir este perfil</string>
+    <string name="search.search">Buscar usuario</string>
+    <string name="search.button.save">Guardar</string>
+    <string name="search.button.cancel">Cancelar</string>
+    <string name="search.alert.message.1">¿Estás seguro en compartir este perfil con %s?</string>
+    <string name="search.alert.button.positive">SI</string>
+    <string name="search.alert.button.negative">NO</string>
+    <string name="search.alert.button.ok">OK</string>
 
     <!-- Onboarding -->
     <string name="onboarding.page0.title">Bienvenido a Bitácora de Familia</string>

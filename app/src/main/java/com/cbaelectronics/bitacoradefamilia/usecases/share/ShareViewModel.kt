@@ -26,6 +26,7 @@ class ShareViewModel: ViewModel() {
     // Localization
 
     val title = R.string.share_title
+    val with = R.string.share_with_title
     val save = R.string.add_button_save
     val cancel = R.string.add_button_cancel
     val back = R.string.add_button_back

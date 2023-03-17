@@ -5,12 +5,15 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.share
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -18,13 +21,13 @@ import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityShareBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.model.domain.SharedChildren
+import com.cbaelectronics.bitacoradefamilia.model.domain.User
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
+import com.cbaelectronics.bitacoradefamilia.usecases.searchUser.SearchUserActivity
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil
-import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
-import com.cbaelectronics.bitacoradefamilia.util.extension.enable
-import com.cbaelectronics.bitacoradefamilia.util.extension.font
-import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
+import com.cbaelectronics.bitacoradefamilia.util.extension.*
 
 class ShareActivity : AppCompatActivity() {
 
@@ -34,8 +37,25 @@ class ShareActivity : AppCompatActivity() {
     private lateinit var viewModel: ShareViewModel
     private var emailEditText: String? = null
     private var permissionEditText: String? = null
+    private var user: User? = null
 
     // Initialization
+
+    private val responseLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
+        if (activityResult.resultCode == RESULT_OK){
+            val userName = activityResult.data?.getStringExtra(DatabaseField.DISPLAY_NAME.key).orEmpty()
+            val userEmail = activityResult.data?.getStringExtra(DatabaseField.EMAIL.key).orEmpty()
+            val userPhoto = activityResult.data?.getStringExtra(DatabaseField.PROFILE_IMAGE_URL.key).orEmpty()
+            val token = activityResult.data?.getStringExtra(DatabaseField.TOKEN.key).orEmpty()
+            val registeredDate = activityResult.data?.getStringExtra(DatabaseField.REGISTERED_DATE.key).orEmpty()
+            val userType = activityResult.data?.getStringExtra(DatabaseField.TYPE.key).orEmpty()
+
+            user = User(userName, userEmail, userPhoto, token, userType.toInt(), registeredDate.parseFirebase())
+            binding.editTextShareUser.setText(userName)
+            emailEditText = userName
+            checkEnable()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +87,7 @@ class ShareActivity : AppCompatActivity() {
 
     private fun localize() {
         binding.textViewShareTitle.text = getString(viewModel.title)
+        binding.textViewSharedWithTitle.text = getString(viewModel.with)
         binding.textViewName.text = viewModel.children?.name
         Glide.with(binding.root.context).load(viewModel.children?.avatar)
             .into(binding.imageViewAvatar)
@@ -116,22 +137,16 @@ class ShareActivity : AppCompatActivity() {
     }
 
     private fun footerInfo() {
-        // Email
 
-        binding.editTextShareUser.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                emailEditText = binding.editTextShareUser.text.toString()
-                checkEnable()
-            }
+        // User
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // Do nothing
+        binding.editTextShareUser.setOnFocusChangeListener { _, hasFocus ->
+            if(hasFocus){
+                hideSoftInput()
+                val intent = Intent(this, SearchUserActivity::class.java)
+                responseLauncher.launch(intent)
             }
-
-            override fun afterTextChanged(p0: Editable?) {
-                // Do nothing
-            }
-        })
+        }
 
         // Permission
 
@@ -167,7 +182,7 @@ class ShareActivity : AppCompatActivity() {
                 genre = viewModel.children?.genre,
                 avatar = viewModel.children?.avatar,
                 registeredBy = viewModel.user,
-                email = email.toString(),
+                user = user!!,
                 permission = permissionInt
             )
             saveDatabase(shared)

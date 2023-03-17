@@ -15,6 +15,7 @@ import android.text.style.TtsSpan.DateBuilder
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cbaelectronics.bitacoradefamilia.model.domain.*
+import com.cbaelectronics.bitacoradefamilia.util.extension.parseFirebase
 import com.cbaelectronics.bitacoradefamilia.util.extension.removeFirebaseInvalidCharacters
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -130,6 +131,34 @@ object FirebaseDBService {
         user.email?.let { login ->
             usersRef.document(login).set(user.toJSON())
         }
+    }
+
+    fun load(): LiveData<MutableList<User>>{
+        val mutableList = MutableLiveData<MutableList<User>>()
+
+        usersRef.addSnapshotListener { value, _ ->
+            val listData = mutableListOf<User>()
+
+            for (document in value!!) {
+
+                val usrEmail = document.get(DatabaseField.EMAIL.key).toString()
+                val usrName = document.get(DatabaseField.DISPLAY_NAME.key).toString()
+                val usrPhoto = document.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                val usrRegisteredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+                val usrToken = document.get(DatabaseField.TOKEN.key).toString()
+                val usrType = document.get(DatabaseField.TYPE.key).toString().toInt()
+
+                val user =
+                    User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
+
+
+                listData.add(user)
+            }
+
+            mutableList.value = listData
+        }
+
+        return mutableList
     }
 
     fun save(children: Children) {
@@ -795,22 +824,29 @@ object FirebaseDBService {
         val mutableList = MutableLiveData<MutableList<SharedChildren>>()
 
         sharedRef
-            .whereEqualTo(DatabaseField.EMAIL.key, email)
+            .whereEqualTo("${DatabaseField.SHARED_WITH.key}.${DatabaseField.EMAIL.key}", email)
             .orderBy(DatabaseField.REGISTERED_DATE.key, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<SharedChildren>()
 
                 for (document in value!!) {
 
-                    val registeredByData =
-                        document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+                    val registeredByData = document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
+                    val sharedUser = document.data[DatabaseField.SHARED_WITH.key] as Map<String, Any>
+
                     val id = document.get(DatabaseField.CHILDREN_ID.key).toString()
                     val name = document.get(DatabaseField.NAME.key).toString()
                     val genre = document.get(DatabaseField.GENRE.key).toString()
                     val avatar = document.get(DatabaseField.AVATAR.key).toString()
-                    val email = document.get(DatabaseField.EMAIL.key).toString()
                     val permission = document.getLong(DatabaseField.PERMISSION.key)?.toInt()
                     val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
+
+                    val sharedEmail = sharedUser.get(DatabaseField.EMAIL.key).toString()
+                    val sharedName = sharedUser.get(DatabaseField.DISPLAY_NAME.key).toString()
+                    val sharedPhoto = sharedUser.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                    val sharedRegisteredDate = document.getDate("${DatabaseField.SHARED_WITH.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val sharedToken = sharedUser.get(DatabaseField.TOKEN.key).toString()
+                    val sharedType = sharedUser.get(DatabaseField.TYPE.key).toString().toInt()
 
                     val usrEmail = registeredByData.get(DatabaseField.EMAIL.key).toString()
                     val usrName = registeredByData.get(DatabaseField.DISPLAY_NAME.key).toString()
@@ -821,6 +857,9 @@ object FirebaseDBService {
                     val usrToken = registeredByData.get(DatabaseField.TOKEN.key).toString()
                     val usrType = registeredByData.get(DatabaseField.TYPE.key).toString().toInt()
 
+                    val sharedWith =
+                        User(sharedName, sharedEmail, sharedPhoto, sharedToken, sharedType, sharedRegisteredDate)
+
                     val user =
                         User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
                     val sharedChildren = SharedChildren(
@@ -830,7 +869,7 @@ object FirebaseDBService {
                         avatar = avatar,
                         registeredDate = registeredDate,
                         registeredBy = user,
-                        email = email,
+                        user = sharedWith,
                         permission = permission!!.toInt()
                     )
 
@@ -842,5 +881,7 @@ object FirebaseDBService {
 
         return mutableList
     }
+
+
 
 }

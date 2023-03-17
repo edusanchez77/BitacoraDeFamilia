@@ -36,7 +36,9 @@ import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showSnackBar
 import com.cbaelectronics.bitacoradefamilia.util.extension.*
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -169,7 +171,7 @@ class MenuActivity : AppCompatActivity() {
                 if(viewModel.childrenShared?.permission == Permission.ADMIN.value){
                     ShareRouter().launch(this)
                 }else{
-                    showAlert(this, getString(viewModel.alertShared))
+                    showSnackBar(binding.constraintMain, getString(viewModel.alertShared))
                 }
             }
             R.id.action_onboard -> {

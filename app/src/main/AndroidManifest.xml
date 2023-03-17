@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BitacoraDeFamilia"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.searchUser.SearchUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.share.ShareActivity"
             android:exported="false" />
         <activity
