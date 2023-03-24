@@ -160,9 +160,13 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         if(checkEdit()){
             binding.editTextAddChildrenName.setText(children?.name)
             binding.editTextAddChildrenGenre.setText(children?.genre)
-            binding.editTextAddChildrenDate.setText(if(children?.date?.customShortFormat() == Constants.DATE_DEFAULT || children?.date?.customShortFormat().isNullOrEmpty()) getString(viewModel.editTextDate) else children?.date?.customShortFormat())
             binding.editTextAddChildrenWeight.setText(children?.weight)
             binding.editTextAddChildrenHeight.setText(children?.height)
+            if(children?.date?.customShortFormat() == Constants.DATE_DEFAULT || children?.date?.customShortFormat().isNullOrEmpty()){
+                binding.textFieldAddChildrenDate.hint = getString(viewModel.editTextDate)
+            }else{
+                binding.editTextAddChildrenDate.setText(children?.date?.customShortFormat())
+            }
         }else{
             binding.textFieldAddChildrenName.hint = getString(viewModel.editTextName)
             binding.textFieldAddChildrenGenre.hint = getString(viewModel.editTextGenre)
