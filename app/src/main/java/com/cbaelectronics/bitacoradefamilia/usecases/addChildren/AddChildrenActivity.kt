@@ -171,6 +171,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
             FirebaseDBService.avatarStorageRef.child(childrenId).downloadUrl.addOnSuccessListener {
                 avatarPath = it.toString()
                 mProgress.cancel()
+                checkEnable()
             }
         }
 
@@ -185,12 +186,12 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
     private fun localize() {
 
-        Glide.with(this).load(children?.avatar).into(binding.imageViewAddChildrenAvatar)
         binding.textViewAddChildrenTitle.text = getString(viewModel.title)
         binding.buttonSaveChildren.text = if(children?.name.isNullOrEmpty()) getString(viewModel.save) else getString(viewModel.edit)
         binding.buttonCancelChildren.text = getString(viewModel.cancel)
 
         if(checkEdit()){
+            Glide.with(this).load(children?.avatar).into(binding.imageViewAddChildrenAvatar)
             binding.editTextAddChildrenName.setText(children?.name)
             binding.editTextAddChildrenGenre.setText(children?.genre)
             binding.editTextAddChildrenWeight.setText(children?.weight)
@@ -201,6 +202,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
                 binding.editTextAddChildrenDate.setText(children?.date?.customShortFormat())
             }
         }else{
+            Glide.with(this).load(Constants.AVATAR_DEFAULT).into(binding.imageViewAddChildrenAvatar)
             binding.textFieldAddChildrenName.hint = getString(viewModel.editTextName)
             binding.textFieldAddChildrenGenre.hint = getString(viewModel.editTextGenre)
             binding.textFieldAddChildrenDate.hint = getString(viewModel.editTextDate)
@@ -345,6 +347,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
             }
         } )
 
+        // Avatar
         binding.imageViewAddChildrenAvatar.setOnClickListener {
             createAlertOptions()
         }
@@ -404,7 +407,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
     private fun checkEnable(){
         if(checkEdit()){
-            if (!nameEditText.isNullOrEmpty() || !genreEditText.isNullOrEmpty() || !dateEditText.isNullOrEmpty() || !weightEditText.isNullOrEmpty() || !heightEditText.isNullOrEmpty()){
+            if (!nameEditText.isNullOrEmpty() || !genreEditText.isNullOrEmpty() || !dateEditText.isNullOrEmpty() || !weightEditText.isNullOrEmpty() || !heightEditText.isNullOrEmpty() || !avatarPath.isNullOrEmpty()){
                 enableSave()
             }
         }else{
@@ -416,11 +419,13 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
     private fun validForm() {
 
-        val name = binding.editTextAddChildrenName.text
-        val genre = binding.editTextAddChildrenGenre.text
-        val date = binding.editTextAddChildrenDate.text
-        val weight = binding.editTextAddChildrenWeight.text
-        val height = binding.editTextAddChildrenHeight.text
+        val name = if (binding.editTextAddChildrenName.text.isNullOrEmpty()) children?.name else binding.editTextAddChildrenName.text
+        val genre = if (binding.editTextAddChildrenGenre.text.isNullOrEmpty()) children?.genre else binding.editTextAddChildrenGenre.text
+        val date = if (binding.editTextAddChildrenDate.text.isNullOrEmpty()) children?.date.toString() else binding.editTextAddChildrenDate.text
+        val weight = if(binding.editTextAddChildrenWeight.text.isNullOrEmpty()) children?.weight else binding.editTextAddChildrenWeight.text
+        val height = if(binding.editTextAddChildrenHeight.text.isNullOrEmpty()) children?.height else binding.editTextAddChildrenHeight.text
+        val avatar = if (avatarPath.isNullOrEmpty()) children?.avatar else avatarPath
+        val registeredDate = if(checkEdit()) children?.registeredDate else null
 
         val sdf = SimpleDateFormat(Constants.DATE_COMPLETE)
         val date1 = if (date.isNullOrBlank()) sdf.parse(Constants.DATE_DEFAULT) else sdf.parse(date.toString())
@@ -428,11 +433,13 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         val childrenNew = Children(
             id = childrenId,
             name = name.toString(),
+            avatar = avatar,
             genre = genre.toString(),
             date = date1,
             weight = weight.toString(),
             height = height.toString(),
-            registeredBy = viewModel.user
+            registeredBy = viewModel.user,
+            registeredDate = registeredDate
         )
 
         saveDatabase(childrenNew)
