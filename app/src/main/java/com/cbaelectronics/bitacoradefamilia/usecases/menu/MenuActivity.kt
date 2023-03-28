@@ -17,6 +17,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.airbnb.lottie.LottieAnimationView
@@ -239,5 +240,12 @@ class MenuActivity : AppCompatActivity() {
 
         }
     }
+
+    override fun onRestart() {
+        data()
+        localize()
+        super.onRestart()
+    }
+
 
 }
