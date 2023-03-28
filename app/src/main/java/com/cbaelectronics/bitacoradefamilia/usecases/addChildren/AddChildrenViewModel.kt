@@ -5,6 +5,7 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.addChildren
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -52,6 +53,10 @@ class AddChildrenViewModel: ViewModel() {
 
     fun update(children: Children){
         FirebaseDBService.update(children)
+    }
+
+    fun saveAvatar(childrenId: String, uri: Uri){
+        FirebaseDBService.saveAvatar(childrenId, uri)
     }
 
 }

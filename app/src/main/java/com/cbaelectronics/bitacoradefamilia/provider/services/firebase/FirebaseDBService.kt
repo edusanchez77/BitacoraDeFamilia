@@ -10,6 +10,7 @@
 
 package com.cbaelectronics.bitacoradefamilia.provider.services.firebase
 
+import android.net.Uri
 import android.provider.ContactsContract.Data
 import android.text.style.TtsSpan.DateBuilder
 import androidx.lifecycle.LiveData
@@ -20,6 +21,8 @@ import com.cbaelectronics.bitacoradefamilia.util.extension.removeFirebaseInvalid
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -124,6 +127,8 @@ object FirebaseDBService {
         FirebaseFirestore.getInstance().collection(DatabaseField.ECHOGRAPHY.key)
     private val sharedRef = FirebaseFirestore.getInstance().collection(DatabaseField.SHARED.key)
 
+    private val avatarStorageRef = Firebase.storage.reference.child(DatabaseField.AVATAR.key)
+
     // Public
 
     fun save(user: User) {
@@ -186,6 +191,13 @@ object FirebaseDBService {
                 DatabaseField.HEIGHT.key, height,
                 DatabaseField.AVATAR.key, avatar
             )
+        }
+    }
+
+
+    fun saveAvatar(childrenId: String, uri: Uri){
+        uri.let { uri ->
+            avatarStorageRef.child(childrenId).putFile(uri)
         }
     }
 

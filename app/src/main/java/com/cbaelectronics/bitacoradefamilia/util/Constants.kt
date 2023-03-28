@@ -24,6 +24,7 @@ object Constants {
     const val KG = "kg."
     const val CM = "cm."
     const val DATE_DEFAULT = "01/01/1900 00:00"
+    const val LENGHT_CHILDREN_ID = 20
     const val AVATAR_DEFAULT = "https://firebasestorage.googleapis.com/v0/b/bitacora-de-familia.appspot.com/o/childrenAvatar%2FavatarBaby.png?alt=media&token=6e22ce0a-8024-416f-ac69-3d2a0ded02b9"
 
     // Login

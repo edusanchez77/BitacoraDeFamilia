@@ -12,6 +12,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -38,6 +39,7 @@ import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showSnackBar
+import com.cbaelectronics.bitacoradefamilia.util.Util
 import com.cbaelectronics.bitacoradefamilia.util.extension.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
@@ -57,6 +59,8 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private var heightEditText: String? = null
     private lateinit var childrenJSON: String
     private var children: Children? = null
+    private lateinit var childrenId: String
+    private var mUri: Uri? = null
     val REQUEST_GALLERY = 1001
     val REQUEST_IMAGE_CAPTURE = 1002
 
@@ -74,7 +78,9 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
     private val pickMedia = registerForActivityResult(PickVisualMedia()){ uri ->
         if(uri != null){
-            binding.imageViewAddChildrenAvatar.setImageURI(uri)
+            mUri = uri
+            viewModel.saveAvatar(childrenId, mUri!!)
+            Glide.with(this).load(mUri).into(binding.imageViewAddChildrenAvatar)
         }else{
             showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorLoad))
         }
@@ -84,7 +90,9 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         if(it.resultCode == RESULT_OK){
             val extras = it.data?.extras
             val bitmap = extras?.get("data") as Bitmap
-            binding.imageViewAddChildrenAvatar.setImageBitmap(bitmap)
+            mUri = Util.getImageUriFromBitmap(this, bitmap) as Uri
+            viewModel.saveAvatar(childrenId, mUri!!)
+            Glide.with(this).load(mUri).into(binding.imageViewAddChildrenAvatar)
         }else{
             showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorLoad))
         }
@@ -148,8 +156,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         val bundle = intent.extras
         childrenJSON = bundle?.getString(DatabaseField.CHILDREN.key).toString()
         children = Children.fromJson(childrenJSON)
-
-
+        childrenId = if(children?.id.isNullOrEmpty()) Util.getRandomString(Constants.LENGHT_CHILDREN_ID) else children?.id.toString()
     }
 
     private fun localize() {
@@ -377,6 +384,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     }
 
     private fun validForm() {
+
         val name = binding.editTextAddChildrenName.text
         val genre = binding.editTextAddChildrenGenre.text
         val date = binding.editTextAddChildrenDate.text
@@ -387,7 +395,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         val date1 = if (date.isNullOrBlank()) sdf.parse(Constants.DATE_DEFAULT) else sdf.parse(date.toString())
 
         val childrenNew = Children(
-            id = children?.id,
+            id = childrenId,
             name = name.toString(),
             genre = genre.toString(),
             date = date1,
