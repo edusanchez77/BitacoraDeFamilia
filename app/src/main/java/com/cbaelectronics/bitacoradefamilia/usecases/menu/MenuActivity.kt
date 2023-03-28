@@ -20,6 +20,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.airbnb.lottie.LottieAnimationView
+import com.bumptech.glide.Glide
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityMenuBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
@@ -86,6 +87,7 @@ class MenuActivity : AppCompatActivity() {
 
         val date = viewModel.childrenShared?.date?.customShortFormat()
 
+        Glide.with(this).load(viewModel.childrenShared?.avatar).into(binding.imageViewAvatar)
         binding.textViewName.text = viewModel.childrenShared?.name
         binding.textViewMenuDateOfBirth.text = if(date == Constants.DATE_DEFAULT ) "-" else viewModel.childrenShared?.date?.calendarDate()
         binding.textViewMenuHourOfBirth.text = if(date == Constants.DATE_DEFAULT ) "-" else  viewModel.childrenShared?.date?.calendarHour()

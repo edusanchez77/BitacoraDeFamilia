@@ -16,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ContentItemChildrenBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
@@ -69,8 +70,8 @@ class ChildrenRecyclerViewAdapter(private val context: Context): RecyclerView.Ad
 
             // UI
             binding.cardViewChildren.setCardBackgroundColor(context.getColor(colorBackground))
-
             binding.textViewChildren.text = children.name
+            Glide.with(context).load(children.avatar).into(binding.imageViewChildren)
 
             // Click
 

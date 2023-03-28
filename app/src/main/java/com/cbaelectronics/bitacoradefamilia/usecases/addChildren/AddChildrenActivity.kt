@@ -28,6 +28,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddChildrenBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
@@ -153,6 +154,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
     private fun localize() {
 
+        Glide.with(this).load(children?.avatar).into(binding.imageViewAddChildrenAvatar)
         binding.textViewAddChildrenTitle.text = getString(viewModel.title)
         binding.buttonSaveChildren.text = if(children?.name.isNullOrEmpty()) getString(viewModel.save) else getString(viewModel.edit)
         binding.buttonCancelChildren.text = getString(viewModel.cancel)

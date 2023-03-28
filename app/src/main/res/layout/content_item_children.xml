@@ -30,10 +30,10 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageViewChildren"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:src="@drawable/baby"/>
 
             <TextView
@@ -41,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Olivia"
+                android:layout_marginTop="8dp"
                 android:gravity="center"/>
 
         </LinearLayout>

@@ -25,7 +25,7 @@ data class Children(
     var date: Date? = null,
     var weight: String? = null,
     var height: String? = null,
-    var avatar: String? = null,
+    var avatar: String? = Constants.AVATAR_DEFAULT,
     val registeredBy: User,
     val registeredDate: Date? = Timestamp(Date().time),
     val permission: Int? = Permission.ADMIN.value
