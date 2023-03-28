@@ -22,6 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -127,7 +128,7 @@ object FirebaseDBService {
         FirebaseFirestore.getInstance().collection(DatabaseField.ECHOGRAPHY.key)
     private val sharedRef = FirebaseFirestore.getInstance().collection(DatabaseField.SHARED.key)
 
-    private val avatarStorageRef = Firebase.storage.reference.child(DatabaseField.AVATAR.key)
+    val avatarStorageRef = Firebase.storage.reference.child(DatabaseField.AVATAR.key)
 
     // Public
 
@@ -194,12 +195,6 @@ object FirebaseDBService {
         }
     }
 
-
-    fun saveAvatar(childrenId: String, uri: Uri){
-        uri.let { uri ->
-            avatarStorageRef.child(childrenId).putFile(uri)
-        }
-    }
 
     suspend fun loadChildren(childrenId: String): DocumentSnapshot? {
 

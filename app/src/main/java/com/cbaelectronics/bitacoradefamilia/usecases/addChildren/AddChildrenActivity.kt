@@ -7,6 +7,8 @@ package com.cbaelectronics.bitacoradefamilia.usecases.addChildren
 
 import android.Manifest
 import android.app.DatePickerDialog
+import android.app.Dialog
+import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -20,6 +22,7 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.TimePicker
@@ -34,6 +37,7 @@ import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddChildrenBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.FirebaseDBService
 import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
@@ -42,6 +46,10 @@ import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showSnackBar
 import com.cbaelectronics.bitacoradefamilia.util.Util
 import com.cbaelectronics.bitacoradefamilia.util.extension.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -61,6 +69,8 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private var children: Children? = null
     private lateinit var childrenId: String
     private var mUri: Uri? = null
+    private var avatarPath: String? = null
+    private lateinit var mProgress: ProgressDialog
     val REQUEST_GALLERY = 1001
     val REQUEST_IMAGE_CAPTURE = 1002
 
@@ -79,7 +89,8 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private val pickMedia = registerForActivityResult(PickVisualMedia()){ uri ->
         if(uri != null){
             mUri = uri
-            viewModel.saveAvatar(childrenId, mUri!!)
+            //viewModel.saveAvatar(childrenId, mUri!!)
+            saveAvatar(mUri!!)
             Glide.with(this).load(mUri).into(binding.imageViewAddChildrenAvatar)
         }else{
             showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorLoad))
@@ -91,7 +102,8 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
             val extras = it.data?.extras
             val bitmap = extras?.get("data") as Bitmap
             mUri = Util.getImageUriFromBitmap(this, bitmap) as Uri
-            viewModel.saveAvatar(childrenId, mUri!!)
+            //viewModel.saveAvatar(childrenId, mUri!!)
+            saveAvatar(mUri!!)
             Glide.with(this).load(mUri).into(binding.imageViewAddChildrenAvatar)
         }else{
             showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorLoad))
@@ -109,6 +121,8 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
         // ViewModel
         viewModel = ViewModelProvider(this)[AddChildrenViewModel::class.java]
+
+        mProgress = ProgressDialog(this)
 
         // Setup
         data()
@@ -151,6 +165,16 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     }
 
     // Private
+
+    private fun saveAvatar(uri: Uri) {
+        FirebaseDBService.avatarStorageRef.child(childrenId).putFile(uri).addOnSuccessListener {
+            FirebaseDBService.avatarStorageRef.child(childrenId).downloadUrl.addOnSuccessListener {
+                avatarPath = it.toString()
+                mProgress.cancel()
+            }
+        }
+
+    }
 
     private fun data(){
         val bundle = intent.extras
@@ -360,10 +384,17 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
     private fun openCamera() {
         pickCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+        openDialog()
     }
 
     private fun openGallery(){
         pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+        openDialog()
+    }
+
+    private fun openDialog(){
+        mProgress.setMessage(getString(viewModel.load))
+        mProgress.show()
     }
 
     private fun checkPermission(permission: String): Boolean {
