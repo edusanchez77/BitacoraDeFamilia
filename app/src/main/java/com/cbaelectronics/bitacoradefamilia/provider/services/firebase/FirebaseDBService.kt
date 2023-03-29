@@ -13,6 +13,7 @@ package com.cbaelectronics.bitacoradefamilia.provider.services.firebase
 import android.net.Uri
 import android.provider.ContactsContract.Data
 import android.text.style.TtsSpan.DateBuilder
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cbaelectronics.bitacoradefamilia.model.domain.*
@@ -53,6 +54,7 @@ enum class DatabaseField(val key: String) {
     FIELD_NOTES("notes"),
 
     // User
+    ID("id"),
     DISPLAY_NAME("displayName"),
     EMAIL("email"),
     PROFILE_IMAGE_URL("photoProfile"),
@@ -202,6 +204,51 @@ object FirebaseDBService {
             childreRef.document(childrenId)
                 .get()
                 .await()
+        }
+    }
+
+    fun loadSharedChildren(childrenId: String, user: User): LiveData<MutableList<User>>{
+        val mutableList = MutableLiveData<MutableList<User>>()
+
+        sharedRef
+            .whereEqualTo(DatabaseField.CHILDREN_ID.key, childrenId)
+            .whereEqualTo(
+                "${DatabaseField.REGISTERED_BY.key}.${DatabaseField.EMAIL.key}",
+                user?.email
+            )
+            .addSnapshotListener { value, error ->
+                val listData = mutableListOf<User>()
+
+                for (document in value!!) {
+
+                    val sharedWithData =
+                        document.data[DatabaseField.SHARED_WITH.key] as Map<String, Any>
+
+                    val usrEmail = sharedWithData[DatabaseField.EMAIL.key].toString()
+                    val usrName = sharedWithData[DatabaseField.DISPLAY_NAME.key].toString()
+                    val usrPhoto = sharedWithData[DatabaseField.PROFILE_IMAGE_URL.key].toString()
+                    val usrRegisteredDate =
+                        document.getDate("${DatabaseField.SHARED_WITH.key}.${DatabaseField.REGISTERED_DATE.key}")
+                    val usrToken = sharedWithData[DatabaseField.TOKEN.key].toString()
+                    val usrType = sharedWithData[DatabaseField.TYPE.key].toString().toInt()
+                    val id = document.id
+
+                    val user =
+                        User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate, id)
+
+
+                    listData.add(user)
+                }
+
+                mutableList.value = listData
+            }
+
+        return mutableList
+    }
+
+    fun deleteSharedChildren(id: String){
+        id.let {
+            sharedRef.document(id).delete()
         }
     }
 

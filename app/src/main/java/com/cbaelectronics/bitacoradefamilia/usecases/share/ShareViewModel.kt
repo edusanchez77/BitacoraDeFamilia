@@ -6,6 +6,9 @@
 package com.cbaelectronics.bitacoradefamilia.usecases.share
 
 import android.content.Context
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.model.domain.SharedChildren
@@ -33,11 +36,37 @@ class ShareViewModel: ViewModel() {
     val errorIncomplete = R.string.add_alert_error_incomplete
     val errorUnknown = R.string.add_alert_error_unknown
     val ok = R.string.add_alert_ok
+    val question = R.string.share_alert_message_1
+    val done = R.string.share_alert_message_2
+    val positive = R.string.share_alert_button_positive
+    val negative = R.string.share_alert_button_negative
+
 
     // Public
 
     fun save(sharedChildren: SharedChildren){
         FirebaseDBService.save(sharedChildren)
+    }
+
+    fun load(): LiveData<MutableList<User>> {
+        val mutableList = MutableLiveData<MutableList<User>>()
+        FirebaseDBService.loadSharedChildren(children?.id!!, user).observeForever{
+            mutableList.value = it
+        }
+
+        return mutableList
+    }
+
+    fun delete(id: String){
+        FirebaseDBService.deleteSharedChildren(id)
+    }
+
+    fun messageQuestion(context: Context, name: String): String{
+        return context.getString(question, name)
+    }
+
+    fun messageDone(context: Context, name: String): String{
+        return context.getString(done, name)
     }
 
 }

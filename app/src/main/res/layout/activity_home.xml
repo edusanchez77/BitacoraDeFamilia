@@ -20,7 +20,6 @@
         android:scaleType="fitXY"
         android:src="@drawable/top_background"/>
 
-
     <TextView
         android:id="@+id/textViewTitleApp"
         android:layout_width="wrap_content"

@@ -69,7 +69,7 @@ class HomeActivity : AppCompatActivity() {
     private fun setup() {
         addCloseWithoutArrow(this)
         // UI
-        binding.textViewTitleApp.font(FontSize.TITLE, FontType.GALADA, getColor(R.color.light))
+        //binding.textViewTitleApp.font(FontSize.TITLE_APP, FontType.GALADA, getColor(R.color.light))
 
         binding.recyclerViewHome.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerViewHome.adapter = adapter

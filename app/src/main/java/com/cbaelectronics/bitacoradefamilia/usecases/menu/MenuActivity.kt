@@ -52,8 +52,6 @@ class MenuActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMenuBinding
     private lateinit var viewModel: MenuViewModel
-    //private lateinit var childrenJSON: String
-    //private lateinit var children: Children
 
     // Initialization
 
@@ -72,6 +70,55 @@ class MenuActivity : AppCompatActivity() {
         localize()
         setup()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_share -> {
+                if(viewModel.childrenShared?.permission == Permission.ADMIN.value){
+                    ShareRouter().launch(this)
+                }else{
+                    showSnackBar(binding.constraintMain, getString(viewModel.alertShared))
+                }
+            }
+            R.id.action_onboard -> {
+                OnboardingRouter().launch(this)
+            }
+            R.id.action_about -> {
+                AboutRouter().launch(this)
+            }
+            R.id.action_settings -> {
+                SettingsRouter().launch(this)
+            }
+            R.id.action_close -> {
+                loadAlertDialog()
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_back_in_up, R.anim.slide_back_out_up)
+    }
+
+    override fun onRestart() {
+        data()
+        localize()
+        super.onRestart()
+    }
+
+    // Private
 
     private fun data(){
         val bundle = intent.extras
@@ -162,50 +209,6 @@ class MenuActivity : AppCompatActivity() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_share -> {
-                if(viewModel.childrenShared?.permission == Permission.ADMIN.value){
-                    ShareRouter().launch(this)
-                }else{
-                    showSnackBar(binding.constraintMain, getString(viewModel.alertShared))
-                }
-            }
-            R.id.action_onboard -> {
-                OnboardingRouter().launch(this)
-            }
-            R.id.action_about -> {
-                AboutRouter().launch(this)
-            }
-            R.id.action_settings -> {
-                SettingsRouter().launch(this)
-            }
-            R.id.action_close -> {
-                loadAlertDialog()
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        overridePendingTransition(R.anim.slide_back_in_up, R.anim.slide_back_out_up)
-    }
-
-    // Private
-
     private fun loadAlertDialog() {
         val mDialog = Dialog(binding.root.context)
         val mWindows = mDialog.window!!
@@ -241,11 +244,7 @@ class MenuActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRestart() {
-        data()
-        localize()
-        super.onRestart()
-    }
+
 
 
 }
