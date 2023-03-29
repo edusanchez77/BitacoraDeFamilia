@@ -88,6 +88,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
     private val pickMedia = registerForActivityResult(PickVisualMedia()){ uri ->
         if(uri != null){
+            openDialog()
             mUri = uri
             //viewModel.saveAvatar(childrenId, mUri!!)
             saveAvatar(mUri!!)
@@ -99,6 +100,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
     private val pickCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ActivityResultCallback() {
         if(it.resultCode == RESULT_OK){
+            openDialog()
             val extras = it.data?.extras
             val bitmap = extras?.get("data") as Bitmap
             mUri = Util.getImageUriFromBitmap(this, bitmap) as Uri
@@ -387,12 +389,10 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
     private fun openCamera() {
         pickCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
-        openDialog()
     }
 
     private fun openGallery(){
         pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
-        openDialog()
     }
 
     private fun openDialog(){
