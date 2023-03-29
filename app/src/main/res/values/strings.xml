@@ -205,6 +205,12 @@
     <!-- Share -->
     <string name="share.title">Seleccioná el usuario con el que queres compartir la información de:</string>
     <string name="share.with.title">Ya estas compartiendo este perfil con:</string>
+    <string name="share.alert.message.1">¿Estás seguro en dejar de compartir este perfil con %s?</string>
+    <string name="share.alert.title.2">Listo</string>
+    <string name="share.alert.message.2">Dejaste de compartir este perfil con %s</string>
+    <string name="share.alert.button.positive">SI</string>
+    <string name="share.alert.button.negative">NO</string>
+    <string name="share.alert.button.ok">OK</string>
 
     <!-- Search User -->
     <string name="search.title">Hacé click en el usuario con el que querés compartir este perfil</string>

@@ -17,7 +17,8 @@ data class User(
     var photoProfile: String? = null,
     var token: String? = null,
     var type: Int? = null,
-    val registerDate: Date? = Timestamp(Date().time)
+    val registerDate: Date? = Timestamp(Date().time),
+    var id: String? = null
 ){
 
     var settings: UserSettings? = null
@@ -25,6 +26,7 @@ data class User(
     fun toJSON(): Map<String, Any> {
 
         val JSON: MutableMap<String, Any> = mutableMapOf(
+            DatabaseField.ID.key to (id ?: ""),
             DatabaseField.EMAIL.key to (email ?: ""),
             DatabaseField.DISPLAY_NAME.key to (displayName ?: ""),
             DatabaseField.PROFILE_IMAGE_URL.key to (photoProfile ?: ""),
