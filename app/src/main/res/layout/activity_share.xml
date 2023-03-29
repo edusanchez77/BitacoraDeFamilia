@@ -81,7 +81,7 @@
                     android:id="@+id/editTextShareUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,6 +103,25 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewSharedWithTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@id/recyclerViewSharedWith"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutAddIllness"
+            tools:text="Ya estas compartiendo este perfil con:" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSharedWith"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/textViewSharedWithTitle"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><!--~
+  ~  Created by CbaElectronics by Eduardo Sanchez on 3/16/23, 9:42 AM.
+  ~  www.cbaelectronics.com.ar
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageViewSharedWithAvatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/buttonSharedWithDelete"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:padding="2dp"
+        android:src="@drawable/ic_close"
+        android:background="@drawable/item_round_primary_close"
+        android:foregroundGravity="center"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintStart_toStartOf="@id/imageViewSharedWithAvatar"
+        app:layout_constraintEnd_toEndOf="@id/imageViewSharedWithAvatar"
+        app:layout_constraintTop_toTopOf="@id/imageViewSharedWithAvatar"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewSharedWithAvatar"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

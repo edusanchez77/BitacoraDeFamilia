@@ -14,17 +14,21 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.airbnb.lottie.LottieAnimationView
+import com.bumptech.glide.Glide
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityMenuBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
 import com.cbaelectronics.bitacoradefamilia.model.domain.Permission
 import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
 import com.cbaelectronics.bitacoradefamilia.usecases.about.AboutRouter
+import com.cbaelectronics.bitacoradefamilia.usecases.addChildren.AddChildrenRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.notebook.NotebookRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.onboarding.OnboardingRouter
 import com.cbaelectronics.bitacoradefamilia.usecases.pregnant.PregnantRouter
@@ -34,7 +38,9 @@ import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showSnackBar
 import com.cbaelectronics.bitacoradefamilia.util.extension.*
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -81,12 +87,8 @@ class MenuActivity : AppCompatActivity() {
     private fun localize() {
 
         val date = viewModel.childrenShared?.date?.customShortFormat()
-        if(date == Constants.DATE_COMPLETE ){
-            Log.d("FechaEdu ==", date.toString())
-        }else{
-            Log.d("FechaEdu =!", date.toString())
-        }
 
+        Glide.with(this).load(viewModel.childrenShared?.avatar).into(binding.imageViewAvatar)
         binding.textViewName.text = viewModel.childrenShared?.name
         binding.textViewMenuDateOfBirth.text = if(date == Constants.DATE_DEFAULT ) "-" else viewModel.childrenShared?.date?.calendarDate()
         binding.textViewMenuHourOfBirth.text = if(date == Constants.DATE_DEFAULT ) "-" else  viewModel.childrenShared?.date?.calendarHour()
@@ -99,6 +101,7 @@ class MenuActivity : AppCompatActivity() {
 
     private fun setup() {
         addClose(this)
+        disableEdit()
 
         // UI
         binding.textViewName.font(FontSize.TITLE, FontType.GALADA, ContextCompat.getColor(this, R.color.text))
@@ -109,6 +112,7 @@ class MenuActivity : AppCompatActivity() {
         binding.textViewPregnancyDiary.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(this, R.color.light))
         binding.textViewPediatricNotebook.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(this, R.color.light))
 
+        checkEdit()
         buttons()
     }
 
@@ -122,6 +126,26 @@ class MenuActivity : AppCompatActivity() {
             NotebookRouter().launch(this, viewModel.childrenShared!!)
         }
 
+        binding.imageViewMenuEdit.setOnClickListener {
+            AddChildrenRouter().launch(this, viewModel.childrenShared!!)
+        }
+
+    }
+
+    private fun checkEdit(){
+        when(viewModel.childrenShared?.permission){
+            Permission.ADMIN.value -> enableEdit()
+            Permission.WRITE.value -> enableEdit()
+            Permission.READ.value -> disableEdit()
+        }
+    }
+
+    private fun enableEdit(){
+        binding.imageViewMenuEdit.visibility = View.VISIBLE
+    }
+
+    private fun disableEdit(){
+        binding.imageViewMenuEdit.visibility = View.GONE
     }
 
     private fun loadChildren(childrenId: String, permission: Int) = runBlocking {
@@ -150,7 +174,7 @@ class MenuActivity : AppCompatActivity() {
                 if(viewModel.childrenShared?.permission == Permission.ADMIN.value){
                     ShareRouter().launch(this)
                 }else{
-                    showAlert(this, getString(viewModel.alertShared))
+                    showSnackBar(binding.constraintMain, getString(viewModel.alertShared))
                 }
             }
             R.id.action_onboard -> {
@@ -216,5 +240,12 @@ class MenuActivity : AppCompatActivity() {
 
         }
     }
+
+    override fun onRestart() {
+        data()
+        localize()
+        super.onRestart()
+    }
+
 
 }

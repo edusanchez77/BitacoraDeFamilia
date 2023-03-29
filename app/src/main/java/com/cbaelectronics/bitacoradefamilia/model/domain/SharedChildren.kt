@@ -12,8 +12,8 @@ import java.sql.Timestamp
 import java.util.*
 
 enum class Permission(val type: String, val value: Int){
-    READ("Solo Lectura", 0),
-    WRITE("Editar Información", 1),
+    READ("Solo lectura", 0),
+    WRITE("Editar información", 1),
     ADMIN("Administrador", 2)
 }
 
@@ -24,7 +24,7 @@ data class SharedChildren(
     var avatar: String? = null,
     val registeredBy: User,
     val registeredDate: Date? = Timestamp(Date().time),
-    val email: String,
+    val user: User,
     val permission: Int
 ) {
 
@@ -37,7 +37,7 @@ data class SharedChildren(
             DatabaseField.AVATAR.key to (avatar ?: ""),
             DatabaseField.REGISTERED_BY.key to (registeredBy ?: ""),
             DatabaseField.REGISTERED_DATE.key to (registeredDate ?: ""),
-            DatabaseField.EMAIL.key to (email ?: ""),
+            DatabaseField.SHARED_WITH.key to (user ?: ""),
             DatabaseField.PERMISSION.key to (permission ?: 0)
         )
 

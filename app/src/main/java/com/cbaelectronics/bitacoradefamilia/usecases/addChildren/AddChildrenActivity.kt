@@ -5,29 +5,51 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.addChildren
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.app.Dialog
+import android.app.ProgressDialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.util.Log
+import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.TimePicker
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddChildrenBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Children
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.DatabaseField
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.FirebaseDBService
 import com.cbaelectronics.bitacoradefamilia.util.Constants
 import com.cbaelectronics.bitacoradefamilia.util.FontSize
 import com.cbaelectronics.bitacoradefamilia.util.FontType
 import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showAlert
-import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
-import com.cbaelectronics.bitacoradefamilia.util.extension.enable
-import com.cbaelectronics.bitacoradefamilia.util.extension.font
-import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
+import com.cbaelectronics.bitacoradefamilia.util.UIUtil.showSnackBar
+import com.cbaelectronics.bitacoradefamilia.util.Util
+import com.cbaelectronics.bitacoradefamilia.util.extension.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,6 +62,17 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private lateinit var viewModel: AddChildrenViewModel
     private var nameEditText: String? = null
     private var genreEditText: String? = null
+    private var dateEditText: String? = null
+    private var weightEditText: String? = null
+    private var heightEditText: String? = null
+    private lateinit var childrenJSON: String
+    private var children: Children? = null
+    private lateinit var childrenId: String
+    private var mUri: Uri? = null
+    private var avatarPath: String? = null
+    private lateinit var mProgress: ProgressDialog
+    val REQUEST_GALLERY = 1001
+    val REQUEST_IMAGE_CAPTURE = 1002
 
     private var day = 0
     private var month = 0
@@ -53,6 +86,32 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private var vHour = 0
     private var vMinute = 0
 
+    private val pickMedia = registerForActivityResult(PickVisualMedia()){ uri ->
+        if(uri != null){
+            openDialog()
+            mUri = uri
+            //viewModel.saveAvatar(childrenId, mUri!!)
+            saveAvatar(mUri!!)
+            Glide.with(this).load(mUri).into(binding.imageViewAddChildrenAvatar)
+        }else{
+            showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorLoad))
+        }
+    }
+
+    private val pickCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ActivityResultCallback() {
+        if(it.resultCode == RESULT_OK){
+            openDialog()
+            val extras = it.data?.extras
+            val bitmap = extras?.get("data") as Bitmap
+            mUri = Util.getImageUriFromBitmap(this, bitmap) as Uri
+            //viewModel.saveAvatar(childrenId, mUri!!)
+            saveAvatar(mUri!!)
+            Glide.with(this).load(mUri).into(binding.imageViewAddChildrenAvatar)
+        }else{
+            showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorLoad))
+        }
+    })
+
     // Initialization
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +124,10 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         // ViewModel
         viewModel = ViewModelProvider(this)[AddChildrenViewModel::class.java]
 
+        mProgress = ProgressDialog(this)
+
         // Setup
+        data()
         localize()
         setup()
         footer()
@@ -81,15 +143,74 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when(requestCode){
+            REQUEST_GALLERY -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    openGallery()
+                }else{
+                    showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorImages))
+                }
+            }
+
+            REQUEST_IMAGE_CAPTURE -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    openCamera()
+                }else{
+                    showSnackBar(binding.constraintLayoutAddChildren, getString(viewModel.errorCamera))
+                }
+            }
+
+        }
+    }
+
     // Private
+
+    private fun saveAvatar(uri: Uri) {
+        FirebaseDBService.avatarStorageRef.child(childrenId).putFile(uri).addOnSuccessListener {
+            FirebaseDBService.avatarStorageRef.child(childrenId).downloadUrl.addOnSuccessListener {
+                avatarPath = it.toString()
+                mProgress.cancel()
+                checkEnable()
+            }
+        }
+
+    }
+
+    private fun data(){
+        val bundle = intent.extras
+        childrenJSON = bundle?.getString(DatabaseField.CHILDREN.key).toString()
+        children = Children.fromJson(childrenJSON)
+        childrenId = if(children?.id.isNullOrEmpty()) Util.getRandomString(Constants.LENGHT_CHILDREN_ID) else children?.id.toString()
+    }
+
     private fun localize() {
+
         binding.textViewAddChildrenTitle.text = getString(viewModel.title)
-        binding.textFieldAddChildrenName.hint = getString(viewModel.editTextName)
-        binding.textFieldAddChildrenGenre.hint = getString(viewModel.editTextGenre)
-        binding.textFieldAddChildrenDate.hint = getString(viewModel.editTextDate)
-        binding.textFieldAddChildrenWeight.hint = getString(viewModel.editTextWeight)
-        binding.buttonSaveChildren.text = getString(viewModel.save)
+        binding.buttonSaveChildren.text = if(children?.name.isNullOrEmpty()) getString(viewModel.save) else getString(viewModel.edit)
         binding.buttonCancelChildren.text = getString(viewModel.cancel)
+
+        if(checkEdit()){
+            Glide.with(this).load(children?.avatar).into(binding.imageViewAddChildrenAvatar)
+            binding.editTextAddChildrenName.setText(children?.name)
+            binding.editTextAddChildrenGenre.setText(children?.genre)
+            binding.editTextAddChildrenWeight.setText(children?.weight)
+            binding.editTextAddChildrenHeight.setText(children?.height)
+            if(children?.date?.customShortFormat() == Constants.DATE_DEFAULT || children?.date?.customShortFormat().isNullOrEmpty()){
+                binding.textFieldAddChildrenDate.hint = getString(viewModel.editTextDate)
+            }else{
+                binding.editTextAddChildrenDate.setText(children?.date?.customShortFormat())
+            }
+        }else{
+            Glide.with(this).load(Constants.AVATAR_DEFAULT).into(binding.imageViewAddChildrenAvatar)
+            binding.textFieldAddChildrenName.hint = getString(viewModel.editTextName)
+            binding.textFieldAddChildrenGenre.hint = getString(viewModel.editTextGenre)
+            binding.textFieldAddChildrenDate.hint = getString(viewModel.editTextDate)
+            binding.textFieldAddChildrenWeight.hint = getString(viewModel.editTextWeight)
+            binding.textFieldAddChildrenHeight.hint = getString(viewModel.editTextHeight)
+        }
     }
 
     private fun setup() {
@@ -177,43 +298,160 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
             checkEnable()
         }
 
+        // Date
+
+        binding.editTextAddChildrenDate.addTextChangedListener ( object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                dateEditText = binding.editTextAddChildrenDate.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        } )
+
+        // Weight
+
+        binding.editTextAddChildrenWeight.addTextChangedListener ( object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                weightEditText = binding.editTextAddChildrenWeight.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        } )
+
+        // Height
+
+        binding.editTextAddChildrenHeight.addTextChangedListener ( object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                heightEditText = binding.editTextAddChildrenHeight.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        } )
+
+        // Avatar
+        binding.imageViewAddChildrenAvatar.setOnClickListener {
+            createAlertOptions()
+        }
+
     }
 
+    private fun createAlertOptions(){
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(viewModel.optionTitle))
+            .setItems(R.array.optionsCamera, DialogInterface.OnClickListener { _, i ->
+                when(i){
+                    0 -> {
+                        if (checkPermission(Manifest.permission.CAMERA) || checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                        {
+
+                            val mPermisoCamara = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            requestPermissions(mPermisoCamara, REQUEST_IMAGE_CAPTURE)
+
+                        }else{
+                            openCamera()
+                        }
+                    }
+
+                    1 -> {
+                        if(checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        ){
+                            val mPermisoGaleria = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            requestPermissions(mPermisoGaleria, REQUEST_GALLERY)
+                        }else{
+                            openGallery()
+                        }
+                    }
+                }
+            })
+            .show()
+    }
+
+    private fun openCamera() {
+        pickCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+    }
+
+    private fun openGallery(){
+        pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+    }
+
+    private fun openDialog(){
+        mProgress.setMessage(getString(viewModel.load))
+        mProgress.show()
+    }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED
+    }
+
+
     private fun checkEnable(){
-        if (!nameEditText.isNullOrEmpty() && !genreEditText.isNullOrEmpty()){
-            enableSave()
+        if(checkEdit()){
+            if (!nameEditText.isNullOrEmpty() || !genreEditText.isNullOrEmpty() || !dateEditText.isNullOrEmpty() || !weightEditText.isNullOrEmpty() || !heightEditText.isNullOrEmpty() || !avatarPath.isNullOrEmpty()){
+                enableSave()
+            }
+        }else{
+            if (!nameEditText.isNullOrEmpty() && !genreEditText.isNullOrEmpty()){
+                enableSave()
+            }
         }
     }
 
     private fun validForm() {
-        val name = binding.editTextAddChildrenName.text
-        val genre = binding.editTextAddChildrenGenre.text
-        val date = binding.editTextAddChildrenDate.text
-        val weight = binding.editTextAddChildrenWeight.text
-        val height = binding.editTextAddChildrenHeight.text
 
-        if (name.isNullOrBlank() || genre.isNullOrBlank()) {
-            showAlert(this, getString(viewModel.errorIncomplete))
-        } else {
+        val name = if (binding.editTextAddChildrenName.text.isNullOrEmpty()) children?.name else binding.editTextAddChildrenName.text
+        val genre = if (binding.editTextAddChildrenGenre.text.isNullOrEmpty()) children?.genre else binding.editTextAddChildrenGenre.text
+        val date = if (binding.editTextAddChildrenDate.text.isNullOrEmpty()) children?.date.toString() else binding.editTextAddChildrenDate.text
+        val weight = if(binding.editTextAddChildrenWeight.text.isNullOrEmpty()) children?.weight else binding.editTextAddChildrenWeight.text
+        val height = if(binding.editTextAddChildrenHeight.text.isNullOrEmpty()) children?.height else binding.editTextAddChildrenHeight.text
+        val avatar = if (avatarPath.isNullOrEmpty()) children?.avatar else avatarPath
+        val registeredDate = if(checkEdit()) children?.registeredDate else null
 
-            val sdf = SimpleDateFormat(Constants.DATE_COMPLETE)
-            val date1 = if (date.isNullOrBlank()) sdf.parse("01/01/1900 00:00") else sdf.parse(date.toString())
+        val sdf = SimpleDateFormat(Constants.DATE_COMPLETE)
+        val date1 = if (date.isNullOrBlank()) sdf.parse(Constants.DATE_DEFAULT) else sdf.parse(date.toString())
 
-            val children = Children(
-                name = name.toString(),
-                genre = genre.toString(),
-                date = date1,
-                weight = weight.toString(),
-                height = height.toString(),
-                registeredBy = viewModel.user
-            )
+        val childrenNew = Children(
+            id = childrenId,
+            name = name.toString(),
+            avatar = avatar,
+            genre = genre.toString(),
+            date = date1,
+            weight = weight.toString(),
+            height = height.toString(),
+            registeredBy = viewModel.user,
+            registeredDate = registeredDate
+        )
 
-            saveDatabase(children)
-        }
+        saveDatabase(childrenNew)
     }
 
     private fun saveDatabase(children: Children) {
-        viewModel.save(children)
+        if(checkEdit()){
+            viewModel.update(children)
+        }else{
+            viewModel.save(children)
+
+        }
 
         clearEditText()
         hideSoftInput()
@@ -251,6 +489,10 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         hour = cal.get(Calendar.HOUR)
         minute = cal.get(Calendar.MINUTE)
 
+    }
+
+    private fun checkEdit(): Boolean{
+        return childrenJSON != "null"
     }
 
     override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {

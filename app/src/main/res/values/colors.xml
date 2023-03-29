@@ -14,7 +14,7 @@
     <color name="dark_shadow">#33000000</color>
     <color name="background">#FFFFFFFF</color>
     <color name="background_dark">#1A1F29</color>
-    <color name="secondary_background">#F5F5F5</color>
+    <color name="secondary_background">#FFF0F0FF</color>
     <color name="text">#FF000000</color>
     <color name="live">#FFFA2828</color>
     <color name="transparent">#00FFFFFF</color>

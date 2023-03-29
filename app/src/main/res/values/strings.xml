@@ -121,6 +121,7 @@
     <string name="add.button.cancel">Cancelar</string>
     <string name="add.button.save">Guardar</string>
     <string name="add.button.back">Volver</string>
+    <string name="add.button.edit">Modificar</string>
     <string name="add.alert.error.incomplete">Tenés que completar todos los campos</string>
     <string name="add.alert.error.unknown">Ha surgido un error inesperado.\nPor favor intenta más tarde.</string>
     <string name="add.alert.ok">Guardado correctamente</string>
@@ -177,6 +178,15 @@
     <string name="add.echography.edittext.week">Semana</string>
     <string name="add.echography.edittext.note">Notas</string>
 
+    <!-- Image -->
+    <string name="image.option.title">Elige una opción</string>
+    <string name="image.option.camera">Tomar una foto</string>
+    <string name="image.option.gallery">Elegir de la galería</string>
+    <string name="image.error.camera">No se puede acceder a la cámara</string>
+    <string name="image.error.images">No se puede acceder a las imágenes</string>
+    <string name="image.error.load">Error al cargar la imagen</string>
+    <string name="image.load">Cargando imagen</string>
+
     <!-- Close Session -->
     <string name="session.alert.logout">¿Estás seguro en cerrar sesión?</string>
     <string name="session.alert.button.ok">Si</string>
@@ -194,6 +204,17 @@
 
     <!-- Share -->
     <string name="share.title">Seleccioná el usuario con el que queres compartir la información de:</string>
+    <string name="share.with.title">Ya estas compartiendo este perfil con:</string>
+
+    <!-- Search User -->
+    <string name="search.title">Hacé click en el usuario con el que querés compartir este perfil</string>
+    <string name="search.search">Buscar usuario</string>
+    <string name="search.button.save">Guardar</string>
+    <string name="search.button.cancel">Cancelar</string>
+    <string name="search.alert.message.1">¿Estás seguro en compartir este perfil con %s?</string>
+    <string name="search.alert.button.positive">SI</string>
+    <string name="search.alert.button.negative">NO</string>
+    <string name="search.alert.button.ok">OK</string>
 
     <!-- Onboarding -->
     <string name="onboarding.page0.title">Bienvenido a Bitácora de Familia</string>
