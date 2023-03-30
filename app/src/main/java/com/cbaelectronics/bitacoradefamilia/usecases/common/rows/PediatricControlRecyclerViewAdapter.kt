@@ -40,6 +40,8 @@ class PediatricControlRecyclerViewAdapter(private val context: Context): Recycle
         // UI
         val binding = viewHolder.binding
 
+        binding.textViewItemControlAge.visibility = View.GONE
+
         binding.textViewItemControlDate.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
         binding.textViewItemControlDoctor.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
         binding.textViewItemControlSpecialty.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))

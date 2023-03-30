@@ -1,3 +1,8 @@
+/**
+ *  Created by CbaElectronics by Eduardo Sanchez on 3/29/23, 11:22 PM.
+ *  www.cbaelectronics.com.ar
+ */
+
 package com.cbaelectronics.bitacoradefamilia.model.domain
 
 /**

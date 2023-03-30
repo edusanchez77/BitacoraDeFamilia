@@ -41,6 +41,8 @@ class NotesRecyclerViewAdapter(private val context: Context): RecyclerView.Adapt
         // UI
         val binding = viewHolder.binding
 
+        binding.textViewItemNoteAge.visibility = View.GONE
+
         binding.textViewItemControlDate.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
         binding.textViewItemNotes.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
 

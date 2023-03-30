@@ -38,6 +38,7 @@ class GrowthRecyclerViewAdapter(private val context: Context): RecyclerView.Adap
 
         // UI
         val binding = viewHolder.binding
+
         binding.textViewGrowthDate.font(FontSize.BODY, FontType.LIGHT, context.getColor(R.color.text))
         binding.textViewGrowthWeight.font(FontSize.BODY, FontType.LIGHT, context.getColor(R.color.text))
         binding.textViewGrowthHeight.font(FontSize.BODY, FontType.LIGHT, context.getColor(R.color.text))

@@ -14,6 +14,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -41,6 +42,8 @@ class IllnessRecyclerViewAdapter(private val context: Context) :
 
         // UI
         val binding = viewHolder.binding
+
+        binding.textViewItemIllnessAge.visibility = GONE
 
         binding.textViewItemIllnessDate.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
         binding.textViewItemIllness.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
@@ -81,8 +84,8 @@ class IllnessRecyclerViewAdapter(private val context: Context) :
             binding.textViewItemIllnessDateOfIllness.text = illness.date?.calendarDate()
             binding.textViewItemIllnessName.text = illness.name
             binding.textViewItemIllnessDurationName.text = "${illness.duration.toString()} ${context.getString(days)}"
-            binding.textViewItemIllnessSymptomName.text = illness.symptom
-            binding.textViewItemIllnessMedicationName.text = illness.medication
+            binding.textViewItemIllnessSymptomName.text = illness.symptom?.replace(". ", "\n")
+            binding.textViewItemIllnessMedicationName.text = illness.medication?.replace(". ", "\n")
             binding.textViewItemIllnessObservationName.text = if(illness.observation.isNullOrEmpty()) "-" else illness.observation
             binding.textViewItemIllnessAuthor.text = illness.registeredBy.displayName
             Glide.with(context).load(illness.registeredBy.photoProfile).into(binding.imageViewItemIllnessAuthor)
