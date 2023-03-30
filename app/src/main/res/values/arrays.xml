@@ -75,6 +75,19 @@
         <item>@string/achievements.other</item>
     </string-array>
 
+    <string-array name="echographies">
+        <item>@string/echography.type.1</item>
+        <item>@string/echography.type.2</item>
+        <item>@string/echography.type.3</item>
+        <item>@string/echography.type.4</item>
+        <item>@string/echography.type.5</item>
+        <item>@string/echography.type.6</item>
+        <item>@string/echography.type.7</item>
+        <item>@string/echography.type.8</item>
+        <item>@string/echography.type.9</item>
+        <item>@string/echography.type.other</item>
+    </string-array>
+
     <string-array name="optionsCamera">
         <item>@string/image.option.camera</item>
         <item>@string/image.option.gallery</item>

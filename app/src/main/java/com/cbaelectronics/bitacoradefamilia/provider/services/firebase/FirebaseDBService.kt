@@ -99,6 +99,9 @@ enum class DatabaseField(val key: String) {
     // Control Weight
     WEEK("week"),
 
+    // Echography
+    ECHOGRAPHY_TYPE("type"),
+
     // Info
     WHEN("when"),
     HOW("how"),
@@ -836,6 +839,7 @@ object FirebaseDBService {
 
                     val date = document.getDate(DatabaseField.DATE.key)
                     val week = document.get(DatabaseField.WEEK.key)
+                    val type = document.get(DatabaseField.ECHOGRAPHY_TYPE.key)
                     val note = document.get(DatabaseField.FIELD_NOTES.key)
                     val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
 
@@ -854,6 +858,7 @@ object FirebaseDBService {
                         childrenId,
                         date,
                         week.toString().toInt(),
+                        type.toString(),
                         note.toString(),
                         user,
                         registeredDate

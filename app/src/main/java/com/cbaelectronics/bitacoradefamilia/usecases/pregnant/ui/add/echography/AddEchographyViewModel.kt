@@ -33,6 +33,7 @@ class AddEchographyViewModel: ViewModel() {
     val errorIncomplete = R.string.add_alert_error_incomplete
     val errorUnknown = R.string.add_alert_error_unknown
     val ok = R.string.add_alert_ok
+    val typeOther = R.string.echography_type_other
 
     // Public
 

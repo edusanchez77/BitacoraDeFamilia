@@ -25,6 +25,7 @@ data class Echography(
     val childrenId: String? = null,
     val date: Date? = null,
     val week: Int? = null,
+    val type: String? = null,
     val notes: String? = null,
     val registeredBy: User,
     val registeredDate: Date? = Timestamp(Date().time)
@@ -35,6 +36,7 @@ data class Echography(
             DatabaseField.CHILDREN_ID.key to (childrenId ?: ""),
             DatabaseField.DATE.key to (date ?: ""),
             DatabaseField.WEEK.key to (week ?: ""),
+            DatabaseField.ECHOGRAPHY_TYPE.key to (type ?: ""),
             DatabaseField.FIELD_NOTES.key to (notes ?: "-"),
             DatabaseField.REGISTERED_BY.key to (registeredBy ?: ""),
             DatabaseField.REGISTERED_DATE.key to (registeredDate ?: "")

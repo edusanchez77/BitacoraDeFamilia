@@ -125,6 +125,16 @@
     <string name="echography.title">Ecografías</string>
     <string name="echography.info">Agregá una nueva ecografía</string>
     <string name="echography.button">Agregar ecografía</string>
+    <string name="echography.type.1">Ecografía Transvaginal</string>
+    <string name="echography.type.2">Riesgo Completo</string>
+    <string name="echography.type.3">Ecografía Tocoginecológica Morfológica de 2do Trimestre</string>
+    <string name="echography.type.4">Ecografía Tocoginecológica Obstétrica del 2do y 3er Trimestre</string>
+    <string name="echography.type.5">Ecografía Tocoginecológica Pelviana</string>
+    <string name="echography.type.6">Ecografía Tocoginecológica 4D/5D</string>
+    <string name="echography.type.7">Eco Doppler Cerebral</string>
+    <string name="echography.type.8">Eco Doppler Ocular</string>
+    <string name="echography.type.9">Ecografía de Cadera</string>
+    <string name="echography.type.other">Otra</string>
 
     <!-- Adds -->
     <string name="add.button.cancel">Cancelar</string>

@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
@@ -38,6 +39,8 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
     private var dateEditText: String? = null
     private var weekEditText: String? = null
     private var noteEditText: String? = null
+    private var typeEditText: String? = null
+    private var typeOther: String? = null
 
     private var day = 0
     private var month = 0
@@ -87,6 +90,7 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
     private fun setup() {
         addClose(this)
+        disableEditTextType()
 
         // UI
         binding.textViewAddEchographyTitle.font(
@@ -98,14 +102,18 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         // Week
 
         val arrayWeek = resources.getStringArray(R.array.week)
-        val adapterWeek = ArrayAdapter(
-            this,
-            R.layout.dropdown_menu_popup_item,
-            arrayWeek
-        )
+        val adapterWeek = ArrayAdapter(this, R.layout.dropdown_menu_popup_item, arrayWeek)
 
         binding.editTextAddEchographyWeek.setAdapter(adapterWeek)
         binding.editTextAddEchographyWeek.inputType = InputType.TYPE_NULL
+
+        // Type
+
+        val arrayType = resources.getStringArray(R.array.echographies)
+        val adapterType = ArrayAdapter(this, R.layout.dropdown_menu_popup_item, arrayType)
+
+        binding.editTextAddEchographyType.setAdapter(adapterType)
+        binding.editTextAddEchographyType.inputType = InputType.TYPE_NULL
 
         // Date and Time
 
@@ -138,7 +146,7 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         }
     }
 
-    private fun footerInfo(){
+    private fun footerInfo() {
 
         // Date
 
@@ -174,6 +182,41 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
             }
         })
 
+        // Type
+
+        binding.editTextAddEchographyType.addTextChangedListener(object : TextWatcher{
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                typeEditText = binding.editTextAddEchographyType.text.toString()
+                checkEchography()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Type Other
+
+        binding.editTextAddEchographyOther.addTextChangedListener(object : TextWatcher{
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                typeOther = binding.editTextAddEchographyOther.text.toString()
+                checkEnable()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
         // Notes
 
         binding.editTextAddEchographyNote.addTextChangedListener(object : TextWatcher {
@@ -193,8 +236,8 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
     }
 
-    private fun checkEnable(){
-        if (!dateEditText.isNullOrEmpty() && !weekEditText.isNullOrEmpty() && !noteEditText.isNullOrEmpty()){
+    private fun checkEnable() {
+        if (!dateEditText.isNullOrEmpty() && !weekEditText.isNullOrEmpty() && !typeEditText.isNullOrEmpty() && !noteEditText.isNullOrEmpty() && (typeEditText != getString(viewModel.typeOther) || !typeOther.isNullOrEmpty())) {
             enableSave()
         }
     }
@@ -202,6 +245,7 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
     private fun validForm() {
         val date = binding.editTextAddEchographyDate.text
         val week = binding.editTextAddEchographyWeek.text
+        val type = if(typeEditText == getString(viewModel.typeOther)) binding.editTextAddEchographyOther.text else binding.editTextAddEchographyType.text
         val note = binding.editTextAddEchographyNote.text
 
         if (date.isNullOrBlank() || week.isNullOrBlank() || note.isNullOrBlank()) {
@@ -214,6 +258,7 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
                 viewModel.children?.id,
                 dateFormat,
                 week.toString().toInt(),
+                type.toString(),
                 note.toString(),
                 viewModel.user
             )
@@ -230,6 +275,22 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         UIUtil.showAlert(this, getString(viewModel.ok))
         disableSave()
         finish()
+    }
+
+    private fun checkEchography(){
+        if (typeEditText == getString(viewModel.typeOther)){
+            enableEditTextType()
+        }else{
+            disableEditTextType()
+        }
+    }
+
+    private fun disableEditTextType(){
+        binding.textFieldAddEchographyOther.visibility = View.GONE
+    }
+
+    private fun enableEditTextType(){
+        binding.textFieldAddEchographyOther.visibility = View.VISIBLE
     }
 
     private fun clearEditText() {
