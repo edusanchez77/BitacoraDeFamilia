@@ -70,13 +70,17 @@ class PregnantNotesFragment : Fragment() {
     // Private
 
     private fun localize() {
-        //binding.textViewControlTitle.text = getString(viewModel.title)
+        binding.textViewNotesTitle.text = getString(viewModel.info)
         binding.buttonPregnantNotesAdd.text = getString(viewModel.button)
     }
 
     private fun setup() {
         // UI
-        //binding.textViewControlTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        binding.textViewNotesTitle.font(
+            FontSize.BODY,
+            FontType.REGULAR,
+            ContextCompat.getColor(binding.root.context, R.color.text)
+        )
 
         binding.recyclerViewPregnantNotes.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewPregnantNotes.adapter = adapter
@@ -102,6 +106,11 @@ class PregnantNotesFragment : Fragment() {
         viewModel.load().observe(viewLifecycleOwner, Observer {
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
+            if (it.size == 0){
+                binding.textViewNotesTitle.visibility = VISIBLE
+            }else{
+                binding.textViewNotesTitle.visibility = GONE
+            }
         })
     }
 

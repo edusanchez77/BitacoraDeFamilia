@@ -13,6 +13,8 @@ package com.cbaelectronics.bitacoradefamilia.usecases.notebook.ui.achievements
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -64,13 +66,17 @@ class AchievementsFragment : Fragment() {
 
     // Private
     private fun localize(){
-        //binding.textViewAchievementsTitle.text = getString(viewModel.title)
+        binding.textViewAchievementTitle.text = getString(viewModel.info)
         binding.buttonAchievementsAdd.text = getString(viewModel.button)
     }
 
     private fun setup(){
         // UI
-        //binding.textViewAchievementsTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        binding.textViewAchievementTitle.font(
+            FontSize.BODY,
+            FontType.REGULAR,
+            ContextCompat.getColor(binding.root.context, R.color.text)
+        )
 
         binding.recyclerViewAchievements.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewAchievements.adapter = adapter
@@ -96,6 +102,11 @@ class AchievementsFragment : Fragment() {
         viewModel.load().observe(viewLifecycleOwner, Observer {
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
+            if (it.size == 0){
+                binding.textViewAchievementTitle.visibility = VISIBLE
+            }else{
+                binding.textViewAchievementTitle.visibility = GONE
+            }
         })
     }
 }

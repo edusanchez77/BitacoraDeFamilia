@@ -32,6 +32,7 @@ class AchievementsViewModel : ViewModel() {
     // Localization
 
     val title = R.string.achievements_title
+    val info = R.string.achievements_info
     val button = R.string.achievements_button
 
     // Public

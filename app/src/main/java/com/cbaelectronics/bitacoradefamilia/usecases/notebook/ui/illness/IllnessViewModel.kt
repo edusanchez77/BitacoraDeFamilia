@@ -22,6 +22,7 @@ class IllnessViewModel : ViewModel() {
     // Localization
 
     val title = R.string.illness_title
+    val info = R.string.illness_info
     val button = R.string.illness_button
 
     // Public

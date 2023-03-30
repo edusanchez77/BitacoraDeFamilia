@@ -62,13 +62,17 @@ class EchographyFragment : Fragment() {
 
     // Private
     private fun localize() {
-        //binding.textViewEchographyTitle.text = getString(viewModel.title)
+        binding.textViewEchographyTitle.text = getString(viewModel.info)
         binding.buttonEchographyAdd.text = getString(viewModel.button)
     }
 
     private fun setup() {
         // UI
-        //binding.textViewEchographyTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        binding.textViewEchographyTitle.font(
+            FontSize.BODY,
+            FontType.REGULAR,
+            ContextCompat.getColor(binding.root.context, R.color.text)
+        )
 
         binding.recyclerViewEchography.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewEchography.adapter = adapter
@@ -94,6 +98,11 @@ class EchographyFragment : Fragment() {
         viewModel.load().observe(viewLifecycleOwner, Observer {
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
+            if (it.size == 0){
+                binding.textViewEchographyTitle.visibility = VISIBLE
+            }else{
+                binding.textViewEchographyTitle.visibility = GONE
+            }
         })
     }
 

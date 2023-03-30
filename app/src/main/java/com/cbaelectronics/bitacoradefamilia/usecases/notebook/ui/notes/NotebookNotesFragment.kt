@@ -10,6 +10,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -60,13 +62,17 @@ class NotebookNotesFragment : Fragment() {
     // Private
 
     private fun localize() {
-        //binding.textViewNotesTitle.text = getString(viewModel.title)
+        binding.textViewNotesTitle.text = getString(viewModel.info)
         binding.buttonNotebookNotesAdd.text = getString(viewModel.button)
     }
 
     private fun setup() {
         // UI
-        //binding.textViewNotesTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        binding.textViewNotesTitle.font(
+            FontSize.BODY,
+            FontType.REGULAR,
+            ContextCompat.getColor(binding.root.context, R.color.text)
+        )
 
         binding.recyclerViewNotebookNotes.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewNotebookNotes.adapter = adapter
@@ -92,6 +98,11 @@ class NotebookNotesFragment : Fragment() {
         viewModel.load().observe(viewLifecycleOwner, Observer {
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
+            if (it.size == 0){
+                binding.textViewNotesTitle.visibility = VISIBLE
+            }else{
+                binding.textViewNotesTitle.visibility = GONE
+            }
         })
     }
 

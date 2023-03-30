@@ -28,6 +28,7 @@ class MedicalMeetingViewModel : ViewModel() {
     // Localization
 
     val title = R.string.medmeeting_title
+    val info = R.string.medmeeting_info
     val button = R.string.medmeeting_button
 
     // Public

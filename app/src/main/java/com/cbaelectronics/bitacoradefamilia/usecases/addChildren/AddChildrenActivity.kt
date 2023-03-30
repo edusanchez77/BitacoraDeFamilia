@@ -6,6 +6,7 @@
 package com.cbaelectronics.bitacoradefamilia.usecases.addChildren
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.ProgressDialog
@@ -50,6 +51,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -69,10 +71,10 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private var children: Children? = null
     private lateinit var childrenId: String
     private var mUri: Uri? = null
-    private var avatarPath: String? = null
+    private var avatarPath: String? = ""
     private lateinit var mProgress: ProgressDialog
-    val REQUEST_GALLERY = 1001
-    val REQUEST_IMAGE_CAPTURE = 1002
+    private val REQUEST_GALLERY = 1001
+    private val REQUEST_IMAGE_CAPTURE = 1002
 
     private var day = 0
     private var month = 0
@@ -417,27 +419,28 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun validForm() {
 
-        val name = if (binding.editTextAddChildrenName.text.isNullOrEmpty()) children?.name else binding.editTextAddChildrenName.text
-        val genre = if (binding.editTextAddChildrenGenre.text.isNullOrEmpty()) children?.genre else binding.editTextAddChildrenGenre.text
+        val name = if (binding.editTextAddChildrenName.text.isNullOrEmpty()) children?.name else binding.editTextAddChildrenName.text.toString()
+        val genre = if (binding.editTextAddChildrenGenre.text.isNullOrEmpty()) children?.genre else binding.editTextAddChildrenGenre.text.toString()
         val date = if (binding.editTextAddChildrenDate.text.isNullOrEmpty()) children?.date.toString() else binding.editTextAddChildrenDate.text
-        val weight = if(binding.editTextAddChildrenWeight.text.isNullOrEmpty()) children?.weight else binding.editTextAddChildrenWeight.text
-        val height = if(binding.editTextAddChildrenHeight.text.isNullOrEmpty()) children?.height else binding.editTextAddChildrenHeight.text
+        val weight = if (binding.editTextAddChildrenWeight.text.isNullOrEmpty()) children?.weight else binding.editTextAddChildrenWeight.text.toString()
+        val height = if (binding.editTextAddChildrenHeight.text.isNullOrEmpty()) children?.height else binding.editTextAddChildrenHeight.text.toString()
         val avatar = if (avatarPath.isNullOrEmpty()) children?.avatar else avatarPath
-        val registeredDate = if(checkEdit()) children?.registeredDate else null
+        val registeredDate = if(checkEdit()) children?.registeredDate else Timestamp(Date().time)
 
         val sdf = SimpleDateFormat(Constants.DATE_COMPLETE)
-        val date1 = if (date.isNullOrBlank()) sdf.parse(Constants.DATE_DEFAULT) else sdf.parse(date.toString())
+        val date1 = if (date == "null") sdf.parse(Constants.DATE_DEFAULT) else sdf.parse(date.toString())
 
         val childrenNew = Children(
             id = childrenId,
-            name = name.toString(),
+            name = name,
             avatar = avatar,
-            genre = genre.toString(),
+            genre = genre,
             date = date1,
-            weight = weight.toString(),
-            height = height.toString(),
+            weight = weight,
+            height = height,
             registeredBy = viewModel.user,
             registeredDate = registeredDate
         )

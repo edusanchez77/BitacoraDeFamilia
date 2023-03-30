@@ -37,6 +37,7 @@ class EchographyViewModel : ViewModel() {
     // Localization
 
     val title = R.string.echography_title
+    val info = R.string.echography_info
     val button = R.string.echography_button
 
     // Public

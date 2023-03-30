@@ -23,6 +23,7 @@ class NotebookNotesViewModel : ViewModel() {
     // Localization
 
     val title = R.string.note_title
+    val info = R.string.note_info
     val button = R.string.note_button
 
     // Public

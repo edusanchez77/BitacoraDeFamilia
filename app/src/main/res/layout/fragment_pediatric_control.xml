@@ -12,6 +12,17 @@
     android:background="@color/secondary_background"
     tools:context=".usecases.notebook.ui.pediatric_control.PediatricControlFragment">
 
+    <TextView
+        android:id="@+id/textViewPediatricControlTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias=".1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Agrega una nueva cita medica" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPediatricControl"
         android:layout_width="0dp"

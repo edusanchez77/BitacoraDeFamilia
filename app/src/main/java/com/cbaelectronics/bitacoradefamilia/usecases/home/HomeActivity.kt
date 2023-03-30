@@ -4,15 +4,18 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.ui.AppBarConfiguration
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -40,6 +43,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var adapter: ChildrenRecyclerViewAdapter
     private lateinit var adapterShared: SharedChildrenRecyclerViewAdapter
+    private var countChildren: Int = 0
+    private var countChildrenShared: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -64,6 +69,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun localize() {
         binding.textViewTitleApp.text = ""//getString(viewModel.title)
+        binding.textViewHomeTitle.text = getString(viewModel.info)
     }
 
     private fun setup() {
@@ -71,33 +77,57 @@ class HomeActivity : AppCompatActivity() {
         // UI
         //binding.textViewTitleApp.font(FontSize.TITLE_APP, FontType.GALADA, getColor(R.color.light))
 
+        binding.textViewHomeTitle.font(
+            FontSize.BODY,
+            FontType.REGULAR,
+            ContextCompat.getColor(binding.root.context, R.color.text)
+        )
+
         binding.recyclerViewHome.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerViewHome.adapter = adapter
 
         binding.recyclerViewHomeShare.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerViewHomeShare.adapter = adapterShared
 
-        observeDate()
+        observeData()
         buttons()
 
     }
 
-    private fun observeDate() {
+    private fun observeData() {
         viewModel.load().observe(this, Observer {
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
+            countChildren = it.size
+            checkTitle()
             if(it.size == 0){
                 binding.recyclerViewHome.visibility = GONE
+            }else{
+                binding.recyclerViewHome.visibility = VISIBLE
             }
         })
 
         viewModel.loadShared().observe(this, Observer {
             adapterShared.setDataList(it)
             adapterShared.notifyDataSetChanged()
+            countChildrenShared = it.size
+            checkTitle()
             if(it.size == 0){
                 binding.recyclerViewHomeShare.visibility = GONE
+            }else{
+                binding.recyclerViewHomeShare.visibility = VISIBLE
             }
         })
+    }
+
+    private fun checkTitle(){
+        if(countChildren == 0 && countChildrenShared == 0){
+            binding.textViewHomeTitle.visibility = VISIBLE
+            Log.d("ChildrenEdu", "Entra IF")
+        }else{
+            binding.textViewHomeTitle.visibility = GONE
+            Log.d("ChildrenEdu", "Entra ELSE")
+        }
     }
 
     private fun buttons() {

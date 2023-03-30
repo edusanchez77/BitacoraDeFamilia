@@ -49,6 +49,9 @@
     <string name="read">Solo lectura</string>
     <string name="write">Editar información</string>
 
+    <!-- Home -->
+    <string name="home.info">Agregá un nuevo integrante a la familia</string>
+
     <!-- Menu -->
     <string name="menu.card.pregnant">Diario de\nEmbarazo</string>
     <string name="menu.card.notebook">Cuaderno\nPediátrico</string>
@@ -57,6 +60,7 @@
 
     <!-- Achievements -->
     <string name="achievements.title">Logros Desbloqueados</string>
+    <string name="achievements.info">Agregá un nuevo logro</string>
     <string name="achievements.button">Agregar logro</string>
     <string name="achievements.01">Se me cayó el pupo</string>
     <string name="achievements.02">Mi primera carcajada</string>
@@ -86,14 +90,17 @@
 
     <!-- Illness -->
     <string name="illness.title">Mis Enfermedades</string>
+    <string name="illness.info">Agregá una nueva enfermedad</string>
     <string name="illness.button">Agregar enfermedad</string>
 
     <!-- Control -->
     <string name="control.title">Controles Pediátricos</string>
+    <string name="control.info">Agregá un nuevo control</string>
     <string name="control.button">Agregar control</string>
 
     <!-- Notes -->
     <string name="note.title">Notas</string>
+    <string name="note.info">Agregá una nueva nota</string>
     <string name="note.button">Agregar nota</string>
 
     <!-- Info -->
@@ -111,10 +118,12 @@
 
     <!-- Medical Meeting -->
     <string name="medmeeting.title">Citas Médicas</string>
+    <string name="medmeeting.info">Agregá una nueva cita médica</string>
     <string name="medmeeting.button">Agregar cita</string>
 
-    <!-- Medical Meeting -->
+    <!-- Echography -->
     <string name="echography.title">Ecografías</string>
+    <string name="echography.info">Agregá una nueva ecografía</string>
     <string name="echography.button">Agregar ecografía</string>
 
     <!-- Adds -->

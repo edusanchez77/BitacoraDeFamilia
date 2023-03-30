@@ -171,8 +171,8 @@ object FirebaseDBService {
 
     fun save(children: Children) {
 
-        children.name?.let {
-            childreRef.document().set(children.toJSON())
+        children.id?.let {id ->
+            childreRef.document(id).set(children.toJSON())
         }
 
     }

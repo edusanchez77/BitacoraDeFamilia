@@ -61,13 +61,17 @@ class PediatricControlFragment : Fragment() {
     // Public
 
     private fun localize() {
-        //binding.textViewControlTitle.text = getString(viewModel.title)
+        binding.textViewPediatricControlTitle.text = getString(viewModel.info)
         binding.buttonControlAdd.text = getString(viewModel.button)
     }
 
     private fun setup() {
         // UI
-        //binding.textViewControlTitle.font(FontSize.BODY, FontType.REGULAR, ContextCompat.getColor(binding.root.context, R.color.text))
+        binding.textViewPediatricControlTitle.font(
+            FontSize.BODY,
+            FontType.REGULAR,
+            ContextCompat.getColor(binding.root.context, R.color.text)
+        )
 
         binding.recyclerViewPediatricControl.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewPediatricControl.adapter = adapter
@@ -93,6 +97,11 @@ class PediatricControlFragment : Fragment() {
         viewModel.load().observe(viewLifecycleOwner, Observer {
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
+            if (it.size == 0){
+                binding.textViewPediatricControlTitle.visibility = VISIBLE
+            }else{
+                binding.textViewPediatricControlTitle.visibility = GONE
+            }
         })
     }
 

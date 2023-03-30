@@ -27,6 +27,7 @@ class PediatricControlViewModel : ViewModel() {
     // Localization
 
     val title = R.string.control_title
+    val info = R.string.control_info
     val button = R.string.control_button
 
     // Public
