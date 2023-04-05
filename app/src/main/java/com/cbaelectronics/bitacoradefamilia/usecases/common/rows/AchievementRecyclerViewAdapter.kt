@@ -30,7 +30,7 @@ class AchievementRecyclerViewAdapter(private val context: Context): RecyclerView
     private var dataList = mutableListOf<Achievements>()
 
     fun setDataList(data: MutableList<Achievements>) {
-        dataList = data
+        dataList = data 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
