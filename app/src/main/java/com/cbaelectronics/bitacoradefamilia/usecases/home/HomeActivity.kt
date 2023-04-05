@@ -123,10 +123,8 @@ class HomeActivity : AppCompatActivity() {
     private fun checkTitle(){
         if(countChildren == 0 && countChildrenShared == 0){
             binding.textViewHomeTitle.visibility = VISIBLE
-            Log.d("ChildrenEdu", "Entra IF")
         }else{
             binding.textViewHomeTitle.visibility = GONE
-            Log.d("ChildrenEdu", "Entra ELSE")
         }
     }
 

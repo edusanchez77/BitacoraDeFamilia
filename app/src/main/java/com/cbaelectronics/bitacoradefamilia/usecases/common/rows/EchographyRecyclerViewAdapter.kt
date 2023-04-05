@@ -7,8 +7,11 @@ package com.cbaelectronics.bitacoradefamilia.usecases.common.rows
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -39,10 +42,12 @@ class EchographyRecyclerViewAdapter(private val context: Context): RecyclerView.
 
         binding.textViewItemEchographyDate.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
         binding.textViewItemEchographyWeek.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
+        binding.textViewItemEchographyType.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
         binding.textViewItemEchographyNotes.font(FontSize.BUTTON, FontType.REGULAR, context.getColor(R.color.text))
 
         binding.textViewItemEchographyDateOfControl.font(FontSize.CAPTION, FontType.LIGHT, context.getColor(R.color.text))
         binding.textViewItemEchographyWeekName.font(FontSize.CAPTION, FontType.LIGHT, context.getColor(R.color.text))
+        binding.textViewItemEchographyTypeName.font(FontSize.CAPTION, FontType.LIGHT, context.getColor(R.color.text))
         binding.textViewItemEchographyNotesName.font(FontSize.CAPTION, FontType.LIGHT, context.getColor(R.color.text))
         binding.textViewItemEchographyAuthor.font(FontSize.CAPTION, FontType.LIGHT, context.getColor(R.color.text))
 
@@ -64,11 +69,16 @@ class EchographyRecyclerViewAdapter(private val context: Context): RecyclerView.
 
         @SuppressLint("SetTextI18n")
         fun bindView(echography: Echography){
+
             binding.textViewItemEchographyDateOfControl.text = echography.date?.calendarDate()
             binding.textViewItemEchographyWeekName.text = echography.week.toString()
+            binding.textViewItemEchographyTypeName.text = echography.type
             binding.textViewItemEchographyNotesName.text = echography.notes
             binding.textViewItemEchographyAuthor.text = echography.registeredBy.displayName
+            Glide.with(context).load(echography.image).into(binding.imageViewItemEchographyImage)
             Glide.with(context).load(echography.registeredBy.photoProfile).into(binding.imageViewEchographyAvatar)
+
+            binding.materialCardViewEchographyImage.visibility = if(!echography.image.isNullOrEmpty()) VISIBLE else GONE
         }
     }
 

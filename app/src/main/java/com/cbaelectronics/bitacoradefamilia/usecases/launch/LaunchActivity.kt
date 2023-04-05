@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityLaunchBinding
+import com.cbaelectronics.bitacoradefamilia.databinding.ActivityLaunchNewBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Onboarding
 import com.cbaelectronics.bitacoradefamilia.model.session.Session
 import com.cbaelectronics.bitacoradefamilia.provider.preferences.PreferencesKey
@@ -22,11 +23,11 @@ import com.cbaelectronics.bitacoradefamilia.util.extension.font
 
 class LaunchActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLaunchBinding
+    private lateinit var binding: ActivityLaunchNewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLaunchBinding.inflate(layoutInflater)
+        binding = ActivityLaunchNewBinding.inflate(layoutInflater)
 
         // Content
         setContentView(binding.root)
@@ -40,9 +41,9 @@ class LaunchActivity : AppCompatActivity() {
         // UI
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
-        binding.textViewTitleBitacora.font(FontSize.TITLE_APP, FontType.GALADA, ContextCompat.getColor(this, R.color.text))
-        binding.textViewTitleFamilia.font(FontSize.TITLE_APP, FontType.GALADA, ContextCompat.getColor(this, R.color.text))
+        /*binding.textViewTitleBitacora.font(FontSize.TITLE_APP, FontType.GALADA, ContextCompat.getColor(this, R.color.text))
         binding.textViewTitleDe.font(FontSize.TITLE_APP, FontType.GALADA, ContextCompat.getColor(this, R.color.secondary))
+        binding.textViewTitleFamilia.font(FontSize.TITLE_APP, FontType.GALADA, ContextCompat.getColor(this, R.color.text))*/
     }
 
     private fun data() {

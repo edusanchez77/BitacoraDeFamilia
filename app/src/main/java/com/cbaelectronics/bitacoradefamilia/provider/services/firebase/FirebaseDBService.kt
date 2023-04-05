@@ -101,6 +101,7 @@ enum class DatabaseField(val key: String) {
 
     // Echography
     ECHOGRAPHY_TYPE("type"),
+    IMAGE("image"),
 
     // Info
     WHEN("when"),
@@ -134,6 +135,7 @@ object FirebaseDBService {
     private val sharedRef = FirebaseFirestore.getInstance().collection(DatabaseField.SHARED.key)
 
     val avatarStorageRef = Firebase.storage.reference.child(DatabaseField.AVATAR.key)
+    val echographyStorageRef = Firebase.storage.reference.child(DatabaseField.ECHOGRAPHY.key)
 
     // Public
 
@@ -821,7 +823,7 @@ object FirebaseDBService {
 
     fun save(echography: Echography) {
         echography.childrenId.let {
-            echographyRef.document().set(echography.toJSON())
+            echographyRef.document(echography.id!!).set(echography.toJSON())
         }
     }
 
@@ -837,10 +839,12 @@ object FirebaseDBService {
                     val registeredByData =
                         document.data[DatabaseField.REGISTERED_BY.key] as Map<String, Any>
 
+                    val id = document.id
                     val date = document.getDate(DatabaseField.DATE.key)
                     val week = document.get(DatabaseField.WEEK.key)
                     val type = document.get(DatabaseField.ECHOGRAPHY_TYPE.key)
                     val note = document.get(DatabaseField.FIELD_NOTES.key)
+                    val image = document.get(DatabaseField.IMAGE.key)
                     val registeredDate = document.getDate(DatabaseField.REGISTERED_DATE.key)
 
                     val usrEmail = registeredByData[DatabaseField.EMAIL.key].toString()
@@ -855,11 +859,13 @@ object FirebaseDBService {
                     val user =
                         User(usrName, usrEmail, usrPhoto, usrToken, usrType, usrRegisteredDate)
                     val echography = Echography(
+                        id,
                         childrenId,
                         date,
                         week.toString().toInt(),
                         type.toString(),
                         note.toString(),
+                        image.toString(),
                         user,
                         registeredDate
                     )

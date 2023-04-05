@@ -73,8 +73,6 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private var mUri: Uri? = null
     private var avatarPath: String? = ""
     private lateinit var mProgress: ProgressDialog
-    private val REQUEST_GALLERY = 1001
-    private val REQUEST_IMAGE_CAPTURE = 1002
 
     private var day = 0
     private var month = 0
@@ -87,6 +85,11 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private var vYear = 0
     private var vHour = 0
     private var vMinute = 0
+
+    enum class request(val value: Int){
+        REQUEST_GALLERY(1001),
+        REQUEST_IMAGE_CAPTURE(1002)
+    }
 
     private val pickMedia = registerForActivityResult(PickVisualMedia()){ uri ->
         if(uri != null){
@@ -126,6 +129,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         // ViewModel
         viewModel = ViewModelProvider(this)[AddChildrenViewModel::class.java]
 
+        // Dialog
         mProgress = ProgressDialog(this)
 
         // Setup
@@ -149,7 +153,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when(requestCode){
-            REQUEST_GALLERY -> {
+            request.REQUEST_GALLERY.value -> {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     openGallery()
                 }else{
@@ -157,7 +161,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
                 }
             }
 
-            REQUEST_IMAGE_CAPTURE -> {
+            request.REQUEST_IMAGE_CAPTURE.value -> {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     openCamera()
                 }else{
@@ -368,7 +372,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
                         {
 
                             val mPermisoCamara = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            requestPermissions(mPermisoCamara, REQUEST_IMAGE_CAPTURE)
+                            requestPermissions(mPermisoCamara, request.REQUEST_IMAGE_CAPTURE.value)
 
                         }else{
                             openCamera()
@@ -379,7 +383,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
                         if(checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                         ){
                             val mPermisoGaleria = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                            requestPermissions(mPermisoGaleria, REQUEST_GALLERY)
+                            requestPermissions(mPermisoGaleria, request.REQUEST_GALLERY.value)
                         }else{
                             openGallery()
                         }
@@ -431,7 +435,7 @@ class AddChildrenActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         val registeredDate = if(checkEdit()) children?.registeredDate else Timestamp(Date().time)
 
         val sdf = SimpleDateFormat(Constants.DATE_COMPLETE)
-        val date1 = if (date == "null") sdf.parse(Constants.DATE_DEFAULT) else sdf.parse(date.toString())
+        val date1 = if (date.toString() == sdf.parse(Constants.DATE_DEFAULT)!!.toString() || date == "null") sdf.parse(Constants.DATE_DEFAULT) else sdf.parse(date.toString())
 
         val childrenNew = Children(
             id = childrenId,

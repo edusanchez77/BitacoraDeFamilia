@@ -7,14 +7,13 @@ package com.cbaelectronics.bitacoradefamilia.util
 
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.DisplayMetrics
 import com.cbaelectronics.bitacoradefamilia.BuildConfig
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
 
 
 object Util {

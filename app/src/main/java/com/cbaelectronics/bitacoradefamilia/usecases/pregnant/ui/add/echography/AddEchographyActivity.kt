@@ -5,30 +5,42 @@
 
 package com.cbaelectronics.bitacoradefamilia.usecases.pregnant.ui.add.echography
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
+import android.content.DialogInterface
+import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
+import android.view.View.GONE
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.cbaelectronics.bitacoradefamilia.R
 import com.cbaelectronics.bitacoradefamilia.databinding.ActivityAddEchographyBinding
 import com.cbaelectronics.bitacoradefamilia.model.domain.Echography
-import com.cbaelectronics.bitacoradefamilia.util.Constants
-import com.cbaelectronics.bitacoradefamilia.util.FontSize
-import com.cbaelectronics.bitacoradefamilia.util.FontType
-import com.cbaelectronics.bitacoradefamilia.util.UIUtil
+import com.cbaelectronics.bitacoradefamilia.provider.services.firebase.FirebaseDBService
+import com.cbaelectronics.bitacoradefamilia.usecases.addChildren.AddChildrenActivity
 import com.cbaelectronics.bitacoradefamilia.util.extension.addClose
 import com.cbaelectronics.bitacoradefamilia.util.extension.enable
 import com.cbaelectronics.bitacoradefamilia.util.extension.font
 import com.cbaelectronics.bitacoradefamilia.util.extension.hideSoftInput
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.*
+import com.cbaelectronics.bitacoradefamilia.usecases.addChildren.AddChildrenActivity.request.*
+import com.cbaelectronics.bitacoradefamilia.util.*
 
 class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
@@ -41,6 +53,10 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
     private var noteEditText: String? = null
     private var typeEditText: String? = null
     private var typeOther: String? = null
+    private var mUri: Uri? = null
+    private var echographyPath: String? = ""
+    private lateinit var mProgress: ProgressDialog
+    private lateinit var echographyId: String
 
     private var day = 0
     private var month = 0
@@ -48,6 +64,20 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
     private var vDay = 0
     private var vMonth = 0
     private var vYear = 0
+
+    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){ uri ->
+        if(uri != null){
+            openDialog()
+            mUri = uri
+            //viewModel.saveAvatar(childrenId, mUri!!)
+            saveAvatar(mUri!!)
+            Glide.with(this).load(mUri).into(binding.imageViewEchography)
+            binding.imageViewIconUpload.visibility = GONE
+            binding.textViewUpload.visibility = GONE
+        }else{
+            UIUtil.showSnackBar(binding.constraintLayoutAddEchography, getString(viewModel.errorLoad))
+        }
+    }
 
     // Initialization
 
@@ -61,7 +91,11 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         // ViewModel
         viewModel = ViewModelProvider(this)[AddEchographyViewModel::class.java]
 
+        // Dialog
+        mProgress = ProgressDialog(this)
+
         // Setup
+        data()
         localize()
         setup()
         footer()
@@ -77,7 +111,28 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when(requestCode){
+            REQUEST_GALLERY.value -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    openGallery()
+                }else{
+                    UIUtil.showSnackBar(
+                        binding.constraintLayoutAddEchography,
+                        getString(viewModel.errorImages)
+                    )
+                }
+            }
+        }
+    }
+
     // Private
+
+    private fun data(){
+        echographyId = Util.getRandomString(Constants.LENGHT_ECHOGRAPHY_ID)
+    }
 
     private fun localize() {
         binding.textViewAddEchographyTitle.text = getString(viewModel.title)
@@ -234,6 +289,84 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
             }
         })
 
+        // Images
+
+        binding.imageViewEchography.setOnClickListener {
+            if(checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+            ){
+                val mPermisoGaleria = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                requestPermissions(mPermisoGaleria,
+                    REQUEST_GALLERY.value
+                )
+            }else{
+                openGallery()
+            }
+        }
+
+    }
+
+    private fun saveAvatar(uri: Uri) {
+        FirebaseDBService.echographyStorageRef.child(echographyId).putFile(uri).addOnSuccessListener {
+            FirebaseDBService.echographyStorageRef.child(echographyId).downloadUrl.addOnSuccessListener {
+                echographyPath = it.toString()
+                mProgress.cancel()
+                Log.d("ChildrenEdu Eco", echographyPath!!)
+                checkEnable()
+            }
+        }
+
+    }
+
+    private fun createAlertOptions(){
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(viewModel.optionTitle))
+            .setItems(R.array.optionsCamera, DialogInterface.OnClickListener { _, i ->
+                when(i){
+                    0 -> {
+                        if (checkPermission(Manifest.permission.CAMERA) || checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                        {
+
+                            val mPermisoCamara = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            requestPermissions(mPermisoCamara,
+                                REQUEST_IMAGE_CAPTURE.value
+                            )
+
+                        }else{
+                            openCamera()
+                        }
+                    }
+
+                    1 -> {
+                        if(checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        ){
+                            val mPermisoGaleria = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            requestPermissions(mPermisoGaleria,
+                                REQUEST_GALLERY.value
+                            )
+                        }else{
+                            openGallery()
+                        }
+                    }
+                }
+            })
+            .show()
+    }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED
+    }
+
+    private fun openCamera() {
+        //pickCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+    }
+
+    private fun openGallery(){
+        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private fun openDialog(){
+        mProgress.setMessage(getString(viewModel.load))
+        mProgress.show()
     }
 
     private fun checkEnable() {
@@ -255,11 +388,13 @@ class AddEchographyActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
             val dateFormat = sdf.parse(date.toString())
 
             val echography = Echography(
+                echographyId,
                 viewModel.children?.id,
                 dateFormat,
                 week.toString().toInt(),
                 type.toString(),
                 note.toString(),
+                echographyPath,
                 viewModel.user
             )
 

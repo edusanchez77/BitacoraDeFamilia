@@ -74,7 +74,7 @@ class NotesRecyclerViewAdapter(private val context: Context): RecyclerView.Adapt
                 TYPE_PREGNANT -> R.color.secondary_light
                 else -> R.color.primary_light
             }
-            binding.constraintLayout.background = context.getDrawable(background)
+            //binding.constraintLayout.background = context.getDrawable(background)
 
 
             binding.textViewItemNoteDate.text = note.date?.calendarDate()
