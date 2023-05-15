@@ -1,0 +1,95 @@
+<resources>
+    <string-array name="genre">
+        <item>@string/male</item>
+        <item>@string/female</item>
+        <item>@string/undefined</item>
+    </string-array>
+
+    <string-array name="permission">
+        <item>@string/read</item>
+        <item>@string/write</item>
+    </string-array>
+
+    <string-array name="week">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+    </string-array>
+
+    <string-array name="achievements">
+        <item>@string/achievements.01</item>
+        <item>@string/achievements.02</item>
+        <item>@string/achievements.03</item>
+        <item>@string/achievements.04</item>
+        <item>@string/achievements.05</item>
+        <item>@string/achievements.06</item>
+        <item>@string/achievements.07</item>
+        <item>@string/achievements.08</item>
+        <item>@string/achievements.09</item>
+        <item>@string/achievements.10</item>
+        <item>@string/achievements.11</item>
+        <item>@string/achievements.12</item>
+        <item>@string/achievements.13</item>
+        <item>@string/achievements.14</item>
+        <item>@string/achievements.15</item>
+        <item>@string/achievements.16</item>
+        <item>@string/achievements.other</item>
+    </string-array>
+
+    <string-array name="echographies">
+        <item>@string/echography.type.1</item>
+        <item>@string/echography.type.2</item>
+        <item>@string/echography.type.3</item>
+        <item>@string/echography.type.4</item>
+        <item>@string/echography.type.5</item>
+        <item>@string/echography.type.6</item>
+        <item>@string/echography.type.7</item>
+        <item>@string/echography.type.8</item>
+        <item>@string/echography.type.9</item>
+        <item>@string/echography.type.other</item>
+    </string-array>
+
+    <string-array name="optionsCamera">
+        <item>@string/image.option.camera</item>
+        <item>@string/image.option.gallery</item>
+    </string-array>
+</resources>

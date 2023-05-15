@@ -1,46 +1,267 @@
 <resources>
-    <string name="app_name">Bitacora de Familia</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <!-- Generic -->
+    <string name="app_name">Bitácora de Familia</string>
+    <string name="companyName">CbaElectronics</string>
+    <string name="title">Bitácora de Familia</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="back">Volver</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="understood">Entendido</string>
+    <string name="kg">kg.</string>
+    <string name="cm">cm.</string>
+    <string name="day">día</string>
+    <string name="days">días</string>
 
-    <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
-        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
-        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
-        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
-        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
-        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
-        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
-        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
-        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
-        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
-        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
-        bibendum, vel congue leo egestas.\n\n
-        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
-        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
-        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
-        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
-        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
-        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
-        est.\n\n
-        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
-        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
-        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
-        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
-        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
-        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
-        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
-        convallis.\n\n
-        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
-        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
-        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
-        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
-        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
-        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
-        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
-    </string>
+    <!-- Options -->
+    <string name="option.settings">Ajustes</string>
+    <string name="option.share">Compartir</string>
+    <string name="option.onboard">Ver tutorial</string>
+    <string name="option.about">Acerca de nosotros</string>
+    <string name="option.close">Cerrar sesión</string>
+
+    <!-- Login -->
+    <string name="login.title">Iniciá sesión de forma segura con tu cuenta de Google</string>
+    <string name="login.body">Necesitas iniciar sesión para poder a la información de la familia.</string>
+    <string name="login.button">Iniciar sesión</string>
+    <string name="login.alert.error.token">Fetching FCM registration token failed</string>
+    <string name="login.alert.wait">Iniciando sesión</string>
+    <string name="login.alert.error.user">Ocurrió un error autenticando al usuario.</string>
+
+    <!-- Bottom Menu -->
+    <string name="bottommenu.pregnant.info">Información</string>
+    <string name="bottommenu.pregnant.medicalmeeting">Citas Médicas</string>
+    <string name="bottommenu.pregnant.echography">Ecografías</string>
+    <string name="bottommenu.pregnant.notes">Notas</string>
+    <string name="bottommenu.notebook.achievements">Logros</string>
+    <string name="bottommenu.notebook.growth">Crecimiento</string>
+    <string name="bottommenu.notebook.illness">Enfermedades</string>
+    <string name="bottommenu.notebook.pediatriccontrol">Controles</string>
+    <string name="bottommenu.notebook.notes">Notas</string>
+
+    <!-- Genre -->
+    <string name="male">Masculino</string>
+    <string name="female">Femenino</string>
+    <string name="undefined">No especificado</string>
+
+    <!-- Permission -->
+    <string name="read">Solo lectura</string>
+    <string name="write">Editar información</string>
+
+    <!-- Home -->
+    <string name="home.info">Agregá un nuevo integrante a la familia</string>
+
+    <!-- Menu -->
+    <string name="menu.card.pregnant">Diario de\nEmbarazo</string>
+    <string name="menu.card.notebook">Cuaderno\nPediátrico</string>
+    <string name="menu.alert.notShared">No tenes permisos para compartir esta información</string>
+    <string name="menu.alert.children.error">Ocurrió un error inesperado. Intentá de nuevo más tarde.</string>
+
+    <!-- Achievements -->
+    <string name="achievements.title">Logros Desbloqueados</string>
+    <string name="achievements.info">Agregá un nuevo logro</string>
+    <string name="achievements.button">Agregar logro</string>
+    <string name="achievements.01">Se me cayó el pupo</string>
+    <string name="achievements.02">Mi primera carcajada</string>
+    <string name="achievements.03">Levanto la cabeza mientras estoy upa</string>
+    <string name="achievements.04">Levanto la cabeza acostada/o boca abajo</string>
+    <string name="achievements.05">Sigo con la mirada</string>
+    <string name="achievements.06">Puedo rotar de atrás para adelante</string>
+    <string name="achievements.07">Sentado, mantengo la cabeza erecta</string>
+    <string name="achievements.08">Mi primer diente</string>
+    <string name="achievements.09">Me puedo parar sosteniéndome de un objeto</string>
+    <string name="achievements.10">Empecé a gatear</string>
+    <string name="achievements.11">Ya como la papilla</string>
+    <string name="achievements.12">Camino 3 o más pasos sin apoyo</string>
+    <string name="achievements.13">Digo mis primeras palabras</string>
+    <string name="achievements.14">Identifico los colores</string>
+    <string name="achievements.15">Cuento del 1 al 10</string>
+    <string name="achievements.16">Comienzo el jardín de infantes</string>
+    <string name="achievements.other">Otro</string>
+
+    <!-- Growth -->
+    <string name="growth.title">Mi Crecimiento</string>
+    <string name="growth.button">Agregar dato</string>
+    <string name="growth.table.header.date">Fecha</string>
+    <string name="growth.table.header.weight">Peso</string>
+    <string name="growth.table.header.height">Altura</string>
+    <string name="growth.table.header.PC">PC</string>
+
+    <!-- Illness -->
+    <string name="illness.title">Mis Enfermedades</string>
+    <string name="illness.info">Agregá una nueva enfermedad</string>
+    <string name="illness.button">Agregar enfermedad</string>
+
+    <!-- Control -->
+    <string name="control.title">Controles Pediátricos</string>
+    <string name="control.info">Agregá un nuevo control</string>
+    <string name="control.button">Agregar control</string>
+
+    <!-- Notes -->
+    <string name="note.title">Notas</string>
+    <string name="note.info">Agregá una nueva nota</string>
+    <string name="note.button">Agregar nota</string>
+
+    <!-- Info -->
+    <string name="info.title">Información</string>
+    <string name="info.tabs.info">Info</string>
+    <string name="info.tabs.weight">Control de Peso</string>
+    <string name="info.tabs.names">Posibles Nombres</string>
+    <string name="info.tabs.names.boy">Varón</string>
+    <string name="info.tabs.names.woman">Mujer</string>
+    <string name="info.button.info">Cargar info</string>
+    <string name="info.button.weight">Cargar peso</string>
+    <string name="info.button.names">Agregar nombre</string>
+    <string name="info.tabs.weight.header.week">Semana</string>
+    <string name="info.tabs.weight.header.weight">Peso</string>
+
+    <!-- Medical Meeting -->
+    <string name="medmeeting.title">Citas Médicas</string>
+    <string name="medmeeting.info">Agregá una nueva cita médica</string>
+    <string name="medmeeting.button">Agregar cita</string>
+
+    <!-- Echography -->
+    <string name="echography.title">Ecografías</string>
+    <string name="echography.info">Agregá una nueva ecografía</string>
+    <string name="echography.button">Agregar ecografía</string>
+    <string name="echography.type.1">Ecografía Transvaginal</string>
+    <string name="echography.type.2">Riesgo Completo</string>
+    <string name="echography.type.3">Ecografía Tocoginecológica Morfológica de 2do Trimestre</string>
+    <string name="echography.type.4">Ecografía Tocoginecológica Obstétrica del 2do y 3er Trimestre</string>
+    <string name="echography.type.5">Ecografía Tocoginecológica Pelviana</string>
+    <string name="echography.type.6">Ecografía Tocoginecológica 4D/5D</string>
+    <string name="echography.type.7">Eco Doppler Cerebral</string>
+    <string name="echography.type.8">Eco Doppler Ocular</string>
+    <string name="echography.type.9">Ecografía de Cadera</string>
+    <string name="echography.type.other">Otra</string>
+
+    <!-- Adds -->
+    <string name="add.button.cancel">Cancelar</string>
+    <string name="add.button.save">Guardar</string>
+    <string name="add.button.back">Volver</string>
+    <string name="add.button.edit">Modificar</string>
+    <string name="add.alert.error.incomplete">Tenés que completar todos los campos</string>
+    <string name="add.alert.error.unknown">Ha surgido un error inesperado.\nPor favor intenta más tarde.</string>
+    <string name="add.alert.ok">Guardado correctamente</string>
+    <string name="add.notes.title">Agregar Nota</string>
+    <string name="add.notes.edittext.note">Nota</string>
+    <string name="add.illness.title">Agregar Enfermedad</string>
+    <string name="add.illness.edittext.date">Fecha en que me enfermé</string>
+    <string name="add.illness.edittext.name">Enfermedad</string>
+    <string name="add.illness.edittext.duration">Duración (en días)</string>
+    <string name="add.illness.edittext.symptom">Síntomas que tuve (separados por punto)</string>
+    <string name="add.illness.edittext.medication">Medicación que tomé (separada por punto)</string>
+    <string name="add.illness.edittext.observation">Observaciones (opcional)</string>
+    <string name="add.growth.title">Agregar información</string>
+    <string name="add.growth.edittext.date">Fecha</string>
+    <string name="add.growth.edittext.weight">Peso</string>
+    <string name="add.growth.edittext.height">Altura (en cm)</string>
+    <string name="add.growth.edittext.pc">PC (opcional)</string>
+    <string name="add.pediatriccontrol.title">Agregar datos del control pediátrico</string>
+    <string name="add.pediatriccontrol.edittext.date">Fecha</string>
+    <string name="add.pediatriccontrol.edittext.doctor">Médico</string>
+    <string name="add.pediatriccontrol.edittext.speciality">Especialidad</string>
+    <string name="add.pediatriccontrol.edittext.weight">Peso</string>
+    <string name="add.pediatriccontrol.edittext.height">Altura (en cm.)</string>
+    <string name="add.pediatriccontrol.edittext.observation">Observaciones</string>
+    <string name="add.pediatriccontrol.edittext.next">Próximo Control</string>
+    <string name="add.pediatriccontrol.edittext.notes">Notas (opcional)</string>
+    <string name="add.achievements.title">Agregar logro</string>
+    <string name="add.achievements.edittext.date">Fecha</string>
+    <string name="add.achievements.edittext.achievementsName">Logro</string>
+    <string name="add.achievements.edittext.details">Detalles (opcional)</string>
+    <string name="add.children.title">Agregar nuevo integrante a la familia</string>
+    <string name="add.children.edittext.name">Nombre</string>
+    <string name="add.children.edittext.genre">Sexo</string>
+    <string name="add.children.edittext.date">Fecha de nacimiento (opcional)</string>
+    <string name="add.children.edittext.hour">Hora de nacimiento (opcional)</string>
+    <string name="add.children.edittext.weight">Peso (opcional)</string>
+    <string name="add.children.edittext.height">Altura (opcional)</string>
+    <string name="add.names.title">Agregar posible nombre</string>
+    <string name="add.names.edittext.name">Nombre</string>
+    <string name="add.names.edittext.genre">Sexo</string>
+    <string name="add.weight.title">Agregar peso semanal</string>
+    <string name="add.weight.edittext.week">Semana</string>
+    <string name="add.weight.edittext.weight">Peso</string>
+    <string name="add.info.title">Agregar información</string>
+    <string name="add.info.edittext.when">¿Cuándo me enteré?</string>
+    <string name="add.info.edittext.how">¿Cómo me enteré?</string>
+    <string name="add.info.edittext.reactions">¿Cómo reaccionaron nuestras familias?</string>
+    <string name="add.medmeeting.title">Agregar cita médica</string>
+    <string name="add.medmeeting.edittext.date">Fecha</string>
+    <string name="add.medmeeting.edittext.doctor">Doctor</string>
+    <string name="add.medmeeting.edittext.note">Notas</string>
+    <string name="add.echography.title">Agregar ecografía</string>
+    <string name="add.echography.edittext.date">Fecha</string>
+    <string name="add.echography.edittext.week">Semana</string>
+    <string name="add.echography.edittext.note">Notas</string>
+
+    <!-- Image -->
+    <string name="image.option.title">Elige una opción</string>
+    <string name="image.option.camera">Tomar una foto</string>
+    <string name="image.option.gallery">Elegir de la galería</string>
+    <string name="image.error.camera">No se puede acceder a la cámara</string>
+    <string name="image.error.images">No se puede acceder a las imágenes</string>
+    <string name="image.error.load">Error al cargar la imagen</string>
+    <string name="image.load">Cargando imagen</string>
+
+    <!-- Close Session -->
+    <string name="session.alert.logout">¿Estás seguro en cerrar sesión?</string>
+    <string name="session.alert.button.ok">Si</string>
+    <string name="session.alert.button.cancel">No</string>
+
+    <!-- About -->
+    <string name="about.by">por</string>
+    <string name="about.info">¡Hola! Mi nombre es Eduardo Sanchez, soy el creador de la aplicación de Bitácora de Familia.\nEsta app se ha desarrollado para llevar un registro de la vida de tus hijos, desde el embarazo.\n\nPronto se vienen más novedades.\n\nSi te gusta, podes dejarme algún tipo de sugerencia para mejorar, o compartir la app para que crezca.\nPueden encontrarme en redes sociales como @cbaelectronics.</string>
+    <string name="about.site">Visitá www.bitacoradefamilia.com.ar para consultar toda la información oficial</string>
+    <string name="about.onboarding">Visualizá de nuevo el tutorial de bienvenida</string>
+    <string name="about.version">Versión %s. </string>
+
+    <!-- Settings -->
+    <string name="settings.title">Ajustes</string>
+
+    <!-- Share -->
+    <string name="share.title">Seleccioná el usuario con el que queres compartir la información de:</string>
+    <string name="share.with.title">Ya estas compartiendo este perfil con:</string>
+    <string name="share.alert.message.1">¿Estás seguro en dejar de compartir este perfil con %s?</string>
+    <string name="share.alert.title.2">Listo</string>
+    <string name="share.alert.message.2">Dejaste de compartir este perfil con %s</string>
+    <string name="share.alert.button.positive">SI</string>
+    <string name="share.alert.button.negative">NO</string>
+    <string name="share.alert.button.ok">OK</string>
+
+    <!-- Search User -->
+    <string name="search.title">Hacé click en el usuario con el que querés compartir este perfil</string>
+    <string name="search.search">Buscar usuario</string>
+    <string name="search.button.save">Guardar</string>
+    <string name="search.button.cancel">Cancelar</string>
+    <string name="search.alert.message.1">¿Estás seguro en compartir este perfil con %s?</string>
+    <string name="search.alert.button.positive">SI</string>
+    <string name="search.alert.button.negative">NO</string>
+    <string name="search.alert.button.ok">OK</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding.page0.title">Bienvenido a Bitácora de Familia</string>
+    <string name="onboarding.page0.body">Donde podrás registrar todo lo relacionado con tus hijos.</string>
+    <string name="onboarding.page1.title">Durante el embarazo</string>
+    <string name="onboarding.page1.body">Registrá tu control de peso, posibles nombres y controles médicos.</string>
+    <string name="onboarding.page2.title"></string>
+    <string name="onboarding.page2.body">También vas a poder registrar tus ecografías.</string>
+    <string name="onboarding.page3.title">Desde el nacimiento</string>
+    <string name="onboarding.page3.body">Registrá sus logros, consultas médicas, enfermedades.</string>
+    <string name="onboarding.page4.title"></string>
+    <string name="onboarding.page4.body">También podes llevar un control sobre su crecimiento.</string>
+    <string name="onboarding.page5.title">Compartí</string>
+    <string name="onboarding.page5.body">Podrás compartir la información de tus hijos con los familiares o amigos que vos quieras.</string>
+
+    <!-- Titles Activity -->
+    <string name="activity.notebook.title">Cuaderno Pediátrico</string>
+    <string name="activity.pregnant.title">Diario de Embarazo</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_note">NoteActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

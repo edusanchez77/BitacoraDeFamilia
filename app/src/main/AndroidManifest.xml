@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,16 +18,89 @@
         android:theme="@style/Theme.BitacoraDeFamilia"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".usecases.searchUser.SearchUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.share.ShareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.onboarding.OnboardingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.settings.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.about.AboutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.pregnant.ui.add.echography.AddEchographyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.pregnant.ui.add.medical_meeting.AddMedicalMeetingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.pregnant.ui.add.info.AddInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.pregnant.ui.add.weight.AddWeightActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.pregnant.ui.add.names.AddNamesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.addChildren.AddChildrenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.notebook.ui.add.achievements.AddAchievementsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.notebook.ui.add.pediatric_control.AddPediatricControlActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.notebook.ui.add.growth.AddGrowthActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.notebook.ui.add.illness.AddIllnessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.notebook.ui.add.notes.AddNotesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.notebook.NotebookActivity"
+            android:exported="false"
+            android:label="@string/activity.notebook.title" />
+        <activity
+            android:name=".usecases.menu.MenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.pregnant.PregnantActivity"
+            android:exported="false"
+            android:label="@string/activity.pregnant.title" />
+        <activity
+            android:name=".usecases.launch.LaunchActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.BitacoraDeFamilia">
+            android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".usecases.home.HomeActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.BitacoraDeFamilia" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/logo_nombre" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/primary" />
     </application>
 
 </manifest>

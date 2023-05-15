@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><!--~
+  ~  Created by CbaElectronics by Eduardo Sanchez on 27/1/23 15:59.
+  ~  www.cbaelectronics.com.ar
+  -->
+
+<resources>
+    <style name="CustomDialogTheme" parent="Theme.Material3.DayNight.Dialog.Alert">
+        <item name="android:windowBackground">@color/secondary</item>
+        <item name="colorAccent">@color/primary</item>
+        <item name="android:textColorPrimary">@color/light</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:scrollbarAlwaysDrawVerticalTrack">false</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_up</item>
+    </style>
+
+
+</resources>
